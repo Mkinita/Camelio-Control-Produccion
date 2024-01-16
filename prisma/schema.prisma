@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Calidad {
+  id Int @id @default(autoincrement())
+  calidad String
+}
+
+model Cliente {
+  id Int @id @default(autoincrement())
+  cliente String
+}
+
+model Producto {
+  id Int @id @default(autoincrement())
+  espesor String
+  ancho String
+  largo String
+  piezas String
+  detalle String
+}
+
+
+model Producciones {
+  id Int @id @default(autoincrement())
+  fecha DateTime
+  calidad String
+  cliente String
+  pedido Json
+  estado Boolean  @default(false)
+  stock Boolean  @default(false)
+  despacho Boolean  @default(false)
+}
+
+
+
