@@ -1,5 +1,5 @@
 import React from 'react'
-import LayoutInsert from "../layout/LayoutInsert"
+import LayoutProducion from "../layout/LayoutProducion"
 import Productos from '../components/Productos'
 import {useState, useEffect} from 'react'
 
@@ -30,7 +30,7 @@ const agregarproduccion = () => {
 
   return (
     <>
-      <LayoutInsert pagina='Agregar Produccion'>
+      <LayoutProducion pagina='Agregar Produccion'>
         <div className='mx-auto w-full max-w-2xl bg-white grid grid-cols-2 py-2 pb-4 '>
           <div class="px-5 py-4 border-b">
             <div class="font-semibold text-gray-800 ">Productos</div>
@@ -45,7 +45,7 @@ const agregarproduccion = () => {
           ))}
         </div>
 
-      </LayoutInsert>
+      </LayoutProducion>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import LayoutInsert from "../layout/LayoutInsert"
+import LayoutProducion from "../layout/LayoutProducion"
 import useCombustible from "../hooks/useCombustible"
 import { useEffect, useCallback, useState } from "react"
 import ResumenProduccion from "../components/ResumenProduccion"
@@ -38,7 +38,7 @@ export default function Resumen() {
     },[pedido, comprobarPedido])
 
    return (
-        <LayoutInsert pagina='Resumen'>
+        <LayoutProducion pagina='Resumen'>
 
             <div className='mx-auto w-full max-w-2xl  border-gray-200 bg-white pb-4'>
                 <header class="border-b border-gray-100 px-5 py-4">
@@ -104,6 +104,6 @@ export default function Resumen() {
 
 
         
-        </LayoutInsert>
+        </LayoutProducion>
    )
 }
