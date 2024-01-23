@@ -9,8 +9,8 @@ export default function OrdenCompra() {
 
 
 
-    const fetcher = () => axios('/api/producciones').then(datos => datos.data)
-    const { data, error, isLoading } = useSWR('/api/producciones',fetcher,{refreshInterval: 100} )
+    const fetcher = () => axios('/api/etiquetas').then(datos => datos.data)
+    const { data, error, isLoading } = useSWR('/api/etiquetas',fetcher,{refreshInterval: 100} )
 
    return (
         <LayoutImprecion pagina='Produccion'>

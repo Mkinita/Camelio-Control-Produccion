@@ -17,6 +17,7 @@ const CombustibleProvider = ({children}) => {
     const [piezas, setPiezas] = useState('')
     const [detalle, setDetalle] = useState('')
     const [fecha, setFecha] = useState('')
+    const [volumen, setVolumen] = useState('')
     const [productos, setProductos] = useState({})
     const [pedido, setPedido] = useState([])
     const [modal, setModal] = useState(false)
@@ -194,6 +195,46 @@ const CombustibleProvider = ({children}) => {
         console.log('agregando orden')
     }
 
+    const AgregarTurno = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/turno',{volumen,fecha: new Date()})
+            setVolumen('')
+            toast.success('Cerrando Turno ⏳')
+            setTimeout(() =>{
+                router.push('/listado-turnos')
+            },2000)
+
+        } catch (error) {
+            console.log(error)
+        }
+        console.log('agregando orden')
+    }
+    
+
+    const agregarDespacho = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/despacho',{pedido,cliente,fecha: new Date()})
+            // Resetear la app
+            setPedido([])
+            setCliente('')
+            toast.success('Agregando ⏳')
+
+            setTimeout(() =>{
+                router.push('/')
+            },1000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
 
 
 
@@ -234,7 +275,11 @@ const CombustibleProvider = ({children}) => {
             handleEditarCantidades,
             handleElimanarSolicitud,
             handleAgregarPedidoDespacho,
-            handleElimanarSolicitudDespacho
+            handleElimanarSolicitudDespacho,
+            AgregarTurno,
+            volumen,
+            setVolumen,
+            agregarDespacho
 
         }}
         

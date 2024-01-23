@@ -26,6 +26,8 @@ const agregarproduccion = () => {
     return id.toLowerCase().includes(buscar.toLowerCase());
 });
 
+
+
  
   
   useEffect( ()=> {

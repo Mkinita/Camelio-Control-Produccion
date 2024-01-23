@@ -100,15 +100,15 @@ const tableroproduccion = () => {
                                 <p className='font-semibold'>{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</p> 
                                 
                             </Link>
-                            <Link href="/produccion-actual" className='py-5 text-4xl'>📝</Link>
+                            <Link href="/produccion-actual" className='py-5 text-4xl'>📟</Link>
                         </div>
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
-                            <Link href="/producciones">
+                            <Link href="/listado-turnos">
                                 <p className="text-center uppercase font-bold text-xl">Producciones</p>
                                 <p className="text-center text-lg">Acumulado</p>
                                 <span className="">➕</span>
                             </Link>
-                            <Link href="/producciones" className='py-5 text-4xl'>📅</Link>
+                            <Link href="/listado-turnos" className='py-5 text-4xl'>📊</Link>
                         </div>
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
                             <Link href="/agregar-despacho">
@@ -125,6 +125,15 @@ const tableroproduccion = () => {
                                 <span className="">➕</span>
                             </Link>
                             <Link href="/autorizarordengeneraladminprueba" className='py-5 text-4xl'>📦</Link>
+                        </div>
+
+                        <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
+                            <Link href="/cerrar-turno">
+                                <p className="text-center uppercase font-bold text-xl">Cerrar</p>
+                                <p className="text-center text-lg">Turno</p>
+                                <span className="">➕</span>
+                            </Link>
+                            <Link href="/cerrar-turno" className='py-5 text-4xl'>❗</Link>
                         </div>
                     </div>
                 </div>

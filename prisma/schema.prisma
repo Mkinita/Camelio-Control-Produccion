@@ -39,5 +39,19 @@ model Producciones {
   despacho Boolean  @default(false)
 }
 
+model Turno {
+  id Int @id @default(autoincrement())
+  fecha DateTime
+  volumen Float
+}
+
+model Despacho {
+  id Int @id @default(autoincrement())
+  fecha DateTime
+  cliente String
+  pedido Json
+}
+
+
 
 

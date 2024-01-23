@@ -7,20 +7,19 @@ import React, { useState, useEffect } from 'react';
 
 export default function AdminProducciones() {
 
-  const fetcher = () => axios('/api/producciones').then(datos => datos.data)
-  const { data, error, isLoading } = useSWR('/api/producciones',fetcher,{refreshInterval: 100} )
+  const fetcher = () => axios('/api/detalle-producciones').then(datos => datos.data)
+  const { data, error, isLoading } = useSWR('/api/detalle-producciones',fetcher,{refreshInterval: 100} )
 
   const [ users, setUsers ] = useState([])
   const [ search, setSearch ] = useState("")
-  const [totalVolumen, setTotalVolumen] = useState(0);
-  const [totalCantidad, setTotalCantidad] = useState(0);
+
 
 
   
 
 
   //función para traer los datos de la API
-  const URL = '/api/producciones'
+  const URL = '/api/detalle-producciones'
 
   const showData = async () => {
     const response = await fetch(URL)
@@ -40,34 +39,7 @@ export default function AdminProducciones() {
   }, [])
 
 
-  const sumarVolumenes = () => {
-    let suma = 0;
-    results.forEach((orden) => {
-      orden.pedido.forEach((oc) => {
-        suma += oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000;
-      });
-    });
-    setTotalVolumen(suma);
-  };
-
-
-  const sumarCantidades = () => {
-    let suma = 0;
-    results.forEach((orden) => {
-      orden.pedido.forEach((oc) => {
-        suma += oc.cantidad;
-      });
-    });
-  setTotalCantidad(suma);
-  };
-
-  const formatoNumero = (num) => {
-    return num.toString().slice(0,4);
-  }
-
   useEffect(() => {
-    sumarVolumenes();
-    sumarCantidades();
   }, [results]);
 
 
@@ -79,12 +51,12 @@ export default function AdminProducciones() {
     <LayoutInsert pagina={'Producciones'}>
       <div className='grid grid-cols-2 gap-2 px-5 py-4 border-b'>
         <div class="">
-          <div class="font-semibold text-gray-800 ">Produccion Actual</div>
-          <p className='font-semibold'>{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</p> 
+          <div class="font-semibold text-gray-800 py-0 pb-2">Detalle Producciones</div>
+          <div class="font-semibold text-gray-800 text-xs px-2 py-0 pb-2">Busca Una Fecha</div>
+          <input value={search} onChange={searcher} type="date" className='text-center border rounded-lg'/>
         </div>
           <div class="text-right">
-          <div class="font-semibold text-gray-800 text-right">{new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric' })}</div>
-          <input value={search} onChange={searcher} type="date" placeholder='Filtra Una Fecha...' className=' text-center border rounded-lg'/>
+          
         </div>
       </div>
       <p className="text-2xl my-10"></p>

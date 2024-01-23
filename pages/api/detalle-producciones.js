@@ -15,18 +15,4 @@ export default async function handler(req, res) {
   res.status(200).json(producciones);
 
 
-
-
-  //Crear producciones
-  if (req.method === "POST") {
-    const producciones = await prisma.producciones.create({
-      data: {
-        fecha: req.body.fecha,
-        pedido: req.body.pedido,
-        cliente: req.body.cliente,
-        calidad:req.body.calidad,
-      },
-    });
-    res.json(producciones);
-  }
 }

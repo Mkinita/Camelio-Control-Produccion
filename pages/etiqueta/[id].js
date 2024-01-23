@@ -1,23 +1,20 @@
 import { PrismaClient } from '@prisma/client';
 import { useEffect, useState } from 'react';
-import EtiquetaImprecion from '@/components/EtiquetaImprecion'
+import EtiquetaImprecionDespacho from '@/components/EtiquetaImprecionDespacho'
 
 const prisma = new PrismaClient();
 
-export default function OrdenPage({ orden }) {
-
+export default function OrdenPage({ produccion }) {
     const [fecha, setFecha] = useState('');
-    
-
     useEffect(() => {
-      const date = new Date(orden.fecha);
+      const date = new Date(produccion.fecha);
       setFecha(date.toLocaleDateString());
     }, []);
 
   return (
     <>
         <div className='m-auto'>
-        <EtiquetaImprecion orden={orden} />
+        <EtiquetaImprecionDespacho produccion={produccion} />
         </div>
 
 
@@ -28,9 +25,9 @@ export default function OrdenPage({ orden }) {
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
-  const orden = await prisma.producciones.findUnique({
+  const produccion = await prisma.producciones.findUnique({
     where: { id: parseInt(id) }
   });
 
-  return { props: { orden: { ...orden, fecha: orden.fecha.toISOString() } } };
+  return { props: { produccion: { ...produccion, fecha: produccion.fecha.toISOString() } } };
 }

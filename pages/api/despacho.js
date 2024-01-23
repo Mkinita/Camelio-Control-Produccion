@@ -2,31 +2,30 @@ import { PrismaClient } from "@prisma/client";
 
 export default async function handler(req, res) {
   const prisma = new PrismaClient();
-  //Obtener producciones
-  const producciones = await prisma.producciones.findMany({
+  //Obtener despacho
+  const despacho = await prisma.despacho.findMany({
    where:  {
-      estado:true,
+
     },
     orderBy: {
       id: "desc",
     },
   })
 
-  res.status(200).json(producciones);
+  res.status(200).json(despacho);
 
 
 
 
-  //Crear producciones
+  //Crear despacho
   if (req.method === "POST") {
-    const producciones = await prisma.producciones.create({
+    const despacho = await prisma.despacho.create({
       data: {
         fecha: req.body.fecha,
         pedido: req.body.pedido,
-        cliente: req.body.cliente,
-        calidad:req.body.calidad,
+        cliente: req.body.cliente
       },
     });
-    res.json(producciones);
+    res.json(despacho);
   }
 }
