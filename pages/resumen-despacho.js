@@ -39,46 +39,15 @@ export default function Resumen() {
         comprobarPedido()
     },[pedido, comprobarPedido])
 
-//     const [datos, setDatos] = useState([]);
-
-//   const URL = '/api/producciones';
-
-//   const showData = async () => {
-//     try {
-//       const response = await fetch(URL);
-//       const data = await response.json();
-//       console.log(data);
-//       setDatos(data);
-//     } catch (error) {
-//       console.error('Error al obtener los datos:', error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     showData();
-//   }, []);
-
-//   useEffect(() => {
-//     // Aquí puedes extraer los IDs y almacenarlos en una variable
-//     const ids = datos.map((registro) => registro.id);
-//     console.log('IDs:', ids);
-
-//     // Si deseas realizar alguna acción con los IDs, puedes hacerlo aquí
-//     // Por ejemplo, almacenarlos en una variable de estado
-//     // setIdsState(ids);
-//   }, [datos]);
-
-
-const pedidoActualizado = pedido.map(productosState => productosState.id === pedido.id ? pedido : productosState)
 
 
 
 
 
 
-  console.log('productos:', productos);
-  console.log('pedido:', pedidoActualizado);
-  
+
+
+
 
 
 
@@ -86,28 +55,7 @@ const pedidoActualizado = pedido.map(productosState => productosState.id === ped
  
 
 
-    const completarOc = async () => {
-
-        const confirmarCreacion = window.confirm(
-          `¿Estás seguro de que deseas crear una nueva etiqueta?`
-        );
-        if (confirmarCreacion) {
     
-          try {
-            await axios.post(`/api/editarpedido/${pedido}`)
-            toast.success('🏠')
-            setTimeout(() =>{
-            router.push('/produccion-actual')
-            },1000)
-            
-          }
-         catch (error) {
-            console.log(error)
-          }
-        }
-      }
-
-    //   console.log('ID:', );
 
    return (
         <LayoutDespacho pagina='Resumen Despacho'>
@@ -138,12 +86,9 @@ const pedidoActualizado = pedido.map(productosState => productosState.id === ped
                     </div>
                 </div>
                 
-            <div className="grid grid-cols-8 gap-2  text-center shadow-lg rounded-lg my-4 font-semibold">
+            <div className="grid grid-cols-5 gap-2  text-center shadow-lg rounded-lg my-4 font-semibold">
                 <div>Nº</div>
-                <div>Esp</div>
-                <div>Anc</div>
-                <div>Lar</div>
-                <div>Pie</div>
+                <div>Detalle</div>
                 <div>Cal</div>
                 <div>m³</div>
                 <div>Acc</div>
@@ -157,13 +102,7 @@ const pedidoActualizado = pedido.map(productosState => productosState.id === ped
                 ))
             )}
 
-<button
-              className="uppercase font-bold rounded-xl text-right my-2"
-              type="button"
-              onClick={completarOc}
-            >
-              ➕
-            </button>
+
 
             <div className="mt-6 w-3/4 m-auto text-center">
                     <input

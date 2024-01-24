@@ -3,7 +3,6 @@ import axios from 'axios'
 import LayoutProduccionActual from "../layout/LayoutProduccionActual"
 import ProduccionActual from '../components/ProduccionActual'
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 
 
 
@@ -86,11 +85,7 @@ export default function AdminProducciones() {
         </div>
           <div class="text-right">
           <div class="font-semibold text-gray-800 text-right">{new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric' })}</div>
-          <Link href="/produccion-actual-filtro" className="text-center border rounded-lg px-2">
-
-          Filtra Producto...
-
-                    </Link>
+          <input value={search} onChange={searcher} type="text" placeholder='Filtra Producto...' className=' text-center border rounded-lg'/>
         </div>
       </div>
       <p className="text-2xl my-10"></p>
@@ -109,7 +104,7 @@ export default function AdminProducciones() {
         </tbody>
       </table>
 
-      {data && data.length ? data.map(produccion =>
+      {data && data.length ? results.map(produccion =>
         <ProduccionActual
           key={produccion.id}
           produccion={produccion}

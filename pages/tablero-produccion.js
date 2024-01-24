@@ -11,10 +11,16 @@ const tableroproduccion = () => {
     const fetcher = () => axios('/api/produccionactual').then(datos => datos.data)
     const { data, error, isLoading } = useSWR('/api/produccionactual',fetcher,{refreshInterval: 100} )
 
+    const fetcherStock = () => axios('/api/stock').then(datos => datos.data)
+    const { data:datastock, error:errorstock, isLoading:isLoadingstock } = useSWR('/api/stock',fetcherStock,{refreshInterval: 100} )
+
     const [ users, setUsers ] = useState([])
+    const [ usersstock, setUsersstock ] = useState([])
     const [ search, setSearch ] = useState("")
     const [totalVolumen, setTotalVolumen] = useState(0);
     const [totalCantidad, setTotalCantidad] = useState(0);
+    const [totalVolumenstock, setTotalVolumenstock] = useState(0);
+    const [totalCantidadstock, setTotalCantidadstock] = useState(0);
 
 
   
@@ -27,16 +33,43 @@ const tableroproduccion = () => {
         console.log(data)
         setUsers(data)
     }
-        //función de búsqueda
-    const searcher = (e) => {
-        setSearch(e.target.value)
-    }
+   
     
     //  metodo de filtrado 2
     const results = !search ? users : users.filter((dato)=> dato.fecha.toLowerCase().includes(search.toLocaleLowerCase()))
         useEffect( ()=> {
         showData()
     }, [])
+
+
+
+
+
+
+
+
+
+    //función para traer los datos de la API
+    const URLstock = '/api/stock'
+
+    const showDatastock = async () => {
+        const responsestock = await fetch(URLstock)
+        const datastock = await responsestock.json()
+        console.log(datastock)
+        setUsersstock(datastock)
+    }
+   
+    
+    //  metodo de filtrado 2
+    const resultsstock = !search ? usersstock : usersstock.filter((dato)=> dato.fecha.toLowerCase().includes(search.toLocaleLowerCase()))
+        useEffect( ()=> {
+        showDatastock()
+    }, [])
+
+
+
+
+    
 
 
     const sumarVolumenes = () => {
@@ -60,6 +93,27 @@ const tableroproduccion = () => {
     setTotalCantidad(suma);
     };
 
+    const sumarVolumenesstock = () => {
+        let sumastock = 0;
+        resultsstock.forEach((orden) => {
+        orden.pedido.forEach((oc) => {
+            sumastock += oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000;
+        });
+        });
+        setTotalVolumenstock(sumastock);
+    };
+
+
+    const sumarCantidadesstock = () => {
+        let sumastock = 0;
+        resultsstock.forEach((orden) => {
+        orden.pedido.forEach((oc) => {
+            sumastock += oc.cantidad;
+        });
+        });
+    setTotalCantidadstock(sumastock);
+    };
+
     const formatoNumero = (num) => {
         return num.toString().slice(0,4);
     }
@@ -67,7 +121,9 @@ const tableroproduccion = () => {
     useEffect(() => {
         sumarVolumenes();
         sumarCantidades();
-    }, [results]);
+        sumarVolumenesstock();
+        sumarCantidadesstock();
+    }, [results,resultsstock]);
 
   return (
     <>
@@ -97,8 +153,7 @@ const tableroproduccion = () => {
                             <Link href="/produccion-actual">
                                 <p className="text-center uppercase font-bold text-xl">Produccion</p>
                                 <p className="text-center text-lg">Actual</p>
-                                <p className='font-semibold'>{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</p> 
-                                
+                                <p className='font-semibold'>{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</p>
                             </Link>
                             <Link href="/produccion-actual" className='py-5 text-4xl'>📟</Link>
                         </div>
@@ -119,12 +174,12 @@ const tableroproduccion = () => {
                             <Link href="/agregar-despacho" className='py-5 text-4xl'>🚚</Link>
                         </div>
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
-                            <Link href="/autorizarordengeneraladminprueba">
+                            <Link href="/stock">
                                 <p className="text-center uppercase font-bold text-xl">Stock</p>
                                 <p className="text-center text-lg">Inventario</p>
-                                <span className="">➕</span>
+                                <p className='font-semibold'>{formatoNumero(totalVolumenstock)} m³ / {formatoNumero(totalCantidadstock)} Und.</p> 
                             </Link>
-                            <Link href="/autorizarordengeneraladminprueba" className='py-5 text-4xl'>📦</Link>
+                            <Link href="/stock" className='py-5 text-4xl'>📦</Link>
                         </div>
 
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">

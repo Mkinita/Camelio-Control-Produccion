@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import axios from 'axios'
-import LayoutProduccionActual from "../layout/LayoutProduccionActual"
-import ProduccionActual from '../components/ProduccionActual'
+import LayoutStock from "../layout/LayoutStock"
+import Stock from '../components/Stock'
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
@@ -9,8 +9,8 @@ import Link from 'next/link';
 
 export default function AdminProducciones() {
 
-  const fetcher = () => axios('/api/produccionactual').then(datos => datos.data)
-  const { data, error, isLoading } = useSWR('/api/produccionactual',fetcher,{refreshInterval: 100} )
+  const fetcher = () => axios('/api/stock').then(datos => datos.data)
+  const { data, error, isLoading } = useSWR('/api/stock',fetcher,{refreshInterval: 100} )
 
   const [ users, setUsers ] = useState([])
   const [ search, setSearch ] = useState("")
@@ -22,7 +22,7 @@ export default function AdminProducciones() {
 
 
   //función para traer los datos de la API
-  const URL = '/api/produccionactual'
+  const URL = '/api/stock'
 
   const showData = async () => {
     const response = await fetch(URL)
@@ -78,15 +78,15 @@ export default function AdminProducciones() {
 
 
   return(
-    <LayoutProduccionActual pagina={'Actual'}>
+    <LayoutStock pagina={'Actual'}>
       <div className='grid grid-cols-2 gap-2 px-5 py-4 border-b'>
         <div class="">
-          <div class="font-semibold text-gray-800 ">Produccion Actual</div>
+          <div class="font-semibold text-gray-800 ">Stock Actual</div>
           <p className='font-semibold'>{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</p> 
         </div>
           <div class="text-right">
           <div class="font-semibold text-gray-800 text-right">{new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric' })}</div>
-          <Link href="/produccion-actual-filtro" className="text-center border rounded-lg px-2">
+          <Link href="/stock-filtro" className="text-center border rounded-lg px-2">
 
           Filtra Producto...
 
@@ -99,25 +99,24 @@ export default function AdminProducciones() {
       <table className="table-auto w-full text-center bg-white text-gray-700 p-1">
         <tbody>
           <tr className="bg-gray-50 text-xs font-bold uppercase text-black text-center">
-            <td className="text-center font-bold hidden md:block w-1/6 p-1">Fecha</td>
-            <td className="text-center font-bold w-1/6 p-1">Nº</td>
-            <td className="text-center font-bold w-1/6 p-1">Detalle</td>
-            <td className="text-center font-bold w-1/6 p-1">Calidad</td>
-            <td className="text-center font-bold w-1/6 p-1">m³</td>
-            <td className="text-center font-bold w-1/6 p-1">Accion</td>
+            <td className="text-center font-bold hidden md:block w-1/5 p-1">Fecha</td>
+            <td className="text-center font-bold w-1/5 p-1">Nº</td>
+            <td className="text-center font-bold w-1/5 p-1">Detalle</td>
+            <td className="text-center font-bold w-1/5 p-1">Calidad</td>
+            <td className="text-center font-bold w-1/5 p-1">m³</td>
           </tr>
         </tbody>
       </table>
 
       {data && data.length ? data.map(produccion =>
-        <ProduccionActual
+        <Stock
           key={produccion.id}
           produccion={produccion}
         />
         ):
         <p className='text-center m-10'>Sin Produccion</p>
       }
-    </LayoutProduccionActual>
+    </LayoutStock>
   )
 
 

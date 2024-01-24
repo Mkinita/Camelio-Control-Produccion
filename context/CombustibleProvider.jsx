@@ -215,6 +215,10 @@ const CombustibleProvider = ({children}) => {
 
     const agregarDespacho = async (e) => {
         e.preventDefault()
+        const confirmarCreacion = window.confirm(
+            `¿descontaste los lotes del stock?`
+            );
+            if (confirmarCreacion) {
 
         try {
            await axios.post('/api/despacho',{pedido,cliente,fecha: new Date()})
@@ -229,7 +233,7 @@ const CombustibleProvider = ({children}) => {
 
         } catch (error) {
             console.log(error)
-        }
+        }}
 
 
         console.log('agregando orden')

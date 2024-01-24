@@ -1,30 +1,48 @@
 import useCombustible from "../hooks/useCombustible"
+import axios from 'axios';
+import { toast } from "react-toastify"
+import { useRouter } from 'next/router'
 
 const ResumenDespacho = ({produccion}) => {
 
-  const {handleElimanarSolicitudDespacho} = useCombustible()
-  const {id, calidad, pedido, fecha} = produccion
+    const {handleElimanarSolicitudDespacho} = useCombustible()
+    const {id, calidad, pedido, fecha} = produccion
+    const router = useRouter()
 
-  const formatoNumero = (num) => {
+    const formatoNumero = (num) => {
     return num.toString().slice(0,3);
-}
+    }
 
-const formatocalidad = (num) => {
-    return num.toString().slice(0,3);
-}
+    const formatocalidad = (num) => {
+        return num.toString().slice(0,3);
+    }
+
+    const completarOc = async () => {
+
+        const confirmarCreacion = window.confirm(
+        `¿Estás seguro de que deseas descontar del stock?`
+        );
+        if (confirmarCreacion) {
+
+        try {
+            await axios.post(`/api/despacho/${id}`)
+            toast.success(`el lote ${id} fue descontado del stock`)   
+        }
+        catch (error) {
+            console.log(error)
+        }
+        }
+    }
 
   return (
     <>
         {pedido.map(oc => (
-            <div className="grid grid-cols-8 gap-2 border text-center shadow-lg rounded-lg my-2" key={oc.id}>
+            <div className="grid grid-cols-5 border text-center shadow-lg rounded-lg my-2 text-xs" key={oc.id}>
                 <div className="p-1">{id}</div>
-                <div className="p-1">{oc.espesor}</div>
-                <div className="p-1">{oc.ancho}</div>
-                <div className="p-1">{oc.largo}</div>
-                <div className="p-1">{oc.piezas}</div>
+                <div className="p-1">{oc.espesor}x{oc.ancho}x{oc.largo}x{oc.piezas}</div>
                 <div className="p-1">{formatocalidad(calidad)}</div>
                 <div className="p-1">{formatoNumero(oc.espesor * oc.ancho * oc.largo * oc.piezas *oc.cantidad / 1000000 )}</div>
-                <div className="p-1">
+                <div className="p-1 grid grid-cols-2">
                     <button
                         type="button"
                         className="hover:scale-x-110"
@@ -35,6 +53,14 @@ const formatocalidad = (num) => {
                         </svg>
                                                                             
                     </button>
+
+                    <button
+              className=""
+              type="button"
+              onClick={completarOc}
+            >
+              ➕
+            </button>
                 </div>
             </div>
         ))}

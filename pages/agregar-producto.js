@@ -28,7 +28,7 @@ const reporte = () => {
 
 
     const comprobarPedido = useCallback(() => {
-        return detalle === "" || detalle.length <3;
+        return detalle === "" || detalle.length <2;
         
     },[detalle])
 
