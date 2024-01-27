@@ -24,19 +24,7 @@ export const SidebarControlProduccion = () => {
                                 </Link>
                             </li>
 
-                            <li className="mb-2 bg-white p-3 shadow-lg rounded cursor-pointer transition-colors border-b-2 border-transparent hover:border-red-700">
-                                <Link href="/agregar-despacho" className="flex items-center">
-                                    <div className="w-full px-2 font-semibold">Despacho</div>
-                                    <div className="text-green-500">+</div>
-                                </Link>
-                            </li>
-
-                            <li className="mb-2 bg-white p-3 shadow-lg rounded cursor-pointer transition-colors border-b-2 border-transparent hover:border-red-700">
-                                <Link href="/stock" className="flex items-center">
-                                    <div className="w-full px-2 font-semibold">Stock</div>
-                                    <div className="text-green-500">+</div>
-                                </Link>
-                            </li>
+                            
 
                             <li className="mb-2 bg-white p-3 shadow-lg rounded cursor-pointer transition-colors border-b-2 border-transparent hover:border-red-700">
                                 <Link href="/agregar-producto" className="flex items-center">
@@ -55,6 +43,20 @@ export const SidebarControlProduccion = () => {
                             <li className="mb-2 bg-white p-3 shadow-lg rounded cursor-pointer transition-colors border-b-2 border-transparent hover:border-red-700">
                                 <Link href="/agregar-cliente" className="flex items-center">
                                     <div className="w-full px-2 font-semibold">Clientes</div>
+                                    <div className="text-green-500">+</div>
+                                </Link>
+                            </li>
+
+                            <li className="mb-2 bg-white p-3 shadow-lg rounded cursor-pointer transition-colors border-b-2 border-transparent hover:border-red-700">
+                                <Link href="/" className="flex items-center">
+                                    <div className="w-full px-2 font-semibold">Destino</div>
+                                    <div className="text-green-500">+</div>
+                                </Link>
+                            </li>
+
+                            <li className="mb-2 bg-white p-3 shadow-lg rounded cursor-pointer transition-colors border-b-2 border-transparent hover:border-red-700">
+                                <Link href="/" className="flex items-center">
+                                    <div className="w-full px-2 font-semibold">Despacho</div>
                                     <div className="text-green-500">+</div>
                                 </Link>
                             </li>
