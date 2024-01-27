@@ -28,7 +28,7 @@ export default function LayoutControlProduccion({ children, pagina }) {
       </Head>
 
       <div className="">
-            <aside className="md:w-4/12 xl:w-3/4 py-5 m-auto">
+            <aside className="md:w-full xl:w-3/4 py-5 m-auto">
                 <Image
                     className="m-auto"
                     width={200}
