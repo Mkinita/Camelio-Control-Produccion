@@ -76,14 +76,16 @@ const Etiquetas = ({orden}) => {
       <div className='text-center'>
         {pedido.map(oc => (
           <div key={oc.id}>
-            <h3 className='text-lg font-bold'>{oc.detalle}</h3>
-            <p className='text-sm font-bold'>{nombre}</p>
-            <p className='text-sm font-bold'></p>
-            <p className='text-sm font-bold'>{formatiarFecha(fecha)}</p>
+            <h1 className=' font-bold text-lg'>Nº: {id}</h1>
+            <p className='text-lg font-bold'>{formatiarFecha(fecha)}</p>
+            
+            <p className='text-lg font-bold'>{cliente}</p>
+            <p className='text-lg font-bold'>{oc.detalle}</p>
+              <p className="text-lg font-bold">{formatoNumero(oc.espesor * oc.ancho * oc.largo * oc.piezas *oc.cantidad / 1000000 )} m³</p>
+
             <div className='py-1'>
               <QRGenerator orden={('https://camelio-control-produccion-production.up.railway.app/etiqueta/')+ ('/')+(id)} />
-              <p className='text-sm font-bold py-1'>N°: {id}</p>
-              <p className="text-sm text-gray-700 mt-2 font-bold">{formatoNumero(oc.espesor * oc.ancho * oc.largo * oc.piezas *oc.cantidad / 1000000 )} m³</p>
+              
             </div>
           </div>
         ))}

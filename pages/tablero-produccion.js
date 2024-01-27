@@ -4,6 +4,7 @@ import Footer from "@/components/Footer"
 import useSWR from 'swr'
 import axios from 'axios'
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 
 const tableroproduccion = () => {
@@ -125,10 +126,18 @@ const tableroproduccion = () => {
         sumarCantidadesstock();
     }, [results,resultsstock]);
 
+    
+    
+    const router = useRouter();
+
+    const handleActualizarClick = () => {
+        router.reload();
+    };
+
   return (
     <>
-        <div className="md:flex">
-            <aside className="md:w-4/12 xl:w-1/4 2xl:w-1/5 py-5">
+        <div className="m-auto">
+            <aside className="">
                 <Image
                     className="m-auto"
                     width={250}
@@ -138,9 +147,36 @@ const tableroproduccion = () => {
                 />  
                 <div className='py-2'><Footer/></div>
             </aside>
-            <main className="md:w-8/12 xl:w-3/4 2xl:w-4/5 h-screen overflow-y-scroll">
+            <main className="">
                 <div className="p-2">
-                    <div className='grid gap-2 grid-cols-1 md:grid-cols-3 py-4 px-2 pb-2'>
+                    <div className='grid gap-2 grid-cols-1 md:grid-cols-2 py-4 px-2 pb-2'>
+
+                        {/* <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
+                            <Link href="/inicio-control-produccion">
+                                <p className="text-center uppercase font-bold text-xl">Inicio</p>
+                            </Link>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                                </svg>
+                            </div>
+                        </div>
+
+                       
+                        <div className='border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700'>
+
+                            <button
+                                className=""
+                                onClick={handleActualizarClick}
+                            >
+                                <div className="">
+                                <p className="text-center uppercase font-bold text-xl justify-center">Actualizar</p>
+                                </div>
+                                
+                            </button>
+                            <div className="text-4xl">Actualizar</div>
+                        </div> */}
+
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
                             <Link href="/agregar-produccion">
                                 <p className="text-center uppercase font-bold text-xl">Agregar</p>

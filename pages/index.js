@@ -2,7 +2,7 @@ import React from 'react'
 
 const index = () => {
   return (
-    <h1 className="bg-gray-500 text-white p-4">Holaaaa</h1>
+    <h1 className="p-52 text-center text-9xl animate-spin">⚙️</h1>
   )
 }
 
