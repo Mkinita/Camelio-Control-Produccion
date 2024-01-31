@@ -5,24 +5,23 @@ export default async function handler(req, res) {
 
   try {
     // Obtener Ordenes
-    const calidades = await prisma.calidad.findMany({
-    orderBy: {
-      id: 'desc',
-    },
-  })
-
-  res.status(200).json(calidades);
-  
-  //Crear saldoes
-  if (req.method === "POST") {
-    const calidad = await prisma.calidad.create({
-      data: {
-        calidad: req.body.calidad,
+    const destinos = await prisma.destino.findMany({
+      orderBy: {
+        id: 'desc',
       },
     });
-    res.json(calidad);
-  }
-  
+
+    res.status(200).json(destinos);
+
+    // Crear saldoes
+    if (req.method === "POST") {
+      const destino = await prisma.destino.create({
+        data: {
+          destino: req.body.destino,
+        },
+      });
+      res.json(destino);
+    }
   } catch (error) {
     console.error("Error handling request:", error);
     res.status(500).json({ error: "Internal Server Error" });

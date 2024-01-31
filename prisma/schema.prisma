@@ -53,5 +53,11 @@ model Despacho {
 }
 
 
+model Destino {
+  id Int @id @default(autoincrement())
+  destino String
+}
+
+
 
 

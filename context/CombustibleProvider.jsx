@@ -18,6 +18,7 @@ const CombustibleProvider = ({children}) => {
     const [detalle, setDetalle] = useState('')
     const [fecha, setFecha] = useState('')
     const [volumen, setVolumen] = useState('')
+    const [destino, setDestino] = useState('')
     const [productos, setProductos] = useState({})
     const [pedido, setPedido] = useState([])
     const [modal, setModal] = useState(false)
@@ -77,6 +78,29 @@ const CombustibleProvider = ({children}) => {
 
             setTimeout(() =>{
                 router.push('/agregar-produccion-resumen')
+            },500)
+        }
+
+        setModal(false)
+        
+    }
+
+    const handleAgregarPedidoPalet = ({...productos}) => {
+        if(pedido.some(productosState => productosState.id === productos.id)) {
+           // Actualizar la cantidad
+           const pedidoActualizado = pedido.map(productosState => productosState.id === productos.id ? productos : productosState)
+           setPedido(pedidoActualizado)
+
+           toast.success('Guardado Correctamente')
+           setTimeout(() =>{
+            router.push('/agregar-produccion-resumen-palet')
+        },500)
+        } else {
+            setPedido([...pedido, productos])
+            toast.success('Agregado')
+
+            setTimeout(() =>{
+                router.push('/agregar-produccion-resumen-palet')
             },500)
         }
 
@@ -239,6 +263,25 @@ const CombustibleProvider = ({children}) => {
         console.log('agregando orden')
     }
 
+    const AgregarDestino = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/destino',{destino})
+            setDestino('')
+            toast.success('Agregando ⏳')
+            setTimeout(() =>{
+                router.push('/agregar-destino')
+            },2000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
 
 
 
@@ -283,7 +326,11 @@ const CombustibleProvider = ({children}) => {
             AgregarTurno,
             volumen,
             setVolumen,
-            agregarDespacho
+            agregarDespacho,
+            AgregarDestino,
+            destino,
+            setDestino,
+            handleAgregarPedidoPalet
 
         }}
         

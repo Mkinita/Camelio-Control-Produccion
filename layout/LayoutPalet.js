@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
-import FooterPropduccion from "../components/FooterPropduccion";
-import ModalProductos from "../components/ModalProductos";
+import FooterPalet from "../components/FooterPalet";
+import ModalPalet from "../components/ModalPalet";
 import useCombustible from "../hooks/useCombustible";
 import Modal from "react-modal"
 import { ToastContainer } from "react-toastify";
@@ -32,7 +32,7 @@ export default function LayoutControlProduccion({ children, pagina }) {
       </Head>
 
       <div className="">
-            <aside className="md:w-full xl:w-3/4 py-5 m-auto">
+            <aside className="md:w-full xl:w-3/4 py-2 m-auto">
                 <Image
                     className="m-auto"
                     width={200}
@@ -40,9 +40,9 @@ export default function LayoutControlProduccion({ children, pagina }) {
                     src="/img/Logo.png"
                     alt="imagen logotipo"
                 />    
-                <div className="py-6 pb-0"><FooterPropduccion/></div>
+                <div className="py-6 pb-0"><FooterPalet/></div>
             </aside>
-            <main className="md:w-full xl:w-3/4 py-5 m-auto">
+            <main className="md:w-full xl:w-3/4 py-2 m-auto">
                 <div className="p-4">
                     {children}
                 </div>
@@ -51,7 +51,7 @@ export default function LayoutControlProduccion({ children, pagina }) {
 
       {modal && (
         <Modal isOpen={modal} style={customStyles}>
-          <ModalProductos />
+          <ModalPalet />
         </Modal>
       )}
       
