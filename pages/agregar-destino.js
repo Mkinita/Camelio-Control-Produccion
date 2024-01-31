@@ -69,7 +69,7 @@ const reporte = () => {
                         destinos={destinos}
                     />
                 </div>
-                ): <p className='text-center'>No Hay Destinos</p>}
+                ): <p className='text-center'>Cargando ... Destinos</p>}
             </div>  
         </LayoutInsert>
     </>

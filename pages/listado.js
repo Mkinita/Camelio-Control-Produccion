@@ -74,7 +74,7 @@ const reporte = () => {
                         calidades={calidades}
                     />
                 </div>
-            ): <p className='text-center'>No Hay Maquinas</p>}
+            ): <p className='text-center'>Cargando ... Maquinas</p>}
 
         </div>
         

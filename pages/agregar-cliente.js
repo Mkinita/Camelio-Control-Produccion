@@ -69,7 +69,7 @@ const reporte = () => {
                         clientes={clientes}
                     />
                 </div>
-                ): <p className='text-center'>No Hay Clientes</p>}
+                ): <p className='text-center'>Cargando ... Clientes</p>}
             </div>  
         </LayoutInsert>
     </>

@@ -69,7 +69,7 @@ const reporte = () => {
                         calidades={calidades}
                     />
                 </div>
-                ): <p className='text-center'>No Hay Calidades</p>}
+                ): <p className='text-center'>Cargando ... Calidades</p>}
             </div>  
         </LayoutInsert>
     </>

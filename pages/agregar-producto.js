@@ -105,7 +105,7 @@ const reporte = () => {
                         productos={productos}
                     />
                 </div>
-                ): <p className='text-center'>No Hay productos</p>}
+                ): <p className='text-center'>Cargando ... productos</p>}
             </div>  
         </LayoutInsert>
     </>
