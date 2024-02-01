@@ -19,6 +19,7 @@ const CombustibleProvider = ({children}) => {
     const [fecha, setFecha] = useState('')
     const [volumen, setVolumen] = useState('')
     const [destino, setDestino] = useState('')
+    const [pallet, setPallet] = useState('')
     const [productos, setProductos] = useState({})
     const [pedido, setPedido] = useState([])
     const [modal, setModal] = useState(false)
@@ -282,6 +283,26 @@ const CombustibleProvider = ({children}) => {
         console.log('agregando orden')
     }
 
+    const AgregarPallet = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/pallet',{pallet})
+            setPallet('')
+            toast.success('Agregando ⏳')
+            setTimeout(() =>{
+                router.push('/agregar-producto-palet')
+            },2000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
+
 
 
 
@@ -330,7 +351,10 @@ const CombustibleProvider = ({children}) => {
             AgregarDestino,
             destino,
             setDestino,
-            handleAgregarPedidoPalet
+            handleAgregarPedidoPalet,
+            AgregarPallet,
+            pallet,
+            setPallet
 
         }}
         

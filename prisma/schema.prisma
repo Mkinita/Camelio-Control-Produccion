@@ -59,5 +59,10 @@ model Destino {
 }
 
 
+model Pallet {
+  id Int @id @default(autoincrement())
+  pallet String
+}
+
 
 
