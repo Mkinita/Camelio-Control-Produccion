@@ -31,18 +31,18 @@ export default function LayoutControlProduccion({ children, pagina }) {
         <meta name="description" content="Produccion" />
       </Head>
 
-      <div className="md:flex">
-            <aside className="md:w-4/12 xl:w-1/4 2xl:w-1/5 py-5 pb-2">
+      <div className="">
+            <aside className="md:w-full xl:w-3/4 py-5 m-auto">
                 <Image
                     className="m-auto"
-                    width={300}
+                    width={200}
                     height={100}
                     src="/img/Logo.png"
                     alt="imagen logotipo"
                 />    
                 <div className="py-6 pb-0"><FooterProduccionActual/></div>
             </aside>
-            <main className="md:w-8/12 xl:w-3/4 2xl:w-4/5 h-screen overflow-y-scroll">
+            <main className="md:w-full xl:w-3/4 py-5 m-auto">
                 <div className="p-4">
                     {children}
                 </div>

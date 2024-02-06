@@ -7,9 +7,8 @@ import ResumenPalet from "../components/ResumenPalet"
 
 export default function Resumen() {
 
-    const { pedido,total,cliente,setCliente, agregarProducciones,id,calidad,setCalidad } = useCombustible()
+    const { pedido,cliente,setCliente,cantidad,setCantidad, agregarProduccionesPallets,fecha,setFecha} = useCombustible()
     const [options, setOptions] = useState([]);
-    const [options01, setOptions01] = useState([]);
 
 
     useEffect(() => {
@@ -18,19 +17,12 @@ export default function Resumen() {
           .then(data => setOptions(data))
           .catch(error => console.log(error));
     },  []);
-
-    useEffect(() => {
-        fetch('/api/calidad')
-          .then(response => response.json())
-          .then(data => setOptions01(data))
-          .catch(error => console.log(error));
-    },  []);
     
 
     const comprobarPedido = useCallback(() => {
-        return pedido.length === 0 || cliente && calidad === "" || cliente.length && calidad.length <1 ;
+        return pedido.length === 0 || fecha == "" || fecha.length <1 ;
         
-    },[pedido, cliente,calidad])
+    },[pedido, fecha])
 
 
     useEffect(() => {
@@ -47,19 +39,19 @@ export default function Resumen() {
             </div>
 
             {pedido.length === 0 ? (
-                <p className="text-center text-2xl">Cargando ... Productos</p>
+                <p className="text-center text-2xl">Cargando ... Productod</p>
                 ) : (
-                pedido.map((productos) => (
-                <ResumenPalet key={productos.id} productos={productos} />
+                pedido.map((pallets) => (
+                <ResumenPalet key={pallets.id} pallets={pallets} />
                 ))
             )}
 
 
             <form 
-                onSubmit={agregarProducciones}
+                onSubmit={agregarProduccionesPallets}
                 className=""
             >
-                <div className="grid gap-2 grid-cols-2 md:grid-cols-2 2xl:grid-cols-2 text-center mx-auto w-full max-w-2xl">
+                <div className="grid gap-2 grid-cols-1 md:grid-cols-3 2xl:grid-cols-3 text-center mx-auto w-full max-w-2xl">
                     <div className='py-5'>
                         <label htmlFor="foto" className="file-label font-bold">Cliente</label>
                         <select
@@ -74,20 +66,14 @@ export default function Resumen() {
                             ))}
                         </select>
                     </div>
+                    <div class="py-5">
+                        <label htmlFor="foto" className="file-label font-bold">Cantidades</label>
+                        <input class="bg-gray-50 w-full p-2 rounded-md" type="number" value={cantidad} onChange={e => setCantidad(e.target.value)} />
+                    </div>
 
-                    <div className='py-5'>
-                        <label htmlFor="foto" className="file-label font-bold">Calidad</label>
-                        <select
-                            id="calidad"
-                            className="bg-gray-50 w-full p-2 rounded-md"
-                            value={calidad}
-                            onChange={e => setCalidad(e.target.value)}
-                        >
-                            <option value="">-</option>
-                            {options01.map(option01 => (
-                            <option key={option01.value} value={option01.value}>{option01.calidad}</option>
-                            ))}
-                        </select>
+                    <div class="py-5">
+                        <label htmlFor="foto" className="file-label font-bold">Fecha</label>
+                        <input class="bg-gray-50 w-full p-2 rounded-md" type="date" value={fecha} onChange={e => setFecha(e.target.value)} />
                     </div>
                 </div>
                 <div className="mt-6 w-3/4 m-auto text-center">

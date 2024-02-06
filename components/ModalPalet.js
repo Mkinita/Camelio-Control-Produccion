@@ -3,7 +3,7 @@ import Image from "next/image";
 import useCombustible from "../hooks/useCombustible";
 
 const ModalProductos = () => {
-  const { productos, handleChangeModal, handleAgregarPedidoPalet, pedido} = useCombustible();
+  const { pallets, handleChangeModal, handleAgregarPedidoPalet, pedido} = useCombustible();
   const [cantidad, setCantidad] = useState(1);
 
   return (
@@ -28,37 +28,19 @@ const ModalProductos = () => {
                     </svg>
                 </button>
             </div>
-            <h1 className="text-lg font-bold mt-1 text-center p-2">{productos.detalle}</h1>
+            <h1 className="text-xl font-bold mt-1 text-center p-2">{pallets.pallet}</h1>
             <table class="w-full table-auto text-center shadow-lg">
                 <thead class="bg-gray-50 text-xs font-semibold uppercase text-gray-400 ">
                     <tr>
                         <th class="p-1">
-                            <div class="text-left font-semibold">Espesor</div>
-                        </th>
-                        <th class="p-1">
-                            <div class="text-left font-semibold">Ancho</div>
-                        </th>
-                        <th class="p-1">
-                            <div class="text-left font-semibold">Largo</div>
-                        </th>
-                        <th class="p-1">
-                            <div class="text-left font-semibold">Piezas</div>
+                            <div class="text-center font-semibold">Detalle</div>
                         </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 text-sm">
+                <tbody class="divide-y divide-gray-100 text-xl">
                     <tr> 
                         <td class="p-2">
-                            <div class="font-medium text-gray-800">{productos.espesor}</div>
-                        </td>
-                        <td class="p-2">
-                            <div class="font-medium text-gray-800">{productos.ancho}</div>
-                       </td>
-                        <td class="p-2">
-                            <div class="font-medium text-gray-800">{productos.largo}</div>
-                        </td>
-                        <td class="p-2">
-                            <div class="font-medium text-gray-800">{productos.piezas}</div>
+                            <div class="font-medium text-gray-800">{pallets.pallet}</div>
                         </td>
                     </tr>  
                 </tbody>
@@ -66,7 +48,7 @@ const ModalProductos = () => {
             <button
             type="button"
             className="bg-red-600 hover:bg-red-800 px-5 py-2 mt-5 text-white font-bold uppercase rounded w-full"
-            onClick={() => handleAgregarPedidoPalet({ ...productos, cantidad })}
+            onClick={() => handleAgregarPedidoPalet({ ...pallets, cantidad })}
             >
             {"Agregar"}
             </button>

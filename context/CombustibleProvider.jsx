@@ -20,7 +20,9 @@ const CombustibleProvider = ({children}) => {
     const [volumen, setVolumen] = useState('')
     const [destino, setDestino] = useState('')
     const [pallet, setPallet] = useState('')
+    const [cantidad, setCantidad] = useState('')
     const [productos, setProductos] = useState({})
+    const [pallets, setPallets] = useState({})
     const [pedido, setPedido] = useState([])
     const [modal, setModal] = useState(false)
     
@@ -33,6 +35,10 @@ const CombustibleProvider = ({children}) => {
         setProductos(productos)
     }
 
+    const handlesetPallets = pallest => {
+        setPallets(pallest)
+    }
+
     const handleEditarCantidades = id => {
         const pedidoActualizado = pedido.filter( productos => productos.id !== id)
         setPedido(pedidoActualizado)
@@ -40,6 +46,16 @@ const CombustibleProvider = ({children}) => {
 
         setTimeout(() =>{
             router.push('/agregar-produccion')
+        },1000)
+    }
+
+    const handleEditarCantidadespallets = id => {
+        const pedidoActualizado = pedido.filter( pallets => pallets.id !== id)
+        setPedido(pedidoActualizado)
+        toast.success('Agrega un nuevo producto')
+
+        setTimeout(() =>{
+            router.push('/agregar-produccion-palet')
         },1000)
     }
 
@@ -303,6 +319,30 @@ const CombustibleProvider = ({children}) => {
     }
 
 
+    const agregarProduccionesPallets = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/pallets',{pedido,cliente,cantidad,fecha})
+            // Resetear la app
+            setPedido([])
+            setCliente('')
+            setCantidad('')
+            toast.success('Agregando ⏳')
+
+            setTimeout(() =>{
+                router.push('/producciones-pallets')
+            },1000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
+
 
 
 
@@ -354,7 +394,14 @@ const CombustibleProvider = ({children}) => {
             handleAgregarPedidoPalet,
             AgregarPallet,
             pallet,
-            setPallet
+            setPallet,
+            pallets,
+            setPallets,
+            handlesetPallets,
+            handleEditarCantidadespallets,
+            cantidad,
+            setCantidad,
+            agregarProduccionesPallets
 
         }}
         
