@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import EtiquetaImprecionDespacho from '@/components/EtiquetaImprecionDespacho'
+import LayoutImprecion from "@/layout/LayoutImprecion"
 
 const prisma = new PrismaClient();
 
@@ -14,7 +15,9 @@ export default function OrdenPage({ produccion }) {
   return (
     <>
         <div className='m-auto'>
+        <LayoutImprecion pagina='Resumen Despacho'>
         <EtiquetaImprecionDespacho produccion={produccion} />
+        </LayoutImprecion>
         </div>
 
 

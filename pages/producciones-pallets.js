@@ -72,9 +72,10 @@ export default function AdminProducciones() {
       <table className="table-auto w-full text-center bg-white text-gray-700 p-1">
         <tbody>
           <tr className="bg-gray-50 text-xs font-bold uppercase text-black text-center">
-            <td className="text-center font-bold w-1/3 p-1">Fecha</td>
-            <td className="text-center font-bold w-1/3 p-1">Detalle</td>
-            <td className="text-center font-bold w-1/3 p-1">Accion</td>
+            <td className="text-center font-bold w-1/4 p-1">Fecha</td>
+            <td className="text-center font-bold w-1/4 p-1">Detalle</td>
+            <td className="text-center font-bold w-1/4 p-1">Cantidad</td>
+            <td className="text-center font-bold w-1/4 p-1">Accion</td>
           </tr>
         </tbody>
       </table>

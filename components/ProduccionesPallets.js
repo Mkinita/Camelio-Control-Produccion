@@ -63,11 +63,11 @@ const CerrarTurno = ({pallets}) => {
             <tbody>
                  {pedido.map(oc => (
                     <tr className="bg-white border-b hover:bg-red-800 hover:text-white text-sm" key={oc.id}>
-                        <td className="text-center font-semibold w-1/3">{(fecha)}</td>
-                        <td className="text-center font-semibold w-1/3">{oc.pallet}</td>
-                        <td className="text-center font-semibold w-1/3">{formatoNumero(cantidad)}</td>
+                        <td className="text-center font-semibold w-1/4">{(fecha)}</td>
+                        <td className="text-center font-semibold w-1/4">{oc.pallet}</td>
+                        <td className="text-center font-semibold w-1/4">{formatoNumero(cantidad)}</td>
                         
-                        <td className="text-center font-semibold w-1/3">
+                        <td className="text-center font-semibold w-1/4">
                             <button onClick={eliminarRegistro}>
                             <svg
                                 class="h-8 w-8 rounded-full  hover:bg-gray-100 hover:text-red-600"
