@@ -38,12 +38,12 @@ const agregarproduccion = () => {
   return (
     <>
       <LayoutDespacho pagina='Agregar Despacho'>
-        <div className='mx-auto w-full max-w-2xl bg-white grid grid-cols-2 py-2 pb-4 '>
-          <div class="px-5 py-4 border-b">
+        <div className='mx-auto w-full max-w-2xl bg-white grid grid-cols-1 py-1 pb-4 text-center'>
+          <div class="">
             <div class="font-semibold text-gray-800 ">Genera un Despacho</div>
           </div>
           <div className='px-5 py-4 border-b'>
-            <input value={buscar} onChange={searcher} type="text" placeholder='Busca un lote...' className='text-gray-700 text-center m-auto flex-wrap-reverse border rounded-lg'/>
+            <input value={buscar} onChange={searcher} type="number" placeholder='Busca un lote...' className='text-gray-700 text-center m-auto flex-wrap-reverse border rounded-lg p-4'/>
           </div>
         </div>
         <div className='grid gap-4 grid-cols-2 md:grid-cols-4 2xl:grid-cols-4'>  

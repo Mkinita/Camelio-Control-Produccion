@@ -27,26 +27,19 @@ const Etiquetas = ({produccion}) => {
     return new Date(nuevaFecha).toLocaleDateString('es-ES', opciones)
   }
 
+
   const completarOc = async () => {
-
-    const confirmarCreacion = window.confirm(
-      `¿Estás seguro de que deseas crear una nueva etiqueta?`
-    );
+    const confirmarCreacion = window.confirm(`¿Estás seguro de que deseas descontar del stock?`);
     if (confirmarCreacion) {
-
       try {
-        await axios.post(`/api/editaretiqueta/${id}`)
-        toast.success('🏠')
-        setTimeout(() =>{
-        router.push('/produccion-actual')
-        },1000)
-        
-      }
-     catch (error) {
-        console.log(error)
+        await axios.post(`/api/despacho/${id}`);
+        toast.success(`El lote ${id} fue descontado del stock`);
+      } catch (error) {
+        console.log(error);
       }
     }
-  }
+  };
+  
 
 
 
@@ -74,7 +67,10 @@ const Etiquetas = ({produccion}) => {
             <button
             type="button"
             className="bg-red-600 hover:bg-red-800 px-5 py-2 mt-5 text-white font-bold uppercase rounded w-full"
-            onClick={() => handleAgregarPedidoDespacho({ ...produccion })}
+            onClick={() => {
+              handleAgregarPedidoDespacho({ ...produccion });
+              completarOc();
+            }}
             >
             {"Agregar"}
             </button>

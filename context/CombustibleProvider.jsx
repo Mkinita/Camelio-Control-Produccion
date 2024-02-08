@@ -21,9 +21,15 @@ const CombustibleProvider = ({children}) => {
     const [destino, setDestino] = useState('')
     const [pallet, setPallet] = useState('')
     const [cantidad, setCantidad] = useState('')
+    const [nombre, setNombre] =  useState('')
+    const [rut, setRut] = useState('')
+    const [patente, setPatente] = useState('')
+    const [patente2, setPatente2] = useState('')
     const [productos, setProductos] = useState({})
     const [pallets, setPallets] = useState({})
+    const [chofer, setChofer] = useState({})
     const [pedido, setPedido] = useState([])
+    const [pedido01, setPedido01] = useState([])
     const [modal, setModal] = useState(false)
     
 
@@ -37,6 +43,10 @@ const CombustibleProvider = ({children}) => {
 
     const handlesetPallets = pallest => {
         setPallets(pallest)
+    }
+
+    const handlesetChofer = chofer => {
+        setChofer(chofer)
     }
 
     const handleEditarCantidades = id => {
@@ -69,6 +79,15 @@ const CombustibleProvider = ({children}) => {
         },1000)
     }
 
+    const handleElimanarchofer = id => {
+        const chofereliminado = pedido01.filter( chofer => chofer.id !== id)
+        setPedido01(chofereliminado)
+        toast.error('Chofer Eliminado')
+        setTimeout(() =>{
+            router.push('/choferes')
+        },2000)
+    }
+
     const handleElimanarSolicitudDespacho = id => {
         const pedidoActualizado = pedido.filter( productos => productos.id !== id)
         setPedido(pedidoActualizado)
@@ -76,7 +95,7 @@ const CombustibleProvider = ({children}) => {
 
         setTimeout(() =>{
             router.push('/agregar-despacho')
-        },1000)
+        },3000)
     }
 
     const handleAgregarPedido = ({...productos}) => {
@@ -146,6 +165,24 @@ const CombustibleProvider = ({children}) => {
 
         setModal(false)
         
+    }
+
+    const handleAgregarChofer = ({...chofer}) => {
+        if(pedido01.some(choferState => choferState.id === chofer.id)) {
+           
+
+           toast.success('Guardado Correctamente')
+           setTimeout(() =>{
+            router.push('/resumen-despacho')
+        },500)
+        } else {
+            setPedido01([...pedido01, chofer])
+            toast.success('Agregado Solicitud')
+            setTimeout(() =>{
+                router.push('/resumen-despacho')
+            },500)
+        }
+        setModal(false)
     }
 
     const AgregarCalidad = async (e) => {
@@ -262,9 +299,11 @@ const CombustibleProvider = ({children}) => {
             if (confirmarCreacion) {
 
         try {
-           await axios.post('/api/despacho',{pedido,cliente,fecha: new Date()})
+           await axios.post('/api/despacho',{pedido,pedido01,destino,cliente,fecha: new Date()})
             // Resetear la app
             setPedido([])
+            setPedido01([])
+            setDestino('')
             setCliente('')
             toast.success('Agregando ⏳')
 
@@ -343,6 +382,31 @@ const CombustibleProvider = ({children}) => {
     }
 
 
+    const agregarChofer = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/chofer',{nombre,rut,patente,patente2})
+            // Resetear la app
+            setNombre('')
+            setRut('')
+            setPatente('')
+            setPatente2('')
+            toast.success('Agregando ⏳')
+
+            setTimeout(() =>{
+                router.push('/agregar-chofer')
+            },1000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
+
 
 
 
@@ -401,7 +465,23 @@ const CombustibleProvider = ({children}) => {
             handleEditarCantidadespallets,
             cantidad,
             setCantidad,
-            agregarProduccionesPallets
+            agregarProduccionesPallets,
+            nombre,
+            setNombre,
+            rut,
+            setRut,
+            patente,
+            setPatente,
+            patente2,
+            setPatente2,
+            agregarChofer,
+            chofer,
+            setChofer,
+            handleAgregarChofer,
+            pedido01,
+            setPedido01,
+            handlesetChofer,
+            handleElimanarchofer
 
         }}
         

@@ -12,7 +12,7 @@ export default async function handler (req,res){
                 id: parseInt(id)
             },
             data:{
-                stock:true
+                stock:false
             }
         })
         res.status(200).json(produccionactualizada)

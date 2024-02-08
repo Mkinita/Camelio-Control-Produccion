@@ -23,7 +23,9 @@ export default async function handler(req, res) {
       data: {
         fecha: req.body.fecha,
         pedido: req.body.pedido,
-        cliente: req.body.cliente
+        pedido01: req.body.pedido01,
+        cliente: req.body.cliente,
+        destino: req.body.destino
       },
     });
     res.json(despacho);

@@ -49,7 +49,9 @@ model Despacho {
   id Int @id @default(autoincrement())
   fecha DateTime
   cliente String
+  destino String
   pedido Json
+  pedido01 Json
 }
 
 
@@ -71,6 +73,14 @@ model Pallets {
   cantidad String
   cliente String
   pedido Json
+}
+
+model Chofer {
+  id Int @id @default(autoincrement())
+  nombre String
+  rut String
+  patente  String
+  patente2  String?
 }
 
 

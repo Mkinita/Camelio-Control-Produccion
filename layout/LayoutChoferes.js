@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import FooterDespacho from "../components/FooterDespacho";
-import ModalDespachos from "../components/ModalDespachos";
+import ModalChofer from "../components/ModalChofer";
 import useCombustible from "../hooks/useCombustible";
 import Modal from "react-modal"
 import { ToastContainer } from "react-toastify";
@@ -40,7 +40,7 @@ export default function LayoutControlProduccion({ children, pagina }) {
                     src="/img/Logo.png"
                     alt="imagen logotipo"
                 />    
-                <div className="py-6 pb-0"><FooterDespacho/></div>
+                
             </aside>
             <main className="md:w-full xl:w-3/4 py-5 m-auto">
                 <div className="p-4">
@@ -51,7 +51,7 @@ export default function LayoutControlProduccion({ children, pagina }) {
 
       {modal && (
         <Modal isOpen={modal} style={customStyles}>
-          <ModalDespachos/>
+          <ModalChofer/>
         </Modal>
       )}
       

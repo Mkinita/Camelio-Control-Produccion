@@ -2,27 +2,29 @@ import LayoutDespacho from "../layout/LayoutDespacho"
 import useCombustible from "../hooks/useCombustible"
 import { useEffect, useCallback, useState } from "react"
 import ResumenDespacho from "../components/ResumenDespacho"
-import axios from 'axios';
-import { toast } from "react-toastify"
-import Result from "postcss/lib/result";
-
+import ResumenChofer from "../components/ResumenChofer"
 
 
 
 export default function Resumen() {
 
-    const { pedido,total,cliente,setCliente, agregarDespacho,calidad,setCalidad,handleAgregarPedidoDespacho,productos } = useCombustible()
+    const { pedido,total,cliente,setCliente, agregarDespacho,destino, setDestino,pedido01} = useCombustible();
     const [options, setOptions] = useState([]);
-    const [options01, setOptions01] = useState([]);
-
-
-    
+    const [options1, setOptions1] = useState([]);
+    const [mostrarDiv, setMostrarDiv] = useState(true);
 
 
     useEffect(() => {
         fetch('/api/cliente')
           .then(response => response.json())
           .then(data => setOptions(data))
+          .catch(error => console.log(error));
+    },  []);
+
+    useEffect(() => {
+        fetch('/api/destino')
+          .then(response => response.json())
+          .then(data => setOptions1(data))
           .catch(error => console.log(error));
     },  []);
 
@@ -41,36 +43,31 @@ export default function Resumen() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-    
-
    return (
         <LayoutDespacho pagina='Resumen Despacho'>
 
-            <div className='mx-auto w-full max-w-2xl  border-gray-200 bg-white pb-4'>
-                <header class="border-b border-gray-100 px-5 py-4">
-                    <div class="font-semibold text-gray-800">Resumen Despacho</div>
-                </header>
-            </div>
+            
             <form 
                 onSubmit={agregarDespacho}
-                className=""
+                className="text-center"
             >
-                <div className="grid gap-2 grid-cols-2 md:grid-cols-2 2xl:grid-cols-2 text-center mx-auto w-full max-w-2xl">
-                    <div className='py-5'>
+                <button type="button" onClick={() => setMostrarDiv(!mostrarDiv)}>
+                {mostrarDiv ? '❌' : '👁️'}
+            </button>
+            
+            {mostrarDiv && (
+
+                
+                
+                <div className="grid gap-1 grid-cols-1 md:grid-cols-3 2xl:grid-cols-3 text-center mx-auto w-full max-w-2xl">
+                    {pedido01.length === 0 ? (
+                    <p className="text-center text-2xl"></p>
+                    ) : (
+                        pedido01.map((chofer) => (
+                        <ResumenChofer  key={chofer.id} chofer={chofer} />
+                    ))
+                )}
+                    <div className='py-1 pb-2'>
                         <label htmlFor="foto" className="file-label font-bold">Cliente</label>
                         <select
                             id="calidad"
@@ -84,7 +81,38 @@ export default function Resumen() {
                             ))}
                         </select>
                     </div>
+
+                    <div className='py-1 pb-2'>
+                        <label htmlFor="foto" className="file-label font-bold">Destino</label>
+                        <select
+                            id="calidad"
+                            className="bg-gray-50 w-full p-2 rounded-md"
+                            value={destino}
+                            onChange={e => setDestino(e.target.value)}
+                        >
+                            <option value="">-</option>
+                            {options1.map(option1 => (
+                            <option key={option1.value} value={option1.value}>{option1.destino}</option>
+                            ))}
+                        </select>
+                        
+                    </div>
+
+
+                    
+                    
                 </div>
+                )}
+
+                
+
+                <div className='mx-auto w-full max-w-2xl  border-gray-200 bg-white pb-4'>
+                <header class="border-b border-gray-100 px-5 py-4">
+                    <div class="font-semibold text-gray-800">Resumen Despacho</div>
+                </header>
+            </div>
+
+                
                 
             <div className="grid grid-cols-5 gap-2  text-center shadow-lg rounded-lg my-4 font-semibold">
                 <div>Nº</div>
@@ -102,6 +130,8 @@ export default function Resumen() {
                 ))
             )}
 
+
+            
 
 
             <div className="mt-6 w-3/4 m-auto text-center">
