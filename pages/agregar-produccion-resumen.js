@@ -7,7 +7,7 @@ import ResumenProduccion from "../components/ResumenProduccion"
 
 export default function Resumen() {
 
-    const { pedido,total,cliente,setCliente, agregarProducciones,id,calidad,setCalidad } = useCombustible()
+    const { pedido,total,cliente,setCliente, agregarProducciones,id,calidad,setCalidad,fecha,setFecha } = useCombustible()
     const [options, setOptions] = useState([]);
     const [options01, setOptions01] = useState([]);
 
@@ -89,7 +89,13 @@ export default function Resumen() {
                             ))}
                         </select>
                     </div>
+
+                    
                 </div>
+
+                {/* <div class=" bg-gray-100 p-2 rounded-lg m-auto w-1/2">
+                        <input class="bg-gray-100 outline-none" type="date" placeholder="Agrega Un Destino...." value={fecha} onChange={e => setFecha(e.target.value)} />
+                    </div> */}
                 <div className="mt-6 w-3/4 m-auto text-center">
                     <input
                         type="submit"

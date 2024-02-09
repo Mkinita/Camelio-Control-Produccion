@@ -80,6 +80,7 @@ const Etiquetas = ({orden}) => {
             <p className='text-lg font-bold'>{formatiarFecha(fecha)}</p>
             
             <p className='text-lg font-bold'>{cliente}</p>
+            <p className='text-lg font-bold'>{oc.detalle}</p>
             <p className='text-sm font-bold'>{oc.espesor}x{oc.ancho}x{oc.largo}x{oc.piezas}</p>
               <p className="text-lg font-bold">{formatoNumero(oc.espesor * oc.ancho * oc.largo * oc.piezas *oc.cantidad / 1000000 )} m³</p>
 

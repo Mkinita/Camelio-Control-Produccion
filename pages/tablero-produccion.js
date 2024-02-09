@@ -5,6 +5,7 @@ import useSWR from 'swr'
 import axios from 'axios'
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head'
 
 
 const tableroproduccion = () => {
@@ -135,7 +136,14 @@ const tableroproduccion = () => {
     };
 
   return (
+
     <>
+
+        <Head>
+        <meta name="description" content="Camelio" />
+        <link rel="icon" href="/img/Logo.png"/>
+        <title>Camalio</title>
+      </Head>
         <div className="m-auto">
             <aside className="">
                 <Image

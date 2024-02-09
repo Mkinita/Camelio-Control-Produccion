@@ -65,7 +65,7 @@ const ProduccionActual = ({produccion}) => {
                     <tr className="bg-white border-b hover:bg-red-800 hover:text-white text-sm" key={oc.id}>
                         <td className="text-center font-semibold w-1/6 hidden md:block">{formatiarFecha(fecha)}</td>
                         <td className="text-center font-semibold w-1/6">{id}</td>
-                        <td className="text-center font-semibold w-1/6">{(oc.detalle)}x{(oc.piezas)}</td>
+                        <td className="text-center font-semibold w-1/6">{(oc.detalle)}</td>
                         <td className="text-center font-semibold w-1/6">{(calidad)}</td>
                         <td className="text-center font-semibold w-1/6">{formatoNumero(oc.espesor * oc.ancho * oc.largo * oc.piezas *oc.cantidad / 1000000 )}</td>
                         <td className="text-center font-semibold w-1/6">
