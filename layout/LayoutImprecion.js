@@ -30,15 +30,15 @@ export default function AdminLayout({ children, pagina }) {
         <meta name="description" content="RestoApp" />
       </Head>
 
-      <div className="md:flex">
-            <aside className="mx-20">
+      <div className="">
+            <aside className="">
 
                 <SidebarImprecion/>
             </aside>
 
             
 
-            <main className="mx-20">
+            <main className="">
                 <div className="">
                     {children}
                 </div>
