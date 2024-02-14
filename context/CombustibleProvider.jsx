@@ -311,7 +311,7 @@ const CombustibleProvider = ({children}) => {
             toast.success('Agregando ⏳')
 
             setTimeout(() =>{
-                router.push('/')
+                router.push('/despachos')
             },1000)
 
         } catch (error) {

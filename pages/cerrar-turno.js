@@ -111,7 +111,7 @@ export default function AdminProducciones() {
           <div class="font-semibold pb-2">Produccion</div>
           {/* <div class="font-semibold pb-2">{new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric' })}</div> */}
           <p className='font-semibold pb-2'>{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</p> 
-          <div class="bg-gray-100 p-4 w-1/4 m-auto space-x-4 rounded-lg py-4">
+          <div class="bg-gray-100 p-4 w-3/4 m-auto space-x-4 rounded-lg py-4">
           <input value={search} onChange={searcher} type="date" className='bg-gray-100 outline-none'/>
         </div>
 
@@ -120,7 +120,7 @@ export default function AdminProducciones() {
         <form 
                 onSubmit={AgregarTurno}
             >
-                <div class="grid grid-cols-1 w-1/4 m-auto items-center justify-center p-2 space-x-2 bg-white gap-2">
+                <div class="grid grid-cols-1 w-3/4 m-auto items-center justify-center p-2 space-x-2 bg-white gap-2">
                 <div class=" bg-gray-100 p-4 w-54 space-x-4 rounded-lg hidden">
                         <input class="bg-gray-100 outline-none " type="date" value={fecha2} onChange={e => setFecha2(e.target.value)} />
                     </div>

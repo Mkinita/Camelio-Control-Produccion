@@ -223,7 +223,11 @@ const tableroproduccion = () => {
                                 <p className="text-center text-lg">Despacho</p>
                                 <span className="">➕</span>
                             </Link>
-                            <Link href="/choferes" className='py-5 text-4xl'>🚚</Link>
+                            <Link href="/despachos">
+                                <p className="text-center uppercase font-bold text-xl">Despacho</p>
+                                <p className="text-center text-lg">Acumulados</p>
+                                <span className="">🚚</span>
+                            </Link>
                         </div>
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
                             <Link href="/stock">
