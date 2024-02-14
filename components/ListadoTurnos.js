@@ -5,7 +5,7 @@ import useCombustible from '../hooks/useCombustible';
 import axios from 'axios';
 
 const CerrarTurno = ({turno}) => {
-    const {id, volumen , fecha} = turno
+    const {id, volumen , fecha2} = turno
 
     const formatiarFecha = fecha =>{
         const nuevaFecha = new Date(fecha).toISOString().slice()
@@ -62,7 +62,7 @@ const CerrarTurno = ({turno}) => {
         
             <tbody>
                     <tr className="bg-white border-b hover:bg-red-800 hover:text-white text-sm">
-                        <td className="text-center font-semibold w-1/3">{formatiarFecha(fecha)}</td>
+                        <td className="text-center font-semibold w-1/3">{fecha2}</td>
                         <td className="text-center font-semibold w-1/3">{formatoNumero(volumen)}</td>
                         
                         <td className="text-center font-semibold w-1/3">
