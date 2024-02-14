@@ -33,10 +33,11 @@ export default function AdminProducciones() {
     //función de búsqueda
   const searcher = (e) => {
     setSearch(e.target.value)
+    setFecha2(e.target.value)
   }
   
   //  metodo de filtrado 2
-  const results = !search ? users : users.filter((dato)=> JSON.stringify(dato.pedido).toLowerCase().includes(search.toLowerCase()))
+  const results = !search ? users : users.filter((dato)=> JSON.stringify(dato.fecha2).toLowerCase().includes(search.toLowerCase()))
     useEffect( ()=> {
     showData()
   }, [])
@@ -77,7 +78,8 @@ export default function AdminProducciones() {
   const 
     { 
         AgregarTurno,
-        volumen,setVolumen
+        volumen,setVolumen,
+        fecha2,setFecha2
 
     } = useCombustible()
 
@@ -106,20 +108,26 @@ export default function AdminProducciones() {
     <LayoutProduccionActual pagina={'Actual'}>
       <div className='grid grid-cols-1 gap-2 px-5 md:py-52 py-4 pb-0 border-b text-lg'>
         <div class=" text-center">
-          <div class="font-semibold pb-2">Produccion Actual</div>
-          <div class="font-semibold pb-2">{new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric' })}</div>
-          <p className='font-semibold'>{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</p> 
+          <div class="font-semibold pb-2">Produccion</div>
+          {/* <div class="font-semibold pb-2">{new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric' })}</div> */}
+          <p className='font-semibold pb-2'>{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</p> 
+          <div class="bg-gray-100 p-4 w-1/4 m-auto space-x-4 rounded-lg py-4">
+          <input value={search} onChange={searcher} type="date" className='bg-gray-100 outline-none'/>
+        </div>
 
         </div>
         <div>
         <form 
                 onSubmit={AgregarTurno}
             >
-                <div class="flex items-center justify-center p-2 space-x-2 bg-white">
-                    <div class=" bg-gray-100 p-4 w-72 space-x-4 rounded-lg hidden">
-                        <input class="bg-gray-100 outline-none" type="text" placeholder="Agrega Volumen" value={volumen} onChange={e => setVolumen(e.target.value)} />
+                <div class="grid grid-cols-1 w-1/4 m-auto items-center justify-center p-2 space-x-2 bg-white gap-2">
+                <div class=" bg-gray-100 p-4 w-54 space-x-4 rounded-lg hidden ">
+                        <input class="bg-gray-100 outline-none" type="date" placeholder="Agrega Volumen" value={fecha2} onChange={e => setFecha2(e.target.value)} />
                     </div>
-                    <div class="bg-red-600 py-3 px-5 text-white font-semibold rounded-lg hover:shadow-lg transition duration-3000 cursor-pointer">
+                    <div class=" bg-gray-100 p-4 w-54 space-x-4 rounded-lg hidden ">
+                        <input class="bg-gray-100 outline-none text-center" type="text" placeholder="Agrega Volumen" value={volumen} onChange={e => setVolumen(e.target.value)} />
+                    </div>
+                    <div class="bg-red-600 text-center py-3 px-5 text-white font-semibold rounded-lg hover:shadow-lg transition duration-3000 cursor-pointer">
                         <input
                             type="submit"
                             className= {`${comprobarPedido()}`}

@@ -34,7 +34,7 @@ export default function AdminProducciones() {
   }
   
   //  metodo de filtrado 2
-  const results = !search ? users : users.filter((dato)=> JSON.stringify(dato.fecha).toLowerCase().includes(search.toLowerCase()))
+  const results = !search ? users : users.filter((dato)=> JSON.stringify(dato.fecha2).toLowerCase().includes(search.toLowerCase()))
     useEffect( ()=> {
     showData()
   }, [])

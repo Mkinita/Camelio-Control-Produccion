@@ -22,6 +22,7 @@ export default async function handler(req, res) {
     const producciones = await prisma.producciones.create({
       data: {
         fecha: req.body.fecha,
+        fecha2: req.body.fecha2,
         pedido: req.body.pedido,
         cliente: req.body.cliente,
         calidad:req.body.calidad,

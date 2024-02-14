@@ -4,20 +4,13 @@ export default async function handler(req, res) {
   const prisma = new PrismaClient();
 
   try {
-    // Obtener Ordenes
-    const turnos = await prisma.turno.findMany({
-      orderBy: {
-        id: 'desc',
-      },
-    });
-
-    res.status(200).json(turnos);
+    
 
     // Crear saldoes
     if (req.method === "POST") {
       const turno = await prisma.turno.create({
         data: {
-          fecha: req.body.fecha,
+          fecha2: req.body.fecha2,
           volumen: req.body.volumen,
         },
       });

@@ -16,6 +16,7 @@ const CombustibleProvider = ({children}) => {
     const [largo, setLargo] = useState('')
     const [piezas, setPiezas] = useState('')
     const [detalle, setDetalle] = useState('')
+    const [fecha2, setFecha2] = useState('')
     const [fecha, setFecha] = useState('')
     const [volumen, setVolumen] = useState('')
     const [destino, setDestino] = useState('')
@@ -254,9 +255,10 @@ const CombustibleProvider = ({children}) => {
         e.preventDefault()
 
         try {
-           await axios.post('/api/producciones',{pedido,calidad,cliente,fecha: new Date()})
+           await axios.post('/api/producciones',{pedido,calidad,cliente,fecha2,fecha: new Date()})
             // Resetear la app
             setPedido([])
+            setFecha2('')
             setCliente('')
             setCalidad('')
             toast.success('Agregando ⏳')
@@ -277,8 +279,9 @@ const CombustibleProvider = ({children}) => {
         e.preventDefault()
 
         try {
-           await axios.post('/api/turno',{volumen,fecha: new Date()})
+           await axios.post('/api/turnos',{volumen,fecha2})
             setVolumen('')
+            setFecha2('')
             toast.success('Cerrando Turno ⏳')
             setTimeout(() =>{
                 router.push('/listado-turnos')
@@ -442,8 +445,8 @@ const CombustibleProvider = ({children}) => {
             setProductos,
             agregarProducciones,
             pedido,
-            fecha,
-            setFecha,
+            fecha2,
+            setFecha2,
             handleEditarCantidades,
             handleElimanarSolicitud,
             handleAgregarPedidoDespacho,
@@ -481,7 +484,9 @@ const CombustibleProvider = ({children}) => {
             pedido01,
             setPedido01,
             handlesetChofer,
-            handleElimanarchofer
+            handleElimanarchofer,
+            fecha, 
+            setFecha
 
         }}
         

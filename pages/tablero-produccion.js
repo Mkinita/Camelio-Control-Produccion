@@ -32,7 +32,7 @@ const tableroproduccion = () => {
     const showData = async () => {
         const response = await fetch(URL)
         const data = await response.json()
-        console.log(data)
+        console.log(results)
         setUsers(data)
     }
    
@@ -41,7 +41,15 @@ const tableroproduccion = () => {
     const results = !search ? users : users.filter((dato)=> dato.fecha.toLowerCase().includes(search.toLocaleLowerCase()))
         useEffect( ()=> {
         showData()
+        
     }, [])
+    
+
+    // const results = !search ? users : Array.isArray(users) ? users.filter((dato) => dato.fecha.toLowerCase().includes(search.toLocaleLowerCase()))
+    // : useEffect( ()=> {
+    //     showData()
+    // }, [])
+
 
 
 
@@ -57,7 +65,7 @@ const tableroproduccion = () => {
     const showDatastock = async () => {
         const responsestock = await fetch(URLstock)
         const datastock = await responsestock.json()
-        console.log(datastock)
+        // console.log(datastock)
         setUsersstock(datastock)
     }
    

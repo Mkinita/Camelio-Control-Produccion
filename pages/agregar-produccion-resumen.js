@@ -7,7 +7,7 @@ import ResumenProduccion from "../components/ResumenProduccion"
 
 export default function Resumen() {
 
-    const { pedido,total,cliente,setCliente, agregarProducciones,id,calidad,setCalidad,fecha,setFecha } = useCombustible()
+    const { pedido,total,cliente,setCliente, agregarProducciones,id,calidad,setCalidad,fecha2,setFecha2 } = useCombustible()
     const [options, setOptions] = useState([]);
     const [options01, setOptions01] = useState([]);
 
@@ -28,9 +28,9 @@ export default function Resumen() {
     
 
     const comprobarPedido = useCallback(() => {
-        return pedido.length === 0 || cliente && calidad === "" || cliente.length && calidad.length <1 ;
+        return fecha2.length === 0 || cliente && calidad === "" || cliente.length && calidad.length <1 ;
         
-    },[pedido, cliente,calidad])
+    },[fecha2, cliente,calidad])
 
 
     useEffect(() => {
@@ -93,9 +93,9 @@ export default function Resumen() {
                     
                 </div>
 
-                {/* <div class=" bg-gray-100 p-2 rounded-lg m-auto w-1/2">
-                        <input class="bg-gray-100 outline-none" type="date" placeholder="Agrega Un Destino...." value={fecha} onChange={e => setFecha(e.target.value)} />
-                    </div> */}
+                <div class=" bg-gray-100 p-2 rounded-lg m-auto w-1/2">
+                        <input class="bg-gray-100 outline-none" type="date" placeholder="Agrega Un Destino...." value={fecha2} onChange={e => setFecha2(e.target.value)} />
+                    </div>
                 <div className="mt-6 w-3/4 m-auto text-center">
                     <input
                         type="submit"
