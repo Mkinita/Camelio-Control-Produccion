@@ -184,9 +184,9 @@ export default function AdminProducciones() {
         
         
         <tr >
-          <td className=" w-1/3 font-bold text-center border border-black">Producto</td>
-          <td className=" w-1/3 font-bold text-center border border-black">Volumen</td>
-          <td className=" w-1/3 font-bold text-center border border-black">Cantidad</td>
+          <td className=" w-1/2 font-bold text-center border border-black">Producto</td>
+          <td className=" w-1/4 font-bold text-center border border-black">m³</td>
+          <td className=" w-1/4 font-bold text-center border border-black">Und.</td>
     
         </tr>
         </table>
@@ -203,9 +203,9 @@ export default function AdminProducciones() {
         
         
         <tr key={detalle}>
-          <td className="w-1/3 font-semibold text-center border border-gray-600">{detalle}</td>
-          <td className="w-1/3 font-semibold text-center border border-gray-600">{formatoNumero(volumen)}</td>
-          <td className="w-1/3 font-semibold text-center border border-gray-600">{results.reduce((total, oc) => {
+          <td className="w-1/2 font-semibold text-center border border-gray-600">{detalle}</td>
+          <td className="w-1/4 font-semibold text-center border border-gray-600">{formatoNumero(volumen)}</td>
+          <td className="w-1/4 font-semibold text-center border border-gray-600">{results.reduce((total, oc) => {
       return total + oc.pedido.reduce((acc, item) => {
         if (item.detalle === detalle) {
           return acc + item.cantidad;
