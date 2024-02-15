@@ -28,7 +28,7 @@ const CerrarTurno = ({turno}) => {
 
     const eliminarRegistro = async () => {
         const confirmarEliminacion = window.confirm(
-        `¿Estás seguro de que deseas eliminar la produccion con fecha ${formatiarFecha(fecha)}?`
+        `¿Estás seguro de que deseas eliminar la produccion con fecha ${formatiarFecha(fecha2)}?`
         );
 
         if (confirmarEliminacion) {
@@ -38,7 +38,7 @@ const CerrarTurno = ({turno}) => {
             });
 
             if (response.ok) {
-            toast.success(`${formatiarFecha(fecha)} eliminada`);
+            toast.success(`${formatiarFecha(fecha2)} eliminada`);
             setTimeout(() => {
                 window.location.reload();
             }, 1000);

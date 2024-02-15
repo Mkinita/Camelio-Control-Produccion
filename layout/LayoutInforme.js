@@ -32,16 +32,7 @@ export default function LayoutControlProduccion({ children, pagina }) {
       </Head>
 
       <div className="">
-            <aside className="md:w-full xl:w-3/4 py-2 m-auto">
-                <Image
-                    className="m-auto"
-                    width={200}
-                    height={100}
-                    src="/img/Logo.png"
-                    alt="imagen logotipo"
-                />    
-                <div className="py-2 pb-0"><FooterInformes/></div>
-            </aside>
+            
             <main className="md:w-full xl:w-3/4 py-2 m-auto">
                 <div className="p-4">
                     {children}

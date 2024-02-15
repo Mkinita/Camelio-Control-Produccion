@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import axios from 'axios'
 import LayoutInforme from "../layout/LayoutInforme"
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import ProduccionActualInforme from '../components/ProduccionActualInforme'
 import Link from 'next/link';
 
@@ -10,21 +11,21 @@ import Link from 'next/link';
 
 export default function AdminProducciones() {
 
-  const fetcher = () => axios('/api/producciones').then(datos => datos.data)
-  const { data, error, isLoading } = useSWR('/api/producciones',fetcher,{refreshInterval: 100} )
+  const fetcher = () => axios('/api/produccionesinforme').then(datos => datos.data)
+  const { data, error, isLoading } = useSWR('/api/produccionesinforme',fetcher,{refreshInterval: 100} )
 
 
-  const fetcherActual = () => axios('/api/produccionactual').then(datos => datos.data)
-  const { data:dataActual, error:errorActual, isLoading:isLoadingActual } = useSWR('/api/produccionactual',fetcherActual,{refreshInterval: 100} )
+
 
 
   const [ users, setUsers ] = useState([])
   const [ search, setSearch ] = useState("")
   const [totalVolumen, setTotalVolumen] = useState(0);
   const [totalCantidad, setTotalCantidad] = useState(0);
+  const [volumenesPorDetalle, setVolumenesPorDetalle] = useState({});
 
   //función para traer los datos de la API
-  const URL = '/api/producciones'
+  const URL = '/api/produccionesinforme'
   const showData = async () => {
     const response = await fetch(URL)
     const data = await response.json()
@@ -78,6 +79,45 @@ export default function AdminProducciones() {
   }, [results]);
 
 
+  useEffect(() => {
+    if (results && Array.isArray(results)) { // Verifica si data existe y es un array
+      let totalVolumen = 0;
+      let totalCantidad = 0;
+      const volumenesPorDetalle = {};
+
+      results.forEach((orden) => {
+        orden.pedido.forEach((oc) => {
+          const detalle = oc.detalle;
+          const volumen = oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000;
+
+          totalVolumen += volumen;
+          totalCantidad += oc.cantidad;
+
+          if (detalle in volumenesPorDetalle) {
+            volumenesPorDetalle[detalle] += volumen;
+          } else {
+            volumenesPorDetalle[detalle] = volumen;
+          }
+        });
+      });
+
+      setTotalVolumen(totalVolumen);
+      setTotalCantidad(totalCantidad);
+      setVolumenesPorDetalle(volumenesPorDetalle);
+    }
+    console.log(results)
+  }, [results]);
+
+
+  
+
+
+
+  
+
+
+
+
   
 
 
@@ -94,9 +134,20 @@ export default function AdminProducciones() {
           <div className="shadow rounded-lg p-2">
             <div>
               <div className="grid grid-cols-1 gap-4">
-                  <div>
+                  <div className='grid grid-cols-1 md:grid-cols-2'>
+                    <div> 
+                    <Image
+                    className="m-auto"
+                    width={100}
+                    height={100}
+                    src="/img/Logo.png"
+                    alt="imagen logotipo"
+                  />
+                    </div>
+                    <div>
                   <p className="font-semibold text-gray-600">Produccion Acumulada</p>
                       <h2 class="text-2xl font-bold text-gray-600">{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</h2>
+                  </div>
                   </div>
                   
                     
@@ -123,33 +174,49 @@ export default function AdminProducciones() {
           
         </div>
 
-        <div className='mx-auto w-full border-b border-gray-100 px-5 py-6 pb-6'>
+        <div className='mx-auto w-full px-5 py-6 pb-6'>
                 <p className='font-semibold text-gray-800  border-b border-gray-100'>Producciones</p>
-                <Link href="/produccion-actual-informe" className="py-0 w-full text-gray-400 hover:text-gray-800">
-                <span className="">
-                    <span className="text-xs pb-1 py-0">Detalle</span>
-                </span>
-            </Link>
             </div>
 
 
-            <table className="table-auto w-full text-center bg-white text-gray-700 p-1">
-        <tbody>
-          <tr className="bg-gray-50 text-xs font-bold uppercase text-black text-center">
-            <td className="text-center font-bold hidden md:block w-1/4 p-1">Fecha</td>
-            <td className="text-center font-bold w-1/4 p-1">Detalle</td>
-            <td className="text-center font-bold w-1/4 p-1">Calidad</td>
-            <td className="text-center font-bold w-1/4 p-1">m³</td>
-          </tr>
-        </tbody>
-      </table>
 
-        {data && data.length ? results.map(produccion =>
-        <ProduccionActualInforme
-          key={produccion.id}
-          produccion={produccion}
-        />
-        ):
+            <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
+        
+        
+        <tr >
+          <td className=" w-1/3 font-bold text-center border border-black">Producto</td>
+          <td className=" w-1/3 font-bold text-center border border-black">Volumen</td>
+          <td className=" w-1/3 font-bold text-center border border-black">Cantidad</td>
+    
+        </tr>
+        </table>
+
+
+            
+
+        
+
+{isLoading && <p className='text-center m-10'>Cargando...</p>}
+      {error && <p className='text-center m-10'>Error al cargar los datos</p>}
+      {!isLoading && results && results.length ? Object.entries(volumenesPorDetalle).map(([detalle, volumen]) =>
+      <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
+        
+        
+        <tr key={detalle}>
+          <td className="w-1/3 font-semibold text-center border border-gray-600">{detalle}</td>
+          <td className="w-1/3 font-semibold text-center border border-gray-600">{formatoNumero(volumen)}</td>
+          <td className="w-1/3 font-semibold text-center border border-gray-600">{results.reduce((total, oc) => {
+      return total + oc.pedido.reduce((acc, item) => {
+        if (item.detalle === detalle) {
+          return acc + item.cantidad;
+        }
+        return acc;
+      }, 0);
+    }, 0)}</td>
+          {/* Aquí puedes agregar más columnas si es necesario */}
+        </tr>
+        </table>
+      ) :
         <p className='text-center m-10'>Sin Produccion</p>
       }
        
