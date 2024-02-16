@@ -51,12 +51,12 @@ const tableroproduccion = () => {
                         </div>
 
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
-                            <Link href="/cerrar-turno">
+                            <Link href="/informe-despacho">
                                 <p className="text-center uppercase font-bold text-xl">Informe</p>
                                 <p className="text-center text-lg">Despacho</p>
                                 <span className="">➕</span>
                             </Link>
-                            <Link href="/cerrar-turno" className='py-5 text-4xl'>📊</Link>
+                            <Link href="/informe-despacho" className='py-5 text-4xl'>📊</Link>
                         </div>
                     </div>
                 </div>

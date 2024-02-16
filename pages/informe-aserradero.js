@@ -123,7 +123,7 @@ export default function AdminProducciones() {
 
   return(
 
-    <LayoutInforme pagina={'Actual'}>
+    <LayoutInforme pagina={'Informe'}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
         <div className="shadow rounded-lg p-2">
           <div>
