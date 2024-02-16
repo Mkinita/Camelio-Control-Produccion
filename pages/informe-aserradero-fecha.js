@@ -145,7 +145,7 @@ export default function AdminProducciones() {
                   />
                     </div>
                     <div>
-                  <p className="font-semibold text-gray-600">Produccion Acumulada</p>
+                  <p className="font-semibold text-gray-600">Produccion</p>
                       <h2 class="text-2xl font-bold text-gray-600">{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</h2>
                   </div>
                   </div>
@@ -154,15 +154,24 @@ export default function AdminProducciones() {
               </div>
               </div>
           </div>
-          <div className="shadow rounded-lg p-2">
-          <div className=''>
-          <p className="font-semibold text-gray-600">Filtrar Fecha</p>
+          <div className="shadow rounded-lg p-2 grid grid-1 md:grid-cols-2">
+          <div className='shadow rounded-lg hover:scale-90'>
+          <p className="font-semibold text-gray-600">Fecha</p>
           <input value={search} onChange={searcher} type="date" placeholder='Filtra Producto...' className=' text-center border rounded-lg'/>
         
 
         
         
       </div>
+
+      <div className='shadow rounded-lg hover:scale-90 hidden md:grid'>
+            <button className="text-center" onClick={() => window.print()}>
+              <p className="font-semibold text-gray-600">Informe</p>
+              <div className="m-auto text-center text-lg">📸</div>
+            </button>
+
+            </div>
+
       
 
       
@@ -175,10 +184,10 @@ export default function AdminProducciones() {
         </div>
 
         <div className='mx-auto w-full px-5 py-6 pb-6'>
-                <p className='font-semibold text-gray-800  border-b border-gray-100'>Producciones</p>
+                <p className='font-semibold text-gray-800  border-b border-gray-100'>Detalle</p>
             </div>
 
-
+      
 
             <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
         
@@ -190,6 +199,7 @@ export default function AdminProducciones() {
     
         </tr>
         </table>
+       
 
 
             
@@ -203,9 +213,9 @@ export default function AdminProducciones() {
         
         
         <tr key={detalle}>
-          <td className="w-1/2 font-semibold text-center border border-gray-600">{detalle}</td>
-          <td className="w-1/4 font-semibold text-center border border-gray-600">{formatoNumero(volumen)}</td>
-          <td className="w-1/4 font-semibold text-center border border-gray-600">{results.reduce((total, oc) => {
+          <td className="w-1/2 font-semibold text-center border  border-gray-600">{detalle}</td>
+          <td className="w-1/4 font-semibold text-center border  border-gray-600">{formatoNumero(volumen)}</td>
+          <td className="w-1/4 font-semibold text-center border  border-gray-600">{results.reduce((total, oc) => {
       return total + oc.pedido.reduce((acc, item) => {
         if (item.detalle === detalle) {
           return acc + item.cantidad;
@@ -219,6 +229,7 @@ export default function AdminProducciones() {
       ) :
         <p className='text-center m-10'>Sin Produccion</p>
       }
+    
        
     </LayoutInforme>
   )

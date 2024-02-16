@@ -10,7 +10,7 @@ const CerrarTurno = ({turno}) => {
     return (
         <>  
             
-                <table className="table-auto w-full text-center bg-white text-gray-700">
+                <table className="table-auto w-1/2 m-auto text-center bg-white text-gray-700">
                     <tbody>
                         <tr className="bg-white border-b hover:bg-red-800 hover:text-white text-sm">
                             <td className="text-center font-semibold w-1/2">{fecha2}</td>

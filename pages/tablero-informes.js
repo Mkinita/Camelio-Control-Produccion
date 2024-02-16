@@ -30,7 +30,7 @@ const tableroproduccion = () => {
             </aside>
             <main className="">
                 <div className="p-2">
-                    <div className='grid gap-2 grid-cols-1 md:grid-cols-1 py-4 px-2 pb-2 w-3/4 m-auto'>
+                    <div className='grid gap-2 grid-cols-1 md:grid-cols-1 py-4 px-2 pb-2 w-full md:w-3/4 m-auto'>
 
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
                             <Link href="/informe-aserradero">
