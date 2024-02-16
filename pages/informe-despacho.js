@@ -111,7 +111,7 @@ export default function AdminProducciones() {
     return(
 
         <LayoutInforme pagina={'Informe'}>
-            <div className=' grid grid-cols-2 gap-2 shadow-lg rounded-lg text-center'>
+            <div className=' grid grid-cols-1 md:grid-cols-2 gap-2 shadow-lg rounded-lg text-center'>
                 <div className="shadow rounded-lg p-2">
                     <div>
                         <div className="grid grid-cols-1 gap-4">
@@ -133,8 +133,8 @@ export default function AdminProducciones() {
                         </div>
                     </div>
                     </div>
-                    <div className="hidden md:grid shadow rounded-lg p-2">
-                        <div className='hidden md:grid grid-cols-2 gap-2'>
+                    <div className="hidden md:grid shadow rounded-lg p-2 ">
+                        <div className='grid  grid-cols-2 gap-2'>
                             <div className='shadow rounded-lg hover:scale-90'>
                                 <Link href="/detalle-despachos">
                                 <p className="font-semibold text-gray-600 ">Detalle</p>
