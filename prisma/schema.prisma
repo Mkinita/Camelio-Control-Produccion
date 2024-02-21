@@ -61,6 +61,10 @@ model Destino {
   destino String
 }
 
+model Operador {
+  id Int @id @default(autoincrement())
+  operador String
+}
 
 model Pallet {
   id Int @id @default(autoincrement())
@@ -74,6 +78,7 @@ model Pallets {
   cantidad String
   cliente String
   pedido Json
+  pedido02 Json
 }
 
 model Chofer {

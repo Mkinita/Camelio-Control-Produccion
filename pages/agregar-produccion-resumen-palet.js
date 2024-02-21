@@ -2,12 +2,13 @@ import LayoutPalet from "../layout/LayoutPalet"
 import useCombustible from "../hooks/useCombustible"
 import { useEffect, useCallback, useState } from "react"
 import ResumenPalet from "../components/ResumenPalet"
+import ResumenOperador from "../components/ResumenOperador"
 
 
 
 export default function Resumen() {
 
-    const { pedido,cliente,setCliente,cantidad,setCantidad, agregarProduccionesPallets,fecha,setFecha} = useCombustible()
+    const { pedido,pedido02,cliente,setCliente,cantidad,setCantidad, agregarProduccionesPallets,fecha,setFecha} = useCombustible()
     const [options, setOptions] = useState([]);
 
 
@@ -39,10 +40,18 @@ export default function Resumen() {
             </div>
 
             {pedido.length === 0 ? (
-                <p className="text-center text-2xl">Cargando ... Productod</p>
+                <p className="text-center text-2xl">Cargando ...</p>
                 ) : (
                 pedido.map((pallets) => (
                 <ResumenPalet key={pallets.id} pallets={pallets} />
+                ))
+            )}
+
+            {pedido02.length === 0 ? (
+                <p className="text-center text-2xl">Cargando ...</p>
+                ) : (
+                pedido02.map((operadores) => (
+                <ResumenOperador key={operadores.id} operadores={operadores} />
                 ))
             )}
 

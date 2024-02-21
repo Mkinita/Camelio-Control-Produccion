@@ -5,7 +5,7 @@ import Link from 'next/link';
 import LayoutInforme from "../layout/LayoutInforme"
 import ListadoTurnosInforme from '../components/ListadoTurnosInforme'
 import React, { useState, useEffect } from 'react';
-import { Spinner } from "@material-tailwind/react";;
+import { Spinner } from "@material-tailwind/react";
 
 
 

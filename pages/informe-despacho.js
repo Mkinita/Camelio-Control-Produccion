@@ -133,7 +133,7 @@ export default function AdminProducciones() {
                         </div>
                     </div>
                     </div>
-                    <div className="hidden md:grid shadow rounded-lg p-2 ">
+                    <div className="grid shadow rounded-lg p-2 ">
                         <div className='grid  grid-cols-2 gap-2'>
                             <div className='shadow rounded-lg hover:scale-90'>
                                 <Link href="/detalle-despachos">

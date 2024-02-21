@@ -19,6 +19,7 @@ export default async function handler(req, res) {
       data: {
         fecha: req.body.fecha,
         pedido: req.body.pedido,
+        pedido02: req.body.pedido02,
         cliente: req.body.cliente,
         cantidad:req.body.cantidad,
       },

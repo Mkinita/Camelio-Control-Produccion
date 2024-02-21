@@ -26,11 +26,14 @@ const CombustibleProvider = ({children}) => {
     const [rut, setRut] = useState('')
     const [patente, setPatente] = useState('')
     const [patente2, setPatente2] = useState('')
+    const [operador, setOperador] = useState('')
+    const [operadores, setOperadores] = useState({})
     const [productos, setProductos] = useState({})
     const [pallets, setPallets] = useState({})
     const [chofer, setChofer] = useState({})
     const [pedido, setPedido] = useState([])
     const [pedido01, setPedido01] = useState([])
+    const [pedido02, setPedido02] = useState([])
     const [modal, setModal] = useState(false)
     
 
@@ -41,10 +44,17 @@ const CombustibleProvider = ({children}) => {
     const handlesetProductos = productos => {
         setProductos(productos)
     }
+    
 
-    const handlesetPallets = pallest => {
-        setPallets(pallest)
+    const handlesetPallets = pallets => {
+        setPallets(pallets)
     }
+
+
+    const handlesetOperadores = operadores => {
+        setOperadores(operadores)
+    }
+
 
     const handlesetChofer = chofer => {
         setChofer(chofer)
@@ -57,6 +67,16 @@ const CombustibleProvider = ({children}) => {
 
         setTimeout(() =>{
             router.push('/agregar-produccion')
+        },1000)
+    }
+
+    const handleEditarCantidadesoperadores = id => {
+        const pedido02Actualizado = pedido02.filter( operadores => operadores.id !== id)
+        setPedido02(pedido02Actualizado)
+        toast.success('Agrega un nuevo producto')
+
+        setTimeout(() =>{
+            router.push('//agregar-operador-palet')
         },1000)
     }
 
@@ -181,6 +201,25 @@ const CombustibleProvider = ({children}) => {
             toast.success('Agregado Solicitud')
             setTimeout(() =>{
                 router.push('/resumen-despacho')
+            },500)
+        }
+        setModal(false)
+    }
+
+
+    const handleAgregarOperador = ({...operadores}) => {
+        if(pedido02.some(operadorState => operadorState.id === operadores.id)) {
+           
+
+           toast.success('Guardado Correctamente')
+           setTimeout(() =>{
+            router.push('/agregar-produccion-palet')
+        },500)
+        } else {
+            setPedido02([...pedido02, operadores])
+            toast.success('Agregado Solicitud')
+            setTimeout(() =>{
+                router.push('/agregar-produccion-palet')
             },500)
         }
         setModal(false)
@@ -365,9 +404,10 @@ const CombustibleProvider = ({children}) => {
         e.preventDefault()
 
         try {
-           await axios.post('/api/pallets',{pedido,cliente,cantidad,fecha})
+           await axios.post('/api/pallets',{pedido,pedido02,cliente,cantidad,fecha})
             // Resetear la app
             setPedido([])
+            setPedido02([])
             setCliente('')
             setCantidad('')
             toast.success('Agregando ⏳')
@@ -400,6 +440,27 @@ const CombustibleProvider = ({children}) => {
             setTimeout(() =>{
                 router.push('/agregar-chofer')
             },1000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
+
+
+    const AgregarOperador = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/operador',{operador})
+            setOperador('')
+            toast.success('Agregando ⏳')
+            setTimeout(() =>{
+                router.push('/agregar-operador')
+            },2000)
 
         } catch (error) {
             console.log(error)
@@ -486,7 +547,17 @@ const CombustibleProvider = ({children}) => {
             handlesetChofer,
             handleElimanarchofer,
             fecha, 
-            setFecha
+            setFecha,
+            operador,
+            setOperador,
+            AgregarOperador,
+            operadores,
+            setOperadores,
+            handlesetOperadores,
+            pedido02,
+            setPedido02,
+            handleAgregarOperador,
+            handleEditarCantidadesoperadores
 
         }}
         
