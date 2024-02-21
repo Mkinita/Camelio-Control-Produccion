@@ -27,7 +27,7 @@ export default function LayoutControlProduccion({ children, pagina }) {
     
     <>
       <Head>
-        <title>Camalio - {pagina}</title>
+        <title>Camelio - {pagina}</title>
         <meta name="description" content="Produccion" />
       </Head>
 

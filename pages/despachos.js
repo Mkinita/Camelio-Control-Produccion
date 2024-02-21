@@ -83,7 +83,7 @@ const despachos = () => {
             <Head>
                 <meta name="description" content="Camelio" />
                 <link rel="icon" href="/img/Logo.png"/>
-                <title>Camalio</title>
+                <title>Camelio</title>
             </Head>
             
             <div className='grid grid-cols-2 gap-2 px-5 py-4 border-b'>

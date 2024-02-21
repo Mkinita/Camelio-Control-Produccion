@@ -11,7 +11,7 @@ const index = () => {
       <Head>
         <meta name="description" content="Camelio" />
         <link rel="icon" href="/img/Logo.png"/>
-        <title>Camalio</title>
+        <title>Camelio</title>
       </Head>
     </LayoutControlProduccionAdmin>
   )
