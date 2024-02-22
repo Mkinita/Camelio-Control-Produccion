@@ -9,8 +9,8 @@ import { useEffect, useCallback, useState } from "react"
 
 export default function AdminProducciones() {
 
-  const fetcher = () => axios('/api/producciones').then(datos => datos.data)
-  const { data, error, isLoading } = useSWR('/api/producciones',fetcher,{refreshInterval: 100} )
+  const fetcher = () => axios('/api/cerrar-turno').then(datos => datos.data)
+  const { data, error, isLoading } = useSWR('/api/cerrar-turno',fetcher,{refreshInterval: 100} )
 
   const [ users, setUsers ] = useState([])
   const [ search, setSearch ] = useState("")
@@ -22,7 +22,7 @@ export default function AdminProducciones() {
 
 
   //función para traer los datos de la API
-  const URL = '/api/producciones'
+  const URL = '/api/cerrar-turno'
 
   const showData = async () => {
     const response = await fetch(URL)
