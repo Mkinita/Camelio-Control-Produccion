@@ -65,7 +65,7 @@ const CerrarTurno = ({pallets}) => {
                     <tr className="bg-white border-b hover:bg-red-800 hover:text-white text-sm" key={oc.id}>
                         <td className="text-center font-semibold w-1/4">{(fecha)}</td>
                         <td className="text-center font-semibold w-1/4">{oc.pallet}</td>
-                        <td className="text-center font-semibold w-1/4">{formatoNumero(cantidad)}</td>
+                        <td className="text-center font-semibold w-1/4">{formatoNumero(oc.cantidad)}</td>
                         
                         <td className="text-center font-semibold w-1/4">
                             <button onClick={eliminarRegistro}>

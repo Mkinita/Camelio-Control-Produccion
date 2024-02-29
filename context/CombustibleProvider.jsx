@@ -86,8 +86,8 @@ const CombustibleProvider = ({children}) => {
         toast.success('Agrega un nuevo producto')
 
         setTimeout(() =>{
-            router.push('/agregar-produccion-palet')
-        },1000)
+            router.push('/agregar-produccion-resumen-palet')
+        },100)
     }
 
     const handleElimanarSolicitud = id => {
@@ -211,15 +211,15 @@ const CombustibleProvider = ({children}) => {
         if(pedido02.some(operadorState => operadorState.id === operadores.id)) {
            
 
-           toast.success('Guardado Correctamente')
+           toast.success('Seleccionado Correctamente')
            setTimeout(() =>{
-            router.push('/agregar-produccion-palet')
+            router.push('/agregar-produccion-resumen-palet')
         },500)
         } else {
             setPedido02([...pedido02, operadores])
             toast.success('Agregado Solicitud')
             setTimeout(() =>{
-                router.push('/agregar-produccion-palet')
+                router.push('/agregar-produccion-resumen-palet')
             },500)
         }
         setModal(false)
@@ -404,16 +404,14 @@ const CombustibleProvider = ({children}) => {
         e.preventDefault()
 
         try {
-           await axios.post('/api/pallets',{pedido,pedido02,cliente,cantidad,fecha})
+           await axios.post('/api/pallets',{pedido,pedido02,fecha})
             // Resetear la app
             setPedido([])
             setPedido02([])
-            setCliente('')
-            setCantidad('')
             toast.success('Agregando ⏳')
 
             setTimeout(() =>{
-                router.push('/producciones-pallets')
+                router.push('/informe-pallet')
             },1000)
 
         } catch (error) {

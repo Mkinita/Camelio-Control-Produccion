@@ -1,28 +1,47 @@
-import React from 'react'
+import React, { useState } from "react";
 import useCombustible from '../hooks/useCombustible';
 
-const Productos = ({pallets}) => {
+const Productos = ({ pallets }) => {
+    const { handleAgregarPedidoPalet, handleChangeModal } = useCombustible();
+    const { pallet } = pallets;
+    const [cantidad, setCantidad] = useState('');
 
-    const {handlesetPallets, handleChangeModal} =useCombustible()
-    const {pallet } = pallets;
+    const handleCantidadChange = (event) => {
+        setCantidad(parseInt(event.target.value));
+    };
+
     return (
-        <div className="border p-2 w-full h-full rounded-xl">
-            <div className='p-2 text-center'>
-                <h3 className='text-2xl font-bold'>{pallet}</h3>
-                
-                <button
-                    type='button'
-                    className='bg-red-600 hover:bg-red-800 text-white w-full mt-5 p-2 uppercase font bold rounded-xl'
-                    onClick={()=> {
-                    handleChangeModal();
-                    handlesetPallets(pallets)
-                    }}
-                >
-                    Agregar
-                </button>
-            </div>
-        </div>
-    )
-}
 
-export default Productos
+        <table className="table-auto w-full m-auto text-left bg-white text-gray-700 p-2">
+            <tbody>
+                <tr className="bg-white border-b  text-sm">
+                    <td className="text-left font-semibold w-1/2 p-2">{pallet}</td>
+                    <td className="text-left font-semibold w-1/4 p-2">
+                        <input
+                            type="text"
+                            placeholder="cantidad"
+                            className="border rounded-md p-1 w-full mx-auto  text-center hover:text-black"
+                            value={cantidad}
+                            onChange={handleCantidadChange}
+                        />
+                    </td>
+                    <td className="text-left font-semibold w-1/12 p-2">
+                        <button
+                            type="button"
+                            className="bg-red-600 hover:bg-red-800 px-2 py-2  text-white font-bold uppercase rounded"
+                            onClick={() => handleAgregarPedidoPalet({ ...pallets, cantidad })}
+                        >
+                            {"Agregar"}
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    );
+};
+
+export default Productos;
+
+
+
+

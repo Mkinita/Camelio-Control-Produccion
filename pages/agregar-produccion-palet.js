@@ -39,7 +39,7 @@ const agregarproduccion = () => {
             <input value={search} onChange={searcher} type="text" placeholder='Buscar...' className='text-gray-700 text-center m-auto flex-wrap-reverse border rounded-lg'/>
           </div>
         </div>
-        <div className='grid gap-4 grid-cols-2 md:grid-cols-4 2xl:grid-cols-4'>  
+        <div className='grid gap-4 grid-cols-2 md:grid-cols-3 2xl:grid-cols-4'>  
           {results.map(pallets=>(
             <Pallet key={pallets.id} pallets={pallets}/>
           ))}

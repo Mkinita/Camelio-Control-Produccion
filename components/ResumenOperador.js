@@ -6,23 +6,22 @@ const ResumenProduccion = ({operadores}) => {
   const {handleEditarCantidadesoperadores} = useCombustible()
 
   return (
-    <div className="grid grid-cols-2 gap-1 shadow-lg rounded-lg mx-auto w-full max-w-2xl  border-gray-200 bg-white text-center pb-2">
-      <div className="">
-        <p className="text-lg font-bold">{operadores.operador}</p>
-      </div>
-      <div className="text-center">
-        <button
-            type="button"
-            className="bg-green-700 flex gap-1  w-full md:w-1/2 px-5  text-white rounded-md font-bold uppercase shadow-md p-2"
-            onClick={() => handleEditarCantidadesoperadores(operadores.id)}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-          </svg>
-            Editar
-        </button>
-      </div>
-    </div>
+    <table className="table-auto w-full m-auto text-left bg-white text-gray-700 p-2">
+      <tbody>
+        <tr className="bg-white">
+          <td className="text-left text-lg font-bold w-3/4 p-2">{operadores.operador}</td>
+          <td className="text-left font-semibold w-1/4 p-2">
+            <button
+              type="button"
+              className="px-2 py-2 text-white font-bold uppercase rounded hover:scale-110"
+              onClick={() => handleEditarCantidadesoperadores(operadores.id)}
+            >
+              🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   )
 }
 

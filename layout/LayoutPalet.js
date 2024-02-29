@@ -35,7 +35,7 @@ export default function LayoutControlProduccion({ children, pagina }) {
             <aside className="md:w-full xl:w-3/4 py-2 m-auto">
                 <Image
                     className="m-auto"
-                    width={200}
+                    width={150}
                     height={100}
                     src="/img/Logo.png"
                     alt="imagen logotipo"

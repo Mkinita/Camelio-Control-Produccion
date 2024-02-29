@@ -75,8 +75,6 @@ model Pallet {
 model Pallets {
   id Int @id @default(autoincrement())
   fecha String
-  cantidad String
-  cliente String
   pedido Json
   pedido02 Json
 }

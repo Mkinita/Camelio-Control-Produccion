@@ -60,7 +60,10 @@ export default function AdminProducciones() {
   
       results.forEach((orden) => {
         // Sumar la cantidad de la orden actual a totalCantidad
-        totalCantidad += parseInt(orden.cantidad);
+
+        orden.pedido.forEach((ocn) => {
+          totalCantidad += parseInt(ocn.cantidad);
+        });
   
         orden.pedido02.forEach((oc) => {
           const detalle = oc.operador;
@@ -119,6 +122,10 @@ export default function AdminProducciones() {
                     <div>
                   <p className="font-semibold text-gray-600">Produccion</p>
                       <h2 class="text-2xl font-bold text-gray-600">{(totalCantidad)} Undidades</h2>
+                      <div className='hidden md:grid grid-cols-2 gap-2 '>
+                      <Link href="/tablero-produccion-palet" className='shadow-lg rounded-lg hover:scale-110'>Inicio</Link>
+                      <Link href="/agregar-operador-palet" className='shadow-lg rounded-lg hover:scale-110'>Agregar</Link>
+                      </div>
                   </div>
                   </div>
                   
@@ -169,7 +176,7 @@ export default function AdminProducciones() {
 
         <div className=' grid grid-cols-1 gap-2 w-3/4 m-auto'>
 
-            {isLoading && <p className='text-center m-10'>Cargando...</p>}
+        {isLoading && <p className='text-center m-10'>Cargando...</p>}
 {error && <p className='text-center m-10'>Error al cargar los datos</p>}
 {!isLoading && results && results.length ? (
   <>
@@ -177,6 +184,7 @@ export default function AdminProducciones() {
     {Object.entries(volumenesPorDetalle).map(([operador, cantidad]) => {
       // Inicializar la suma total de la cantidad
       let totalCantidad = 0;
+      let pallets = {};
 
       return (
         <div className='' key={operador}>
@@ -190,32 +198,27 @@ export default function AdminProducciones() {
             </thead>
             <tbody>
               {/* Mapear los resultados y filtrar por operador */}
-              {results.reduce((acc, orden) => {
-                orden.pedido02.forEach((oc) => {
-                  if (oc.operador === operador) {
-                    const existingIndex = acc.findIndex(item => item.pallet === orden.pedido[0].pallet);
-                    if (existingIndex !== -1) {
-                      acc[existingIndex].cantidad += parseInt(orden.cantidad);
-                    } else {
-                      acc.push({
-                        pallet: orden.pedido[0].pallet,
-                        cantidad: parseInt(orden.cantidad)
-                      });
-                    }
+              {results.filter(orden => orden.pedido02.some(oc => oc.operador === operador)).forEach((orden) => {
+                orden.pedido.forEach((pedido) => {
+                  if (!pallets[pedido.pallet]) {
+                    pallets[pedido.pallet] = parseInt(pedido.cantidad);
+                  } else {
+                    pallets[pedido.pallet] += parseInt(pedido.cantidad);
                   }
                 });
-                return acc;
-              }, []).map((pedido, index) => {
-                // Sumar la cantidad al totalCantidad
-                totalCantidad += pedido.cantidad;
-
+              })}
+              
+              {/* Mostrar los pallets y sus cantidades */}
+              {Object.entries(pallets).map(([pallet, cantidad], index) => {
+                totalCantidad += cantidad;
                 return (
                   <tr key={index}>
-                    <td className="w-1/2 font-semibold text-center border border-gray-600">{pedido.pallet}</td>
-                    <td className="w-1/4 font-semibold text-center border border-gray-600">{pedido.cantidad}</td>
+                    <td className="w-1/2 font-semibold text-center border border-gray-600">{pallet}</td>
+                    <td className="w-1/4 font-semibold text-center border border-gray-600">{cantidad}</td>
                   </tr>
                 );
               })}
+              
               {/* Mostrar el total de la cantidad */}
               <tr>
                 <td className="w-1/2 font-semibold text-center border border-gray-600">Total</td>
@@ -230,6 +233,8 @@ export default function AdminProducciones() {
 ) : (
   <p className='text-center m-10'>Sin Produccion</p>
 )}
+
+
 
 </div>
 
