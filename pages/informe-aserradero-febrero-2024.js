@@ -11,62 +11,24 @@ import { Spinner } from "@material-tailwind/react";
 
 export default function AdminProducciones() {
 
-  const fetcher = () => axios('/api/acumuladomesactual').then(datos => datos.data)
-  const { data, error, isLoading } = useSWR('/api/acumuladomesactual',fetcher,{refreshInterval: 100} )
+  const fetcher = () => axios('/api/acumuladomesanterior').then(datos => datos.data)
+  const { data, error, isLoading } = useSWR('/api/acumuladomesanterior',fetcher,{refreshInterval: 100} )
 
-  const fetcherS = () => axios('/api/listado-turnos-mes-actual').then(datos => datos.data)
-  const { data:dataS, error:errorS, isLoading:isLoadingS } = useSWR('/api/listado-turnos-mes-actual',fetcherS,{refreshInterval: 100} )
+  const fetcherS = () => axios('/api/listado-turnos-mes-anterior').then(datos => datos.data)
+  const { data:dataS, error:errorS, isLoading:isLoadingS } = useSWR('/api/listado-turnos-mes-anterior',fetcherS,{refreshInterval: 100} )
 
-  const fetcherA = () => axios('/api/produccionactual').then(datos => datos.data)
-  const { data:dataA, error:errorA, isLoading:isLoadingaA } = useSWR('/api/produccionactual',fetcherA,{refreshInterval: 100} )
 
-  const [ buscar, setBuscar ] = useState("")
-  const [ datos, setDatos ] = useState([])
   const [ users, setUsers ] = useState([])
   const [ search, setSearch ] = useState("")
   const [totalVolumen, setTotalVolumen] = useState(0);
   const [totalCantidad, setTotalCantidad] = useState(0);
-  const [totalVolumenA, setTotalVolumenA] = useState(0);
-  const [totalCantidadA, setTotalCantidadA] = useState(0);
+
 
   
-  //función para traer los datos de la API
-  const URLA = '/api/produccionactual'
-
-  const showDataA = async () => {
-    const response = await fetch(URLA)
-    const data = await response.json()
-    setDatos(data)
-  }
   
-  //  metodo de filtrado 2
-  const resultsA = !buscar ? datos : datos.filter((dato)=> dato.fecha.toLowerCase().includes(buscar.toLocaleLowerCase()))
-    useEffect( ()=> {
-    showDataA()   
-  }, [dataA])
-
-  const sumarVolumenesA = () => {
-    let sumaA = 0;
-    resultsA.forEach((orden) => {
-      orden.pedido.forEach((oc) => {
-        sumaA += oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000;
-      });
-    });
-    setTotalVolumenA(sumaA);
-  };
-
-  const sumarCantidadesA = () => {
-    let sumaA = 0;
-    resultsA.forEach((orden) => {
-      orden.pedido.forEach((oc) => {
-          sumaA += oc.cantidad;
-      });
-    });
-    setTotalCantidadA(sumaA);
-  };
 
   //función para traer los datos de la API
-  const URL = '/api/acumuladomesactual'
+  const URL = '/api/acumuladomesanterior'
     const showData = async () => {
     const response = await fetch(URL)
     const data = await response.json()
@@ -111,10 +73,7 @@ export default function AdminProducciones() {
   }, [results]);
 
 
-  useEffect(() => {
-    sumarVolumenesA();
-    sumarCantidadesA();
-  }, [resultsA]);
+  
 
 
  
@@ -124,7 +83,7 @@ export default function AdminProducciones() {
   return(
 
     <LayoutInforme pagina={'Informe'}>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
         <div className="shadow rounded-lg p-2">
           <div>
             <div className="grid grid-cols-1 gap-4">
@@ -139,21 +98,14 @@ export default function AdminProducciones() {
                   /> 
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-600">Produccion Actual</p>
-                  <h2 class="text-lg font-bold text-gray-600">{formatoNumero(totalVolumenA)} m³ / {formatoNumero(totalCantidadA)} Und.</h2>
+                  <p className="font-semibold text-gray-600">Produccion Acumulada</p>
+                  <h2 class="text-lg font-bold text-gray-600">{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und</h2>
                 </div>
               </div>     
             </div>
           </div>
         </div>
-        <div className="shadow rounded-lg p-2">
-          <div className=''>
-            <div>
-              <p className="font-semibold text-gray-600">Produccion Acumulada</p>
-              <h2 class="text-lg font-bold text-gray-600">{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</h2>
-            </div>
-          </div>
-        </div>
+       
         <div className="hidden md:grid shadow rounded-lg p-2">
           <div className='hidden md:grid grid-cols-3 gap-2'>
             
@@ -209,7 +161,7 @@ export default function AdminProducciones() {
         </div> 
       </div>
         <div className='m-auto w-full  border-gray-100 px-5 py-6 pb-1'>
-          <p className='font-semibold text-gray-800   border-gray-100'>Producciones</p>
+          <p className='font-semibold text-gray-800   border-gray-100'>Producciones Febrero 2024</p>
         </div>
         <div className='grid grid-cols-1 md:grid-cols-1 gap-2'><div>
           <table className="table-auto w-1/2 m-auto text-center bg-white text-gray-700 p-1">
