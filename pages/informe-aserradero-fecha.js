@@ -3,6 +3,7 @@ import axios from 'axios'
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import LayoutInforme from "../layout/LayoutInforme"
+import Link from 'next/link';
 
 export default function AdminProducciones() {
 
@@ -28,12 +29,31 @@ export default function AdminProducciones() {
     setSearch(e.target.value);
   };
 
+  // const filterByDateRange = (date) => {
+  //   if (startDate && endDate) {
+  //     return date >= startDate && date <= endDate;
+  //   }
+  //   return true;
+  // };
+
+
   const filterByDateRange = (date) => {
     if (startDate && endDate) {
-      return date >= startDate && date <= endDate;
+      // Convertir las fechas a objetos Date para una comparación adecuada
+      const startDateObj = new Date(startDate);
+      const endDateObj = new Date(endDate);
+      const dateObj = new Date(date);
+  
+      // Añadir un día a la fecha de finalización para incluir ese día en el rango
+      endDateObj.setDate(endDateObj.getDate() + 1);
+  
+      // Comparar las fechas
+      return dateObj >= startDateObj && dateObj < endDateObj;
     }
     return true;
   };
+  
+  
 
   const results = !search
     ? users.filter((dato) => filterByDateRange(dato.fecha))
@@ -116,6 +136,7 @@ export default function AdminProducciones() {
               <div className="grid grid-cols-1 gap-4">
                 <div className='grid grid-cols-1 md:grid-cols-2'>
                   <div> 
+                  <Link  href="/inicio-control-produccion">
                     <Image
                       className="m-auto"
                       width={100}
@@ -123,6 +144,7 @@ export default function AdminProducciones() {
                       src="/img/Logo.png"
                       alt="imagen logotipo"
                     />
+                    </Link>
                   </div>
                   <div>
                   <p className="font-semibold text-gray-600">Produccion</p>
@@ -215,31 +237,60 @@ export default function AdminProducciones() {
 
           
 
-      {isLoading && <p className='text-center m-10'>Cargando...</p>}
-          {error && <p className='text-center m-10'>Error al cargar los datos</p>}
-          {!isLoading && results && results.length ? Object.entries(volumenesPorDetalle).map(([detalle, volumen]) =>
-          <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
-            
-            
-            <tr key={detalle}>
-              <td className="w-1/2 font-semibold text-center border  border-gray-600">{detalle}</td>
-              <td className="w-1/4 font-semibold text-center border  border-gray-600">{formatoNumero(volumen)}</td>
-              <td className="w-1/4 font-semibold text-center border  border-gray-600">{results.reduce((total, oc) => {
-          return total + oc.pedido.reduce((acc, item) => {
-            if (item.detalle === detalle) {
-              return acc + item.cantidad;
+          {isLoading && <p className='text-center m-10'>Cargando...</p>}
+            {error && <p className='text-center m-10'>Error al cargar los datos</p>}
+            {!isLoading && results && results.length ? 
+              Object.entries(volumenesPorDetalle)
+                .sort(([detalleA], [detalleB]) => detalleA.localeCompare(detalleB)) // Ordenar alfabéticamente
+                .map(([detalle, volumen]) =>
+                  <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
+                    <tr key={detalle}>
+                      <td className="w-1/2 font-semibold text-center border  border-gray-600">{detalle}</td>
+                      <td className="w-1/4 font-semibold text-center border  border-gray-600">{formatoNumero(volumen)}</td>
+                      <td className="w-1/4 font-semibold text-center border  border-gray-600">{results.reduce((total, oc) => {
+                        return total + oc.pedido.reduce((acc, item) => {
+                          if (item.detalle === detalle) {
+                            return acc + item.cantidad;
+                          }
+                          return acc;
+                        }, 0);
+                      }, 0)}</td>
+                      {/* Aquí puedes agregar más columnas si es necesario */}
+                    </tr>
+                  </table>
+                ) :
+              <p className='text-center m-10'>Sin Produccion</p>
             }
-            return acc;
-          }, 0);
-        }, 0)}</td>
-              {/* Aquí puedes agregar más columnas si es necesario */}
-            </tr>
-            </table>
-          ) :
-            <p className='text-center m-10'>Sin Produccion</p>
-          }
+
       
         
     </LayoutInforme>
   )
 }
+
+
+
+
+// {isLoading && <p className='text-center m-10'>Cargando...</p>}
+//           {error && <p className='text-center m-10'>Error al cargar los datos</p>}
+//           {!isLoading && results && results.length ? Object.entries(volumenesPorDetalle).map(([detalle, volumen]) =>
+//           <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
+            
+            
+//             <tr key={detalle}>
+//               <td className="w-1/2 font-semibold text-center border  border-gray-600">{detalle}</td>
+//               <td className="w-1/4 font-semibold text-center border  border-gray-600">{formatoNumero(volumen)}</td>
+//               <td className="w-1/4 font-semibold text-center border  border-gray-600">{results.reduce((total, oc) => {
+//           return total + oc.pedido.reduce((acc, item) => {
+//             if (item.detalle === detalle) {
+//               return acc + item.cantidad;
+//             }
+//             return acc;
+//           }, 0);
+//         }, 0)}</td>
+//               {/* Aquí puedes agregar más columnas si es necesario */}
+//             </tr>
+//             </table>
+//           ) :
+//             <p className='text-center m-10'>Sin Produccion</p>
+//           }

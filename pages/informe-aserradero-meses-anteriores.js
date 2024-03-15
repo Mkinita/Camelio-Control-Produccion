@@ -93,6 +93,7 @@ export default function AdminProducciones() {
             <div className="grid grid-cols-1 gap-4">
               <div className='grid grid-cols-1 md:grid-cols-2'>
                 <div className=''>
+                <Link  href="/inicio-control-produccion">
                   <Image
                     className="m-auto"
                     width={100}
@@ -100,6 +101,7 @@ export default function AdminProducciones() {
                     src="/img/Logo.png"
                     alt="imagen logotipo"
                   /> 
+                  </Link>
                 </div>
                 <div>
                   <p className="font-semibold text-gray-600">Produccion Actual</p>

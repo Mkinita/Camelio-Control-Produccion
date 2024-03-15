@@ -18,6 +18,7 @@ const tableroproduccion = () => {
     <>
         <div className="m-auto">
             <aside className="">
+            <Link href="/inicio-control-produccion">
                 <Image
                     className="m-auto"
                     width={250}
@@ -25,6 +26,7 @@ const tableroproduccion = () => {
                     src="/img/Logo.png"
                     alt="imagen logotipo"
                 />  
+                </Link>
                 <div className="px-5 bg-white pb-0">
             <div className="flex">
                 <div className="flex-1 group">

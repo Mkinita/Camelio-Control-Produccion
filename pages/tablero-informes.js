@@ -20,6 +20,7 @@ const tableroproduccion = () => {
       </Head>
         <div className="m-auto">
             <aside className="">
+            <Link href="/inicio-control-produccion">
                 <Image
                     className="m-auto"
                     width={250}
@@ -27,6 +28,7 @@ const tableroproduccion = () => {
                     src="/img/Logo.png"
                     alt="imagen logotipo"
                 />  
+                </Link> 
             </aside>
             <main className="">
                 <div className="p-2">
