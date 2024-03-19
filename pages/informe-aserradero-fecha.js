@@ -16,6 +16,7 @@ export default function AdminProducciones() {
   const [endDate, setEndDate] = useState('');
   const [totalVolumen, setTotalVolumen] = useState(0);
   const [totalCantidad, setTotalCantidad] = useState(0);
+  const [subtotalesPorProducto,setSubtotalesPorProducto] = useState(0);
   const [volumenesPorDetalle, setVolumenesPorDetalle] = useState({});
   const URL = '/api/produccionesinforme';
 
@@ -28,13 +29,6 @@ export default function AdminProducciones() {
   const searcher = (e) => {
     setSearch(e.target.value);
   };
-
-  // const filterByDateRange = (date) => {
-  //   if (startDate && endDate) {
-  //     return date >= startDate && date <= endDate;
-  //   }
-  //   return true;
-  // };
 
 
   const filterByDateRange = (date) => {
@@ -52,17 +46,24 @@ export default function AdminProducciones() {
     }
     return true;
   };
+
+
+  const  results = users.filter((dato) => {
+    const matchesSearch = !search || JSON.stringify(dato.pedido).toLowerCase().includes(search.toLowerCase());
+    const isInDateRange = filterByDateRange(dato.fecha);
+    return matchesSearch && isInDateRange;
+  });
   
   
 
-  const results = !search
-    ? users.filter((dato) => filterByDateRange(dato.fecha))
-    : users.filter(
-        (dato) =>
-        JSON.stringify(dato.fecha)
-    .toLowerCase()
-    .includes(search.toLowerCase()) && filterByDateRange(dato.fecha)
-  );
+  // const results = !search
+  //   ? users.filter((dato) => filterByDateRange(dato.fecha))
+  //   : users.filter(
+  //       (dato) =>
+  //       JSON.stringify(dato.fecha)
+  //   .toLowerCase()
+  //   .includes(search.toLowerCase()) && filterByDateRange(dato.fecha)
+  // );
 
   useEffect(() => {
     showData();
@@ -126,6 +127,45 @@ export default function AdminProducciones() {
     }
     console.log(results)
   }, [results]);
+
+
+  // useEffect(() => {
+  //   if (results && Array.isArray(results)) { // Verifica si data existe y es un array
+  //     let totalVolumen = 0;
+  //     let totalCantidad = 0;
+  //     const volumenesPorDetalle = {};
+  //     const subtotalesPorProducto = {};
+  
+  //     results.forEach((orden) => {
+  //       orden.pedido.forEach((oc) => {
+  //         const detalle = oc.detalle;
+  //         const producto = detalle.substring(0, 2); // Obtiene las dos primeras letras como identificador de producto
+  //         const volumen = oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000;
+  
+  //         totalVolumen += volumen;
+  //         totalCantidad += oc.cantidad;
+  
+  //         if (detalle in volumenesPorDetalle) {
+  //           volumenesPorDetalle[detalle] += volumen;
+  //         } else {
+  //           volumenesPorDetalle[detalle] = volumen;
+  //         }
+  
+  //         // Sumar al subtotal del producto
+  //         if (producto in subtotalesPorProducto) {
+  //           subtotalesPorProducto[producto] += volumen;
+  //         } else {
+  //           subtotalesPorProducto[producto] = volumen;
+  //         }
+  //       });
+  //     });
+  
+  //     setTotalVolumen(totalVolumen);
+  //     setTotalCantidad(totalCantidad);
+  //     setVolumenesPorDetalle(volumenesPorDetalle);
+  //     setSubtotalesPorProducto(subtotalesPorProducto);
+  //   }
+  // }, [results]);
 
   return(
 
@@ -214,13 +254,29 @@ export default function AdminProducciones() {
 
       </div>
 
-          <div className='mx-auto w-full px-5 py-6 pb-6'>
-                  <p className='font-semibold text-gray-800  border-b border-gray-100'>Detalle</p>
-              </div>
+      
+          <div className=' grid grid-cols-2 m-auto w-1/2  py-6 pb-4 '> 
+
+            <div className='m-auto '>
+                    <p className='font-semibold text-gray-800  '>Detalle</p>
+                </div>
+          
+            <div className='m-auto'>
+          <input
+            value={search}
+            onChange={searcher}
+            type='text'
+            placeholder='Filtra Producto...'
+            className=' text-center border rounded-lg m-auto'
+          />
+          
+          </div>
+          </div>
+          
 
         
 
-              <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
+              <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1 '>
           
           
           <tr >
@@ -230,12 +286,8 @@ export default function AdminProducciones() {
       
           </tr>
           </table>
-        
 
 
-              
-
-          
 
           {isLoading && <p className='text-center m-10'>Cargando...</p>}
             {error && <p className='text-center m-10'>Error al cargar los datos</p>}
@@ -261,6 +313,14 @@ export default function AdminProducciones() {
                 ) :
               <p className='text-center m-10'>Sin Produccion</p>
             }
+        
+
+
+              
+
+          
+
+          
 
       
         
@@ -294,3 +354,44 @@ export default function AdminProducciones() {
 //           ) :
 //             <p className='text-center m-10'>Sin Produccion</p>
 //           }
+
+
+
+
+
+
+
+
+
+
+// {isLoading && <p className='text-center m-10'>Cargando...</p>}
+// {error && <p className='text-center m-10'>Error al cargar los datos</p>}
+// {!isLoading && results && results.length ? 
+//   <>
+//     {Object.entries(subtotalesPorProducto)
+//       .sort(([productoA], [productoB]) => productoA.localeCompare(productoB)) // Ordenar alfabéticamente
+//       .map(([producto, subtotal]) =>
+//         <div key={producto}>
+//           <h2 className='text-center'>{producto}</h2>
+//           <p className='text-center'>Subtotal: {formatoNumero(subtotal)}</p>
+//           {results.filter(orden => orden.pedido.some(oc => oc.detalle.startsWith(producto)))
+//             .map(orden =>
+//               <table key={orden.id} className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
+//                 <tbody>
+//                   {orden.pedido.filter(oc => oc.detalle.startsWith(producto))
+//                     .map(oc =>
+//                       <tr key={oc.id}>
+//                         <td className="w-1/2 font-semibold text-center border border-gray-600">{oc.detalle}</td>
+//                         <td className="w-1/4 font-semibold text-center border border-gray-600">{formatoNumero(oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000)}</td>
+//                         <td className="w-1/4 font-semibold text-center border border-gray-600">{oc.cantidad}</td>
+//                         {/* Aquí puedes agregar más columnas si es necesario */}
+//                       </tr>
+//                     )}
+//                 </tbody>
+//               </table>
+//             )}
+//         </div>
+//       )}
+//   </>
+//   : <p className='text-center m-10'>Sin Produccion</p>
+// }
