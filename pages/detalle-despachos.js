@@ -207,7 +207,7 @@ const sumarVolumenes = () => {
         });
     });
     setTotalVolumen(suma);
-    console.log(setTotalVolumen);
+    
 };
 
   const sumarCantidades = () => {
