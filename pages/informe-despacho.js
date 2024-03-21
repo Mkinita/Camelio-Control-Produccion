@@ -11,8 +11,8 @@ import { Spinner } from "@material-tailwind/react";;
 
 export default function AdminProducciones() {
 
-    const fetcher = () => axios('/api/despachos').then(datos => datos.data)
-    const { data, error, isLoading } = useSWR('/api/despachos',fetcher,{refreshInterval: 100} )
+    const fetcher = () => axios('/api/despachos-mes-actual').then(datos => datos.data)
+    const { data, error, isLoading } = useSWR('/api/despachos-mes-actual',fetcher,{refreshInterval: 100} )
 
     const [ datos, setDatos ] = useState([])
     const [ buscar, setBuscar ] = useState("")
@@ -23,7 +23,7 @@ export default function AdminProducciones() {
         
   
     //función para traer los datos de la API
-    const URL = '/api/despachos'
+    const URL = '/api/despachos-mes-actual'
   
     const showData = async () => {
       const response = await fetch(URL)
@@ -136,7 +136,14 @@ export default function AdminProducciones() {
                     </div>
                     </div>
                     <div className="grid shadow rounded-lg p-2 ">
-                        <div className='grid  grid-cols-2 gap-2'>
+                        <div className='grid  grid-cols-3 gap-2'>
+                          <div className='shadow rounded-lg hover:scale-90'>
+                                <Link href="/detalle-despachos">
+                                <p className="font-semibold text-gray-600 ">Meses</p>
+                                <p className="text-center ">Anteriores</p>
+                                <span className="">📆</span>
+                                </Link>
+                            </div>
                             <div className='shadow rounded-lg hover:scale-90'>
                                 <Link href="/detalle-despachos">
                                 <p className="font-semibold text-gray-600 ">Detalle</p>
