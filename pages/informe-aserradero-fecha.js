@@ -16,7 +16,7 @@ export default function AdminProducciones() {
   const [endDate, setEndDate] = useState('');
   const [totalVolumen, setTotalVolumen] = useState(0);
   const [totalCantidad, setTotalCantidad] = useState(0);
-  const [subtotalesPorProducto,setSubtotalesPorProducto] = useState(0);
+  const [specificDate, setSpecificDate] = useState('');
   const [volumenesPorDetalle, setVolumenesPorDetalle] = useState({});
   const URL = '/api/produccionesinforme';
 
@@ -31,39 +31,35 @@ export default function AdminProducciones() {
   };
 
 
+  
+
   const filterByDateRange = (date) => {
-    if (startDate && endDate) {
-      // Convertir las fechas a objetos Date para una comparación adecuada
-      const startDateObj = new Date(startDate);
-      const endDateObj = new Date(endDate);
+    if ((startDate && endDate) || specificDate) {
       const dateObj = new Date(date);
-  
-      // Añadir un día a la fecha de finalización para incluir ese día en el rango
-      endDateObj.setDate(endDateObj.getDate() + 1);
-  
-      // Comparar las fechas
-      return dateObj >= startDateObj && dateObj < endDateObj;
+
+      if (startDate && endDate) {
+        const startDateObj = new Date(startDate);
+        const endDateObj = new Date(endDate);
+        endDateObj.setDate(endDateObj.getDate() + 1);
+        return dateObj >= startDateObj && dateObj < endDateObj;
+      }
+
+      if (specificDate) {
+        const specificDateObj = new Date(specificDate);
+        specificDateObj.setDate(specificDateObj.getDate() + 1);
+        return dateObj.toDateString() === specificDateObj.toDateString();
+      }
     }
     return true;
   };
 
-
-  const  results = users.filter((dato) => {
+  const results = users ? users.filter((dato) => {
     const matchesSearch = !search || JSON.stringify(dato.pedido).toLowerCase().includes(search.toLowerCase());
     const isInDateRange = filterByDateRange(dato.fecha);
     return matchesSearch && isInDateRange;
-  });
+  }) : [];
   
   
-
-  // const results = !search
-  //   ? users.filter((dato) => filterByDateRange(dato.fecha))
-  //   : users.filter(
-  //       (dato) =>
-  //       JSON.stringify(dato.fecha)
-  //   .toLowerCase()
-  //   .includes(search.toLowerCase()) && filterByDateRange(dato.fecha)
-  // );
 
   useEffect(() => {
     showData();
@@ -129,44 +125,7 @@ export default function AdminProducciones() {
   }, [results]);
 
 
-  // useEffect(() => {
-  //   if (results && Array.isArray(results)) { // Verifica si data existe y es un array
-  //     let totalVolumen = 0;
-  //     let totalCantidad = 0;
-  //     const volumenesPorDetalle = {};
-  //     const subtotalesPorProducto = {};
   
-  //     results.forEach((orden) => {
-  //       orden.pedido.forEach((oc) => {
-  //         const detalle = oc.detalle;
-  //         const producto = detalle.substring(0, 2); // Obtiene las dos primeras letras como identificador de producto
-  //         const volumen = oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000;
-  
-  //         totalVolumen += volumen;
-  //         totalCantidad += oc.cantidad;
-  
-  //         if (detalle in volumenesPorDetalle) {
-  //           volumenesPorDetalle[detalle] += volumen;
-  //         } else {
-  //           volumenesPorDetalle[detalle] = volumen;
-  //         }
-  
-  //         // Sumar al subtotal del producto
-  //         if (producto in subtotalesPorProducto) {
-  //           subtotalesPorProducto[producto] += volumen;
-  //         } else {
-  //           subtotalesPorProducto[producto] = volumen;
-  //         }
-  //       });
-  //     });
-  
-  //     setTotalVolumen(totalVolumen);
-  //     setTotalCantidad(totalCantidad);
-  //     setVolumenesPorDetalle(volumenesPorDetalle);
-  //     setSubtotalesPorProducto(subtotalesPorProducto);
-  //   }
-  // }, [results]);
-
   return(
 
     <LayoutInforme pagina={'Actual'}>
@@ -174,9 +133,11 @@ export default function AdminProducciones() {
           <div className="shadow rounded-lg p-2">
             <div>
               <div className="grid grid-cols-1 gap-4">
+              
                 <div className='grid grid-cols-1 md:grid-cols-2'>
+                <Link  href="/inicio-control-produccion">
                   <div> 
-                  <Link  href="/inicio-control-produccion">
+                  
                     <Image
                       className="m-auto"
                       width={100}
@@ -184,9 +145,11 @@ export default function AdminProducciones() {
                       src="/img/Logo.png"
                       alt="imagen logotipo"
                     />
-                    </Link>
+                    
                   </div>
+                  </Link>
                   <div>
+                    
                   <p className="font-semibold text-gray-600">Produccion</p>
                   <h2 class="text-2xl font-bold text-gray-600">{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</h2>
                 </div>
@@ -199,8 +162,8 @@ export default function AdminProducciones() {
             <p className="font-semibold text-gray-600">Fecha</p>
             <div>
               <input
-                value={search}
-                onChange={searcher}
+                value={specificDate}
+                onChange={(e) => setSpecificDate(e.target.value)}
                 type="date"
                 placeholder="Filtra Producto..."
                 className="text-center m-auto border rounded-lg"
@@ -331,67 +294,28 @@ export default function AdminProducciones() {
 
 
 
-// {isLoading && <p className='text-center m-10'>Cargando...</p>}
-//           {error && <p className='text-center m-10'>Error al cargar los datos</p>}
-//           {!isLoading && results && results.length ? Object.entries(volumenesPorDetalle).map(([detalle, volumen]) =>
-//           <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
-            
-            
-//             <tr key={detalle}>
-//               <td className="w-1/2 font-semibold text-center border  border-gray-600">{detalle}</td>
-//               <td className="w-1/4 font-semibold text-center border  border-gray-600">{formatoNumero(volumen)}</td>
-//               <td className="w-1/4 font-semibold text-center border  border-gray-600">{results.reduce((total, oc) => {
-//           return total + oc.pedido.reduce((acc, item) => {
-//             if (item.detalle === detalle) {
-//               return acc + item.cantidad;
-//             }
-//             return acc;
-//           }, 0);
-//         }, 0)}</td>
-//               {/* Aquí puedes agregar más columnas si es necesario */}
-//             </tr>
-//             </table>
-//           ) :
-//             <p className='text-center m-10'>Sin Produccion</p>
-//           }
+// const filterByDateRange = (date) => {
+  //   if (startDate && endDate) {
+  //     // Convertir las fechas a objetos Date para una comparación adecuada
+  //     const startDateObj = new Date(startDate);
+  //     const endDateObj = new Date(endDate);
+  //     const dateObj = new Date(date);
+  
+  //     // Añadir un día a la fecha de finalización para incluir ese día en el rango
+  //     endDateObj.setDate(endDateObj.getDate() + 1);
+  
+  //     // Comparar las fechas
+  //     return dateObj >= startDateObj && dateObj < endDateObj;
+  //   }
+  //   return true;
+  // };
+
+
+  // const  results = users.filter((dato) => {
+  //   const matchesSearch = !search || JSON.stringify(dato.pedido).toLowerCase().includes(search.toLowerCase());
+  //   const isInDateRange = filterByDateRange(dato.fecha);
+  //   return matchesSearch && isInDateRange;
+  // });
 
 
 
-
-
-
-
-
-
-
-// {isLoading && <p className='text-center m-10'>Cargando...</p>}
-// {error && <p className='text-center m-10'>Error al cargar los datos</p>}
-// {!isLoading && results && results.length ? 
-//   <>
-//     {Object.entries(subtotalesPorProducto)
-//       .sort(([productoA], [productoB]) => productoA.localeCompare(productoB)) // Ordenar alfabéticamente
-//       .map(([producto, subtotal]) =>
-//         <div key={producto}>
-//           <h2 className='text-center'>{producto}</h2>
-//           <p className='text-center'>Subtotal: {formatoNumero(subtotal)}</p>
-//           {results.filter(orden => orden.pedido.some(oc => oc.detalle.startsWith(producto)))
-//             .map(orden =>
-//               <table key={orden.id} className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
-//                 <tbody>
-//                   {orden.pedido.filter(oc => oc.detalle.startsWith(producto))
-//                     .map(oc =>
-//                       <tr key={oc.id}>
-//                         <td className="w-1/2 font-semibold text-center border border-gray-600">{oc.detalle}</td>
-//                         <td className="w-1/4 font-semibold text-center border border-gray-600">{formatoNumero(oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000)}</td>
-//                         <td className="w-1/4 font-semibold text-center border border-gray-600">{oc.cantidad}</td>
-//                         {/* Aquí puedes agregar más columnas si es necesario */}
-//                       </tr>
-//                     )}
-//                 </tbody>
-//               </table>
-//             )}
-//         </div>
-//       )}
-//   </>
-//   : <p className='text-center m-10'>Sin Produccion</p>
-// }

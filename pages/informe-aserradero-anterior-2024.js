@@ -11,11 +11,11 @@ import { Spinner } from "@material-tailwind/react";
 
 export default function AdminProducciones() {
 
-  const fetcher = () => axios('/api/acumuladomesfebrero').then(datos => datos.data)
-  const { data, error, isLoading } = useSWR('/api/acumuladomesfebrero',fetcher,{refreshInterval: 100} )
+  const fetcher = () => axios('/api/acumuladomesanterior').then(datos => datos.data)
+  const { data, error, isLoading } = useSWR('/api/acumuladomesanterior',fetcher,{refreshInterval: 100} )
 
-  const fetcherS = () => axios('/api/listado-turnos-mes-febrero').then(datos => datos.data)
-  const { data:dataS, error:errorS, isLoading:isLoadingS } = useSWR('/api/listado-turnos-mes-febrero',fetcherS,{refreshInterval: 100} )
+  const fetcherS = () => axios('/api/listado-turnos-mes-anterior').then(datos => datos.data)
+  const { data:dataS, error:errorS, isLoading:isLoadingS } = useSWR('/api/listado-turnos-mes-anterior',fetcherS,{refreshInterval: 100} )
 
 
   const [ users, setUsers ] = useState([])
@@ -28,7 +28,7 @@ export default function AdminProducciones() {
   
 
   //función para traer los datos de la API
-  const URL = '/api/acumuladomesfebrero'
+  const URL = '/api/acumuladomesanterior'
     const showData = async () => {
     const response = await fetch(URL)
     const data = await response.json()
