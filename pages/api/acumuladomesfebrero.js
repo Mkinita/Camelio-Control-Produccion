@@ -8,10 +8,10 @@ export default async function handler(req, res) {
   const month = fecha.getMonth();
 
   // Obtener la fecha inicial del mes anterior
-  const firstDayOfLastMonth = new Date(year, month - 2, 2);
+  const firstDayOfLastMonth = new Date(year, month - 2, 1);
 
   // Obtener la fecha final del mes anterior
-  const lastDayOfLastMonth = new Date(year, month, 0);
+  const lastDayOfLastMonth = new Date(year, month - 1, 0);
 
   try {
     // Obtener producciones

@@ -161,7 +161,7 @@ export default function AdminProducciones() {
         </div> 
       </div>
         <div className='m-auto w-full  border-gray-100 px-5 py-6 pb-1'>
-          <p className='font-semibold text-gray-800   border-gray-100'>Producciones Febrero 2024</p>
+          <p className='font-semibold text-gray-800   border-gray-100'>Producciones Marzo 2024</p>
         </div>
         <div className='grid grid-cols-1 md:grid-cols-1 gap-2'><div>
           <table className="table-auto w-1/2 m-auto text-center bg-white text-gray-700 p-1">
