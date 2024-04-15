@@ -60,6 +60,10 @@ export default function AdminProducciones() {
     const formatoNumero = (num) => {
         return num.toString().slice(0,5);
     }
+
+    const formatoNumero2 = (num) => {
+      return num.toString().slice(0,10);
+  }
     
     useEffect(() => {
         sumarVolumenes();
@@ -129,7 +133,7 @@ export default function AdminProducciones() {
                                 </div>
                                 <div className=''>
                                     <p className="font-semibold text-gray-600">Despacho Acumulado</p>
-                                    <h2 class="text-lg font-bold text-gray-600">{formatoNumero(totalVolumens)} m³</h2>
+                                    <h2 class="text-lg font-bold text-gray-600">{formatoNumero2(totalVolumens)} m³</h2>
                                 </div>
                             </div>     
                         </div>

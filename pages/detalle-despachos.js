@@ -51,22 +51,28 @@ export default function AdminProducciones() {
   };
 
 
-  const  results = users.filter((dato) => {
-    const matchesSearch = !search || JSON.stringify(dato.pedido).toLowerCase().includes(search.toLowerCase());
-    const isInDateRange = filterByDateRange(dato.fecha);
-    return matchesSearch && isInDateRange;
+  // const  results = users.filter((dato) => {
+  //   const matchesSearch = !search || JSON.stringify(dato.pedido).toLowerCase().includes(search.toLowerCase());
+  //   const isInDateRange = filterByDateRange(dato.fecha);
+  //   return matchesSearch && isInDateRange;
+  // });
+
+
+  const results = users.filter((despacho) => {
+    return (
+      despacho.pedido.some((oc) => {
+        return (
+          JSON.stringify(oc.pedido).toLowerCase().includes(search.toLowerCase()) ||
+          oc.pedido.some((detalle) => {
+            return JSON.stringify(detalle.detalle).toLowerCase().includes(search.toLowerCase());
+          })
+        );
+      }) &&
+      filterByDateRange(despacho.fecha)
+    );
   });
 
-// const results = users.filter((dato) => {
-//     const matchesSearch = !search || dato.pedido.some(innerPedido => {
-//       return innerPedido.pedido.some(detallePedido => {
-//         return detallePedido.detalle.toLowerCase().includes(search.toLowerCase());
-//       });
-//     });
-//     const isInDateRange = filterByDateRange(dato.fecha);
-//     return matchesSearch && isInDateRange;
-//   });
-  
+
   
   
   
@@ -74,15 +80,6 @@ export default function AdminProducciones() {
     showData();
   }, []);
   
-//   const sumarVolumenes = () => {
-//     let suma = 0;
-//     results.forEach((orden) => {
-//       orden.pedido.forEach((oc) => {
-//         suma += oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000;
-//       });
-//     });
-//     setTotalVolumen(suma);
-//   };
 
 
 const sumarVolumenes = () => {
@@ -111,7 +108,11 @@ const sumarVolumenes = () => {
   };
 
   const formatoNumero = (num) => {
-    return num.toString().slice(0,4);
+    return num.toString().slice(0,5);
+  }
+
+  const formatoNumero2 = (num) => {
+    return num.toString().slice(0,10);
   }
 
   useEffect(() => {
@@ -173,8 +174,8 @@ const sumarVolumenes = () => {
                     </Link>
                   </div>
                   <div>
-                  <p className="font-semibold text-gray-600">Produccion</p>
-                  <h2 class="text-2xl font-bold text-gray-600">{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</h2>
+                  <p className="font-semibold text-gray-600">Despachos</p>
+                  <h2 class="text-xl font-bold text-gray-600">{formatoNumero2(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</h2>
                 </div>
               </div> 
             </div>
