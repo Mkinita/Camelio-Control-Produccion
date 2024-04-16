@@ -58,13 +58,28 @@ export default function AdminProducciones() {
   // });
 
 
+  // const results = users.filter((despacho) => {
+  //   return (
+  //     despacho.pedido.some((oc) => {
+  //       return (
+  //         JSON.stringify(oc.pedido).toLowerCase().includes(search.toLowerCase()) ||
+  //         oc.pedido.some((detalle) => {
+  //           return JSON.stringify(detalle.detalle).toLowerCase().includes(search.toLowerCase());
+  //         })
+  //       );
+  //     }) &&
+  //     filterByDateRange(despacho.fecha)
+  //   );
+  // });
+
   const results = users.filter((despacho) => {
     return (
       despacho.pedido.some((oc) => {
         return (
           JSON.stringify(oc.pedido).toLowerCase().includes(search.toLowerCase()) ||
           oc.pedido.some((detalle) => {
-            return JSON.stringify(detalle.detalle).toLowerCase().includes(search.toLowerCase());
+            // Verificar si el detalle coincide exactamente con lo que el usuario ha ingresado
+            return detalle.detalle.toLowerCase() === search.toLowerCase();
           })
         );
       }) &&
