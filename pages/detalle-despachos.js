@@ -22,6 +22,17 @@ export default function AdminProducciones() {
   const [totalCantidad, setTotalCantidad] = useState(0);
   const [volumenesPorDetalle, setVolumenesPorDetalle] = useState({});
   const URL = '/api/despachos';
+  const [paginaActualizada, setPaginaActualizada] = useState(false);
+
+  const handleClick = () => {
+    // Aquí se establece la página como actualizada
+    setPaginaActualizada(true);
+
+    // Después de 3 segundos, se recarga la página
+    setTimeout(() => {
+      location.reload();
+    }, 200);
+  };
 
   const showData = async () => {
     const response = await fetch(URL);
@@ -172,21 +183,28 @@ const sumarVolumenes = () => {
   return(
 
     <LayoutInforme pagina={'Actual'}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-center">
           <div className="shadow rounded-lg p-2">
             <div>
               <div className="grid grid-cols-1 gap-4">
                 <div className='grid grid-cols-1 md:grid-cols-2'>
                   <div> 
-                  <Link  href="/inicio-control-produccion">
-                    <Image
-                      className="m-auto"
-                      width={100}
-                      height={100}
-                      src="/img/Logo.png"
-                      alt="imagen logotipo"
-                    />
-                    </Link>
+                  <button onClick={handleClick} disabled={paginaActualizada}>
+                    
+                    {!paginaActualizada && (
+                      <Link href="/inicio-control-produccion">
+                        <div>
+                          <Image
+                            className="m-auto"
+                            width={100}
+                            height={100}
+                            src="/img/Logo.png"
+                            alt="imagen logotipo"
+                          />
+                        </div>
+                      </Link>
+                    )}
+                  </button>
                   </div>
                   <div>
                   <p className="font-semibold text-gray-600">Despachos</p>
@@ -196,9 +214,9 @@ const sumarVolumenes = () => {
             </div>
           </div>
         </div>
-        <div className="shadow rounded-lg p-2  grid-1 md:grid-cols-2 hidden md:grid">
+        <div className="shadow rounded-lg p-2  grid-1 md:grid-cols-2 gap-2 hidden md:grid">
           <div className='shadow rounded-lg hover:scale-90'>
-            <p className="font-semibold text-gray-600">Fecha</p>
+            {/* <p className="font-semibold text-gray-600">Fecha</p>
             <div>
               <input
                 value={search}
@@ -212,7 +230,35 @@ const sumarVolumenes = () => {
                   <li key={index}>{user.nombre}</li>
                 ))}
               </ul>
-            </div>        
+            </div>         */}
+
+<div className=' m-auto'>
+
+
+
+<p className=' text-center font-semibold text-gray-600'>Desde</p>
+<div></div>
+<input
+ className=' text-center'
+ type="date"
+ value={startDate}
+ onChange={(e) => setStartDate(e.target.value)}
+/>
+</div>
+<div className=' m-auto'>
+<p className=' text-center font-semibold text-gray-600'>Hasta</p>
+<input
+ className=' text-center'
+ type="date"
+ value={endDate}
+ onChange={(e) => setEndDate(e.target.value)}
+/>
+<ul>
+ {results.map((user, index) => (
+   <li key={index}>{user.nombre}</li>
+ ))}
+</ul>
+</div>
           </div>
           <div className='shadow rounded-lg hover:scale-90 hidden md:grid'>
             <button className="text-center" onClick={() => window.print()}>
@@ -223,38 +269,7 @@ const sumarVolumenes = () => {
         </div>
       </div>
 
-          <div className=' grid grid-cols-1 p-4 w-1/2 m-auto'>
-          <div className=' grid grid-cols-2 gap-2 shadow-lg rounded-lg p-2'>
-            <div className=' m-auto'>
-
-
-
-         <p className=' text-center font-semibold text-gray-600'>Desde</p>
-         <div></div>
-        <input
-          className=' text-center'
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-        </div>
-        <div className=' m-auto'>
-        <p className=' text-center font-semibold text-gray-600'>Hasta</p>
-        <input
-          className=' text-center'
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-        <ul>
-          {results.map((user, index) => (
-            <li key={index}>{user.nombre}</li>
-          ))}
-        </ul>
-        </div>
-        </div>
-
-      </div>
+          
 
       
           <div className=' grid grid-cols-2 m-auto w-1/2  py-6 pb-4 '> 
