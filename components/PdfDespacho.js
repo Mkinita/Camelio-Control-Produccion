@@ -28,25 +28,42 @@ const PdfDespacho = ({orden}) => {
 
 
 
-    // Función para calcular el volumen de un pedido
-    const calcularVolumenPedido = (pedido) => {
+      const calcularVolumenPedido = (pedido) => {
         let volumenPedido = 0;
-        pedido.forEach(o => {
-            volumenPedido += o.espesor * o.ancho * o.largo * o.piezas / 1000000;
-        });
+        if (pedido) {
+            pedido.forEach(o => {
+                volumenPedido += o.espesor * o.ancho * o.largo * o.piezas / 1000000;
+            });
+        }
         return volumenPedido;
-    };
+    }
+    
 
     // Función para calcular el volumen total
-    const calcularVolumenTotal = () => {
+    const calcularVolumenTotal = (pedido) => {
         let volumenTotal = 0;
-        pedido.forEach(dato => {
-            volumenTotal += calcularVolumenPedido(dato.pedido);
-        });
+        if (pedido) {
+            pedido.forEach(item => {
+                if (item && item.pedido) {
+                    item.pedido.forEach(o => {
+                        volumenTotal += calcularVolumenPedido(o);
+                    });
+                }
+            });
+        }
         return volumenTotal;
     };
 
-    const volumenTotal = calcularVolumenTotal();
+    console.log(calcularVolumenTotal)
+    
+    
+    
+    
+    const volumenTotal = calcularVolumenTotal(pedido);
+    
+
+    console.log("Datos de pedido:", pedido);
+console.log("Volumen total:", volumenTotal);
 
 
 
@@ -97,32 +114,27 @@ const PdfDespacho = ({orden}) => {
             <div className="">
                 <div className="">
                     <table className="table-auto w-3/4 m-auto text-center bg-white">
-                        <tbody>
-                            {pedido.map((dato, index) => (
-                                <React.Fragment key={dato.id}>
-                                    {index === 0 && (
-                                        <tr className="bg-white border-b text-sm">
-                                            <td  className="px-1 py-1 w-1/6 text-center border border-black">Orden</td>
-                                            <td  className="px-1 py-1 w-1/6 text-center border border-black">Cliente</td>
-                                            <td  className="px-1 py-1 w-1/6 text-center border border-black">Etiqueta</td>
-                                            <td  className="px-1 py-1 w-1/6 text-center border border-black">Calidad</td>
-                                            <td  className="px-1 py-1 w-1/6 text-center border border-black">Detalle</td>
-                                            <td  className="px-1 py-1 w-1/6 text-center border border-black">m³</td>
-                                        </tr>
-                                    )}
-                                    {dato.pedido.map(o => (
-                                        <tr key={o.id} className="bg-white border-b text-sm">
-                                            <td className="px-1 py-1 w-1/6 text-center border border-black">Orden</td>
-                                            <td className="px-1 py-1 w-1/6 text-center border border-black">{cliente}/{destino}</td>
-                                            <td className="px-1 py-1 w-1/6 text-center border border-black">{dato.id}</td>
-                                            <td className="px-1 py-1 w-1/6 text-center border border-black">{dato.calidad}</td>
-                                            <td className="px-1 py-1 w-1/6 text-center border border-black">{o.espesor}x{o.ancho}x{o.largo}x{o.piezas}</td>
-                                            <td className="px-1 py-1 w-1/6 text-center border border-black">{formatoNumero(o.espesor*o.ancho*o.largo*o.piezas/1000000)}</td>
-                                        </tr>
-                                    ))}
-                                </React.Fragment>
-                            ))}
-                        </tbody>
+                    <tbody>
+    <tr className="bg-white border-b text-sm">
+        <td className="px-1 py-1 w-1/5 text-center border border-black">Orden</td>
+        <td className="px-1 py-1 w-1/5 text-center border border-black">Cliente</td>
+        <td className="px-1 py-1 w-1/5 text-center border border-black">Destino</td>
+        {/* <td className="px-1 py-1 w-1/5 text-center border border-black">Calidad</td> */}
+        <td className="px-1 py-1 w-1/5 text-center border border-black">Detalle</td>
+        <td className="px-1 py-1 w-1/5 text-center border border-black">m³</td>
+    </tr>
+    {pedido.map((o, index) => (
+        <tr key={o.id} className="bg-white border-b text-sm">
+            <td className="px-1 py-1 w-1/5 text-center border border-black">Orden</td>
+            <td className="px-1 py-1 w-1/5 text-center border border-black">{cliente}</td>
+            <td className="px-1 py-1 w-1/5 text-center border border-black">{destino}</td>
+            {/* <td className="px-1 py-1 w-1/5 text-center border border-black">{o.calidad}</td> */}
+            <td className="px-1 py-1 w-1/5 text-center border border-black">{o.espesor}x{o.ancho}x{o.largo}x{o.piezas}</td>
+            <td className="px-1 py-1 w-1/5 text-center border border-black">{formatoNumero(o.espesor*o.ancho*o.largo*o.piezas/1000000)}</td>
+        </tr>
+    ))}
+</tbody>
+
                     </table>
                     <div className="text-center mt-5">
                         <p className="text-lg font-bold">Volumen Total: {formatoNumero1(volumenTotal)} m³</p>

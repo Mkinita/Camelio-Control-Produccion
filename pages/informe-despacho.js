@@ -47,9 +47,9 @@ export default function AdminProducciones() {
         let suma = 0;
         resultss.forEach((despacho) => {
             despacho.pedido.forEach((oc) => {
-                oc.pedido.forEach((detalle) => {
-                    suma += detalle.espesor * detalle.ancho * detalle.largo * detalle.piezas / 1000000;
-                });
+                
+                    suma += oc.espesor * oc.ancho * oc.largo * oc.piezas / 1000000;
+                
             });
         });
         setTotalVolumens(suma);
@@ -88,9 +88,9 @@ export default function AdminProducciones() {
             const detalle = `${year}-${month + 1}-${day}`;
       
             orden.pedido.forEach((oc) => {
-              oc.pedido.forEach((detalle) => {
-                suma = detalle.espesor * detalle.ancho * detalle.largo * detalle.piezas / 1000000;
-              });
+              
+                suma = oc.espesor * oc.ancho * oc.largo * oc.piezas / 1000000;
+             
       
               totalVolumen += suma;
               totalCantidad += oc.cantidad;

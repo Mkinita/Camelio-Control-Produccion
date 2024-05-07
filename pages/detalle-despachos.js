@@ -1,7 +1,3 @@
-
-
-
-
 import useSWR from 'swr'
 import axios from 'axios'
 import Image from 'next/image';
@@ -11,8 +7,8 @@ import Link from 'next/link';
 
 export default function AdminProducciones() {
 
-  const fetcher = () => axios('/api/despachos').then(datos => datos.data)
-  const { data, error, isLoading } = useSWR('/api/despachos',fetcher,{refreshInterval: 100} )
+  const fetcher = () => axios('/api/despachoinforme').then(datos => datos.data)
+  const { data, error, isLoading } = useSWR('/api/despachoinforme',fetcher,{refreshInterval: 100} )
 
   const [ users, setUsers ] = useState([])
   const [ search, setSearch ] = useState("")
@@ -20,8 +16,9 @@ export default function AdminProducciones() {
   const [endDate, setEndDate] = useState('');
   const [totalVolumen, setTotalVolumen] = useState(0);
   const [totalCantidad, setTotalCantidad] = useState(0);
+  const [specificDate, setSpecificDate] = useState('');
   const [volumenesPorDetalle, setVolumenesPorDetalle] = useState({});
-  const URL = '/api/despachos';
+  const URL = '/api/despachoinforme';
   const [paginaActualizada, setPaginaActualizada] = useState(false);
 
   const handleClick = () => {
@@ -45,100 +42,65 @@ export default function AdminProducciones() {
   };
 
 
+  
+
   const filterByDateRange = (date) => {
-    if (startDate && endDate) {
-      // Convertir las fechas a objetos Date para una comparación adecuada
-      const startDateObj = new Date(startDate);
-      const endDateObj = new Date(endDate);
+    if ((startDate && endDate) || specificDate) {
       const dateObj = new Date(date);
-  
-      // Añadir un día a la fecha de finalización para incluir ese día en el rango
-      endDateObj.setDate(endDateObj.getDate() + 1);
-  
-      // Comparar las fechas
-      return dateObj >= startDateObj && dateObj < endDateObj;
+
+      if (startDate && endDate) {
+        const startDateObj = new Date(startDate);
+        const endDateObj = new Date(endDate);
+        endDateObj.setDate(endDateObj.getDate() + 1);
+        return dateObj >= startDateObj && dateObj < endDateObj;
+      }
+
+      if (specificDate) {
+        const specificDateObj = new Date(specificDate);
+        specificDateObj.setDate(specificDateObj.getDate() + 1);
+        return dateObj.toDateString() === specificDateObj.toDateString();
+      }
     }
     return true;
   };
 
-
-  // const  results = users.filter((dato) => {
-  //   const matchesSearch = !search || JSON.stringify(dato.pedido).toLowerCase().includes(search.toLowerCase());
-  //   const isInDateRange = filterByDateRange(dato.fecha);
-  //   return matchesSearch && isInDateRange;
-  // });
-
-
-  // const results = users.filter((despacho) => {
-  //   return (
-  //     despacho.pedido.some((oc) => {
-  //       return (
-  //         JSON.stringify(oc.pedido).toLowerCase().includes(search.toLowerCase()) ||
-  //         oc.pedido.some((detalle) => {
-  //           return JSON.stringify(detalle.detalle).toLowerCase().includes(search.toLowerCase());
-  //         })
-  //       );
-  //     }) &&
-  //     filterByDateRange(despacho.fecha)
-  //   );
-  // });
-
-  const results = users.filter((despacho) => {
-    return (
-      despacho.pedido.some((oc) => {
-        return (
-          JSON.stringify(oc.pedido).toLowerCase().includes(search.toLowerCase()) ||
-          oc.pedido.some((detalle) => {
-            // Verificar si el detalle coincide exactamente con lo que el usuario ha ingresado
-            return detalle.detalle.toLowerCase() === search.toLowerCase();
-          })
-        );
-      }) &&
-      filterByDateRange(despacho.fecha)
-    );
-  });
-
-
+  const results = users ? users.filter((dato) => {
+    const matchesSearch = !search || JSON.stringify(dato.pedido).toLowerCase().includes(search.toLowerCase());
+    const isInDateRange = filterByDateRange(dato.fechaCambioStock);
+    return matchesSearch && isInDateRange;
+  }) : [];
   
   
-  
+
   useEffect(() => {
     showData();
   }, []);
   
-
-
-const sumarVolumenes = () => {
+  const sumarVolumenes = () => {
     let suma = 0;
-    results.forEach((despacho) => {
-        despacho.pedido.forEach((oc) => {
-            oc.pedido.forEach((detalle) => {
-                suma += detalle.espesor * detalle.ancho * detalle.largo * detalle.piezas / 1000000;
-            });
-        });
+    results.forEach((orden) => {
+      orden.pedido.forEach((oc) => {
+        suma += oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000;
+      });
     });
     setTotalVolumen(suma);
-    
-};
+  };
 
   const sumarCantidades = () => {
     let suma = 0;
-    results.forEach((despacho) => {
-      despacho.pedido.forEach((oc) => {
-        oc.pedido.forEach((detalle) => {
-        suma += detalle.cantidad;
+    results.forEach((orden) => {
+      orden.pedido.forEach((oc) => {
+        suma += oc.cantidad;
       });
-    });
     });
   setTotalCantidad(suma);
   };
 
   const formatoNumero = (num) => {
-    return num.toString().slice(0,5);
-  }
-
-  const formatoNumero2 = (num) => {
     return num.toString().slice(0,10);
+  }
+  const formatoNumerotabla = (num) => {
+    return num.toString().slice(0,5);
   }
 
   useEffect(() => {
@@ -153,14 +115,13 @@ const sumarVolumenes = () => {
       let totalCantidad = 0;
       const volumenesPorDetalle = {};
 
-      results.forEach((despacho) => {
-        despacho.pedido.forEach((oc) => {
-            oc.pedido.forEach((detalles) => {
-          const detalle = detalles.detalle;
-          const volumen = detalles.espesor * detalles.ancho * detalles.largo * detalles.piezas * detalles.cantidad / 1000000;
+      results.forEach((orden) => {
+        orden.pedido.forEach((oc) => {
+          const detalle = oc.detalle;
+          const volumen = oc.espesor * oc.ancho * oc.largo * oc.piezas * oc.cantidad / 1000000;
 
           totalVolumen += volumen;
-          totalCantidad += detalles.cantidad;
+          totalCantidad += oc.cantidad;
 
           if (detalle in volumenesPorDetalle) {
             volumenesPorDetalle[detalle] += volumen;
@@ -168,7 +129,6 @@ const sumarVolumenes = () => {
             volumenesPorDetalle[detalle] = volumen;
           }
         });
-     });
       });
 
       setTotalVolumen(totalVolumen);
@@ -179,16 +139,16 @@ const sumarVolumenes = () => {
   }, [results]);
 
 
-
+  
   return(
 
     <LayoutInforme pagina={'Actual'}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
           <div className="shadow rounded-lg p-2">
             <div>
               <div className="grid grid-cols-1 gap-4">
+              
                 <div className='grid grid-cols-1 md:grid-cols-2'>
-                  <div> 
                   <button onClick={handleClick} disabled={paginaActualizada}>
                     
                     {!paginaActualizada && (
@@ -205,22 +165,22 @@ const sumarVolumenes = () => {
                       </Link>
                     )}
                   </button>
-                  </div>
                   <div>
-                  <p className="font-semibold text-gray-600">Despachos</p>
-                  <h2 class="text-xl font-bold text-gray-600">{formatoNumero2(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</h2>
+                    
+                  <p className="font-semibold text-gray-600">Produccion</p>
+                  <h2 class="text-2xl font-bold text-gray-600">{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</h2>
                 </div>
               </div> 
             </div>
           </div>
         </div>
-        <div className="shadow rounded-lg p-2  grid-1 md:grid-cols-2 gap-2 hidden md:grid">
+        <div className="shadow rounded-lg p-2  grid-1 md:grid-cols-2 hidden md:grid">
           <div className='shadow rounded-lg hover:scale-90'>
-            {/* <p className="font-semibold text-gray-600">Fecha</p>
+            <p className="font-semibold text-gray-600">Fecha</p>
             <div>
               <input
-                value={search}
-                onChange={searcher}
+                value={specificDate}
+                onChange={(e) => setSpecificDate(e.target.value)}
                 type="date"
                 placeholder="Filtra Producto..."
                 className="text-center m-auto border rounded-lg"
@@ -230,35 +190,7 @@ const sumarVolumenes = () => {
                   <li key={index}>{user.nombre}</li>
                 ))}
               </ul>
-            </div>         */}
-
-<div className=' m-auto'>
-
-
-
-<p className=' text-center font-semibold text-gray-600'>Desde</p>
-<div></div>
-<input
- className=' text-center'
- type="date"
- value={startDate}
- onChange={(e) => setStartDate(e.target.value)}
-/>
-</div>
-<div className=' m-auto'>
-<p className=' text-center font-semibold text-gray-600'>Hasta</p>
-<input
- className=' text-center'
- type="date"
- value={endDate}
- onChange={(e) => setEndDate(e.target.value)}
-/>
-<ul>
- {results.map((user, index) => (
-   <li key={index}>{user.nombre}</li>
- ))}
-</ul>
-</div>
+            </div>        
           </div>
           <div className='shadow rounded-lg hover:scale-90 hidden md:grid'>
             <button className="text-center" onClick={() => window.print()}>
@@ -269,7 +201,38 @@ const sumarVolumenes = () => {
         </div>
       </div>
 
-          
+          <div className=' grid grid-cols-1 p-4 w-1/2 m-auto'>
+          <div className=' grid grid-cols-2 gap-2 shadow-lg rounded-lg p-2'>
+            <div className=' m-auto'>
+
+
+
+         <p className=' text-center font-semibold text-gray-600'>Desde</p>
+         <div></div>
+        <input
+          className=' text-center'
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        </div>
+        <div className=' m-auto'>
+        <p className=' text-center font-semibold text-gray-600'>Hasta</p>
+        <input
+          className=' text-center'
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+        <ul>
+          {results.map((user, index) => (
+            <li key={index}>{user.nombre}</li>
+          ))}
+        </ul>
+        </div>
+        </div>
+
+      </div>
 
       
           <div className=' grid grid-cols-2 m-auto w-1/2  py-6 pb-4 '> 
@@ -307,34 +270,30 @@ const sumarVolumenes = () => {
 
 
           {isLoading && <p className='text-center m-10'>Cargando...</p>}
-{error && <p className='text-center m-10'>Error al cargar los datos</p>}
-{!isLoading && results && results.length ? 
-  Object.entries(volumenesPorDetalle)
-    .sort(([detalleA], [detalleB]) => detalleA.localeCompare(detalleB)) // Ordenar alfabéticamente
-    .map(([detalle, volumen]) =>
-      <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
-        <tr key={detalle}>
-          <td className="w-1/2 font-semibold text-center border  border-gray-600">{detalle}</td>
-          <td className="w-1/4 font-semibold text-center border  border-gray-600">{formatoNumero(volumen)}</td>
-          <td className="w-1/4 font-semibold text-center border  border-gray-600">
-            {results.reduce((total, oc) => {
-              return total + oc.pedido.reduce((acc, pedido) => {
-                return acc + pedido.pedido.reduce((subAcc, item) => {
-                  if (item.detalle === detalle) {
-                    return subAcc + item.cantidad;
-                  }
-                  return subAcc;
-                }, 0);
-              }, 0);
-            }, 0)}
-          </td>
-          {/* Aquí puedes agregar más columnas si es necesario */}
-        </tr>
-      </table>
-    ) :
-  <p className='text-center m-10'>Sin Produccion</p>
-}
-
+            {error && <p className='text-center m-10'>Error al cargar los datos</p>}
+            {!isLoading && results && results.length ? 
+              Object.entries(volumenesPorDetalle)
+                .sort(([detalleA], [detalleB]) => detalleA.localeCompare(detalleB)) // Ordenar alfabéticamente
+                .map(([detalle, volumen]) =>
+                  <table className='table-auto w-3/4 m-auto text-center bg-white text-gray-700 p-1'>
+                    <tr key={detalle}>
+                      <td className="w-1/2 font-semibold text-center border  border-gray-600">{detalle}</td>
+                      <td className="w-1/4 font-semibold text-center border  border-gray-600">{formatoNumerotabla(volumen)}</td>
+                      <td className="w-1/4 font-semibold text-center border  border-gray-600">{results.reduce((total, oc) => {
+                        return total + oc.pedido.reduce((acc, item) => {
+                          if (item.detalle === detalle) {
+                            return acc + item.cantidad;
+                          }
+                          return acc;
+                        }, 0);
+                      }, 0)}</td>
+                      {/* Aquí puedes agregar más columnas si es necesario */}
+                    </tr>
+                  </table>
+                ) :
+              <p className='text-center m-10'>Sin Produccion</p>
+            }
+        
 
 
               
@@ -348,3 +307,32 @@ const sumarVolumenes = () => {
     </LayoutInforme>
   )
 }
+
+
+
+
+// const filterByDateRange = (date) => {
+  //   if (startDate && endDate) {
+  //     // Convertir las fechas a objetos Date para una comparación adecuada
+  //     const startDateObj = new Date(startDate);
+  //     const endDateObj = new Date(endDate);
+  //     const dateObj = new Date(date);
+  
+  //     // Añadir un día a la fecha de finalización para incluir ese día en el rango
+  //     endDateObj.setDate(endDateObj.getDate() + 1);
+  
+  //     // Comparar las fechas
+  //     return dateObj >= startDateObj && dateObj < endDateObj;
+  //   }
+  //   return true;
+  // };
+
+
+  // const  results = users.filter((dato) => {
+  //   const matchesSearch = !search || JSON.stringify(dato.pedido).toLowerCase().includes(search.toLowerCase());
+  //   const isInDateRange = filterByDateRange(dato.fecha);
+  //   return matchesSearch && isInDateRange;
+  // });
+
+
+

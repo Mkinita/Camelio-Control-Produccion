@@ -34,6 +34,7 @@ const CombustibleProvider = ({children}) => {
     const [pedido, setPedido] = useState([])
     const [pedido01, setPedido01] = useState([])
     const [pedido02, setPedido02] = useState([])
+    const [pedido03, setPedido03] = useState([])
     const [modal, setModal] = useState(false)
     
 
@@ -173,19 +174,21 @@ const CombustibleProvider = ({children}) => {
 
            toast.success('Agregado Correctamente')
            setTimeout(() =>{
-            router.push('/resumen-despacho')
+            router.push('/agregar-despacho')
         },500)
         } else {
             setPedido([...pedido, productos])
-            toast.success('Agregado')
+            
+            toast.success('Agrega Un Nuevo Producto')
+            // toast.success('Agregado')
 
             setTimeout(() =>{
-                router.push('/resumen-despacho')
+                router.push('/agregar-despacho')
             },500)
         }
 
         setModal(false)
-        
+       
     }
 
     const handleAgregarChofer = ({...chofer}) => {
@@ -333,33 +336,89 @@ const CombustibleProvider = ({children}) => {
     }
     
 
+    // const agregarDespacho = async (e) => {
+    //     e.preventDefault();
+    //     const confirmarCreacion = window.confirm("¿Descontaste los lotes del stock?");
+    //     if (confirmarCreacion) {
+    //         try {
+    //             const detallesProductos = pedido.map(producto => ({
+    //                 pedido: producto.pedido.map(item => ({
+    //                     id: item.id,
+    //                     ancho: item.ancho,
+    //                     largo: item.largo,
+    //                     piezas: item.piezas,
+    //                     detalle: item.detalle,
+    //                     espesor: item.espesor,
+    //                     cantidad: item.cantidad
+    //                 })),
+    //                 calidad: producto.calidad,
+    //                 cantidad: producto.cantidad,
+    //                 despacho: producto.despacho
+    //             }));
+                
+    //             await axios.post('/api/despacho', {
+    //                 pedido: detallesProductos,
+    //                 pedido01,
+    //                 destino,
+    //                 cliente,
+    //                 fecha: new Date()
+    //             });
+    
+    //             // Resetear la app
+    //             setPedido([]);
+    //             setPedido01([]);
+    //             setDestino('');
+    //             setCliente('');
+    //             toast.success('Agregando ⏳');
+    
+    //             setTimeout(() => {
+    //                 router.push('/despachos');
+    //             }, 1000);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    
+    //     console.log('agregando orden');
+    // }
+
+
     const agregarDespacho = async (e) => {
-        e.preventDefault()
-        const confirmarCreacion = window.confirm(
-            `¿descontaste los lotes del stock?`
-            );
-            if (confirmarCreacion) {
-
-        try {
-           await axios.post('/api/despacho',{pedido,pedido01,destino,cliente,fecha: new Date()})
-            // Resetear la app
-            setPedido([])
-            setPedido01([])
-            setDestino('')
-            setCliente('')
-            toast.success('Agregando ⏳')
-
-            setTimeout(() =>{
-                router.push('/despachos')
-            },1000)
-
-        } catch (error) {
-            console.log(error)
-        }}
-
-
-        console.log('agregando orden')
+        e.preventDefault();
+        const confirmarCreacion = window.confirm("¿Descontaste los lotes del stock?");
+        if (confirmarCreacion) {
+            try {
+                // Mapeamos los detalles de productos para obtener solo los detalles del pedido
+                const detallesPedido = pedido.map(producto => producto.pedido[0]);
+                
+                // Enviamos solo los detalles del pedido al backend
+                await axios.post('/api/despacho', {
+                    pedido: detallesPedido,
+                    pedido01,
+                    destino,
+                    cliente,
+                    fecha: new Date()
+                });
+    
+                // Resetear la app
+                setPedido([]);
+                setPedido01([]);
+                setDestino('');
+                setCliente('');
+                toast.success('Agregando ⏳');
+    
+                setTimeout(() => {
+                    router.push('/despachos');
+                }, 1000);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    
+        console.log('agregando orden');
     }
+    
+    
 
     const AgregarDestino = async (e) => {
         e.preventDefault()
@@ -554,6 +613,8 @@ const CombustibleProvider = ({children}) => {
             handlesetOperadores,
             pedido02,
             setPedido02,
+            pedido03,
+            setPedido03,
             handleAgregarOperador,
             handleEditarCantidadesoperadores
 

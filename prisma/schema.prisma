@@ -38,7 +38,22 @@ model Producciones {
   estado Boolean  @default(false)
   stock Boolean  @default(false)
   despacho Boolean  @default(false)
+  fechaCambioStock DateTime? // Campo opcional para almacenar la fecha de cambio de stock
 }
+
+// model Pruebas {
+//   id Int @id @default(autoincrement())
+//   fecha DateTime
+//   fecha2 String
+//   calidad String
+//   cliente String
+//   pedido Json
+//   estado Boolean @default(false)
+//   stock Boolean @default(false)
+//   despacho Boolean @default(false)
+//   fechaCambioStock DateTime? // Campo opcional para almacenar la fecha de cambio de stock
+// }
+
 
 model Turno {
   id Int @id @default(autoincrement())
@@ -85,6 +100,16 @@ model Chofer {
   rut String
   patente  String
   patente2  String?
+}
+
+
+model NuevoDespacho {
+  id Int @id @default(autoincrement())
+  fecha DateTime
+  cliente String
+  destino String
+  pedido03 Json
+  pedido01 Json
 }
 
 

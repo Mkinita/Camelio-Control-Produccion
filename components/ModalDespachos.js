@@ -6,7 +6,7 @@ import { toast } from "react-toastify"; // Importa react-toastify para mostrar n
 
 const ModalDespachos = () => {
   const { productos, handleChangeModal, handleAgregarPedidoDespacho } = useCombustible();
-  const { id, calidad, pedido, fecha } = productos;
+  const { id, calidad, pedido, fecha,espesor } = productos;
   const [cantidad, setCantidad] = useState(1);
   const [modalVisible, setModalVisible] = useState(false); // Variable de estado para controlar la visibilidad del modal
 
@@ -80,7 +80,7 @@ const ModalDespachos = () => {
             type="button"
             className="bg-red-600 hover:bg-red-800 px-5 py-2 mt-5 text-white font-bold uppercase rounded w-full"
             onClick={() => {
-              handleAgregarPedidoDespacho({ ...productos, cantidad });
+              handleAgregarPedidoDespacho({ ...productos});
               completarOc();
               toggleModal(false); // Ocultar el modal después de completar la acción
             }}
@@ -89,16 +89,7 @@ const ModalDespachos = () => {
           </button>
         </div>
       ))}
-      {/* Modal */}
-      {modalVisible && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-lg">
-            <h1>Contenido del modal</h1>
-            <button onClick={() => toggleModal(false)}>Cerrar Modal</button>
-          </div>
-        </div>
-      )}
-      {/* Fin Modal */}
+      
     </div>
   );
 };

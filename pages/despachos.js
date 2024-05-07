@@ -54,9 +54,9 @@ const despachos = () => {
     let suma = 0;
     resultss.forEach((despacho) => {
         despacho.pedido.forEach((oc) => {
-            oc.pedido.forEach((detalle) => {
-                suma += detalle.espesor * detalle.ancho * detalle.largo * detalle.piezas / 1000000;
-            });
+            
+                suma += oc.espesor * oc.ancho * oc.largo * oc.piezas / 1000000;
+            
         });
     });
     setTotalVolumen(suma);
