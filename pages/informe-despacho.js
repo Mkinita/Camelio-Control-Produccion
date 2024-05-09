@@ -78,7 +78,7 @@ export default function AdminProducciones() {
           const volumenesPorDetalle = {};
       
           resultss.forEach((orden) => {
-            const fechaOrden = new Date(orden.fecha); // Convertir la fecha a objeto Date
+            const fechaOrden = new Date(orden.fechaCambioStock); // Convertir la fecha a objeto Date
       
             const year = fechaOrden.getFullYear(); // Obtener el año
             const month = fechaOrden.getMonth(); // Obtener el mes (0-11)

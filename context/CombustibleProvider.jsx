@@ -336,28 +336,46 @@ const CombustibleProvider = ({children}) => {
     }
     
 
+    const agregarDespacho = async (e) => {
+        e.preventDefault()
+        const confirmarCreacion = window.confirm(
+            `¿descontaste los lotes del stock?`
+            );
+            if (confirmarCreacion) {
+
+        try {
+           await axios.post('/api/despacho',{pedido,pedido01,destino,cliente,fecha: new Date()})
+            // Resetear la app
+            setPedido([])
+            setPedido01([])
+            setDestino('')
+            setCliente('')
+            toast.success('Agregando ⏳')
+
+            setTimeout(() =>{
+                router.push('/despachos')
+            },1000)
+
+        } catch (error) {
+            console.log(error)
+        }}
+
+
+        console.log('agregando orden')
+    }
+
+
     // const agregarDespacho = async (e) => {
     //     e.preventDefault();
     //     const confirmarCreacion = window.confirm("¿Descontaste los lotes del stock?");
     //     if (confirmarCreacion) {
     //         try {
-    //             const detallesProductos = pedido.map(producto => ({
-    //                 pedido: producto.pedido.map(item => ({
-    //                     id: item.id,
-    //                     ancho: item.ancho,
-    //                     largo: item.largo,
-    //                     piezas: item.piezas,
-    //                     detalle: item.detalle,
-    //                     espesor: item.espesor,
-    //                     cantidad: item.cantidad
-    //                 })),
-    //                 calidad: producto.calidad,
-    //                 cantidad: producto.cantidad,
-    //                 despacho: producto.despacho
-    //             }));
+    //             // Mapeamos los detalles de productos para obtener solo los detalles del pedido
+    //             const detallesPedido = pedido.map(producto => producto.pedido[0]);
                 
+    //             // Enviamos solo los detalles del pedido al backend
     //             await axios.post('/api/despacho', {
-    //                 pedido: detallesProductos,
+    //                 pedido: detallesPedido,
     //                 pedido01,
     //                 destino,
     //                 cliente,
@@ -381,42 +399,6 @@ const CombustibleProvider = ({children}) => {
     
     //     console.log('agregando orden');
     // }
-
-
-    const agregarDespacho = async (e) => {
-        e.preventDefault();
-        const confirmarCreacion = window.confirm("¿Descontaste los lotes del stock?");
-        if (confirmarCreacion) {
-            try {
-                // Mapeamos los detalles de productos para obtener solo los detalles del pedido
-                const detallesPedido = pedido.map(producto => producto.pedido[0]);
-                
-                // Enviamos solo los detalles del pedido al backend
-                await axios.post('/api/despacho', {
-                    pedido: detallesPedido,
-                    pedido01,
-                    destino,
-                    cliente,
-                    fecha: new Date()
-                });
-    
-                // Resetear la app
-                setPedido([]);
-                setPedido01([]);
-                setDestino('');
-                setCliente('');
-                toast.success('Agregando ⏳');
-    
-                setTimeout(() => {
-                    router.push('/despachos');
-                }, 1000);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    
-        console.log('agregando orden');
-    }
     
     
 

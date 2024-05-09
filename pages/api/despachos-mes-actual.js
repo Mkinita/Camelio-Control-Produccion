@@ -10,19 +10,20 @@ export default async function handler(req, res) {
     const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
     // Obtener Ordenes del mes actual
-    const despacho = await prisma.despacho.findMany({
+    const producciones = await prisma.producciones.findMany({
       orderBy: {
-        id: 'asc',
+        fechaCambioStock: 'asc',
       },
       where: {
-        fecha: {
+        stock:true,
+        fechaCambioStock: {
           gte: firstDayOfMonth.toISOString(),
           lte: lastDayOfMonth.toISOString(),
         }
       }
     });
 
-    res.status(200).json(despacho);
+    res.status(200).json(producciones);
     
   } catch (error) {
     console.error("Error handling request:", error);
