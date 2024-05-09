@@ -27,43 +27,17 @@ const PdfDespacho = ({orden}) => {
       }
 
 
-
-      const calcularVolumenPedido = (pedido) => {
-        let volumenPedido = 0;
-        if (pedido) {
-            pedido.forEach(o => {
-                volumenPedido += o.espesor * o.ancho * o.largo * o.piezas / 1000000;
-            });
-        }
-        return volumenPedido;
-    }
-    
-
-    // Función para calcular el volumen total
-    const calcularVolumenTotal = (pedido) => {
-        let volumenTotal = 0;
-        if (pedido) {
-            pedido.forEach(item => {
-                if (item && item.pedido) {
-                    item.pedido.forEach(o => {
-                        volumenTotal += calcularVolumenPedido(o);
-                    });
-                }
-            });
-        }
-        return volumenTotal;
+      const sumarVolumenes = () => {
+        let suma = 0;
+        pedido.forEach((item) => {
+            suma += item.espesor * item.ancho * item.largo * item.piezas / 1000000;
+        });
+        return suma;
     };
 
-    console.log(calcularVolumenTotal)
-    
-    
-    
-    
-    const volumenTotal = calcularVolumenTotal(pedido);
-    
 
-    console.log("Datos de pedido:", pedido);
-console.log("Volumen total:", volumenTotal);
+
+   
 
 
 
@@ -115,29 +89,27 @@ console.log("Volumen total:", volumenTotal);
                 <div className="">
                     <table className="table-auto w-3/4 m-auto text-center bg-white">
                     <tbody>
-    <tr className="bg-white border-b text-sm">
-        <td className="px-1 py-1 w-1/5 text-center border border-black">Orden</td>
-        <td className="px-1 py-1 w-1/5 text-center border border-black">Cliente</td>
-        <td className="px-1 py-1 w-1/5 text-center border border-black">Destino</td>
-        {/* <td className="px-1 py-1 w-1/5 text-center border border-black">Calidad</td> */}
-        <td className="px-1 py-1 w-1/5 text-center border border-black">Detalle</td>
-        <td className="px-1 py-1 w-1/5 text-center border border-black">m³</td>
-    </tr>
-    {pedido.map((o, index) => (
-        <tr key={o.id} className="bg-white border-b text-sm">
-            <td className="px-1 py-1 w-1/5 text-center border border-black">Orden</td>
-            <td className="px-1 py-1 w-1/5 text-center border border-black">{cliente}</td>
-            <td className="px-1 py-1 w-1/5 text-center border border-black">{destino}</td>
-            {/* <td className="px-1 py-1 w-1/5 text-center border border-black">{o.calidad}</td> */}
-            <td className="px-1 py-1 w-1/5 text-center border border-black">{o.espesor}x{o.ancho}x{o.largo}x{o.piezas}</td>
-            <td className="px-1 py-1 w-1/5 text-center border border-black">{formatoNumero(o.espesor*o.ancho*o.largo*o.piezas/1000000)}</td>
-        </tr>
-    ))}
-</tbody>
+                <tr className="bg-white border-b text-sm">
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">Orden</td>
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">Cliente</td>
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">Destino</td>
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">Detalle</td>
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">m³</td>
+                </tr>
+            {pedido.map((o, index) => (
+                <tr key={o.id} className="bg-white border-b text-sm">
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">Orden</td>
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">{cliente}</td>
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">{destino}</td>
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">{o.espesor}x{o.ancho}x{o.largo}x{o.piezas}</td>
+                    <td className="px-1 py-1 w-1/5 text-center border border-black">{formatoNumero(o.espesor*o.ancho*o.largo*o.piezas/1000000)}</td>
+                </tr>
+            ))}
+        </tbody>
 
                     </table>
                     <div className="text-center mt-5">
-                        <p className="text-lg font-bold">Volumen Total: {formatoNumero1(volumenTotal)} m³</p>
+                        <p className="text-lg font-bold">Volumen Total: {formatoNumero1 (sumarVolumenes())} m³</p>
                     </div>
                 </div>
             </div>
