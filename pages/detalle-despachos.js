@@ -97,7 +97,7 @@ export default function AdminProducciones() {
   };
 
   const formatoNumero = (num) => {
-    return num.toString().slice(0,10);
+    return num.toString().slice(0,6);
   }
   const formatoNumerotabla = (num) => {
     return num.toString().slice(0,5);
@@ -167,8 +167,9 @@ export default function AdminProducciones() {
                   </button>
                   <div>
                     
-                  <p className="font-semibold text-gray-600">Produccion</p>
-                  <h2 class="text-2xl font-bold text-gray-600">{formatoNumero(totalVolumen)} m³ / {formatoNumero(totalCantidad)} Und.</h2>
+                  <p className="font-semibold text-gray-600 text-xl">Produccion</p>
+                  <h2 class="text-lg font-bold text-gray-600">{formatoNumero(totalVolumen)} m³</h2>
+                  <h3 class="text-lg font-bold text-gray-600">{formatoNumero(totalCantidad)} Und.</h3>
                 </div>
               </div> 
             </div>

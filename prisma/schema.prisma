@@ -38,7 +38,7 @@ model Producciones {
   estado Boolean  @default(false)
   stock Boolean  @default(false)
   despacho Boolean  @default(false)
-  fechaCambioStock DateTime? // Campo opcional para almacenar la fecha de cambio de stock
+  fechaCambioStock DateTime? 
 }
 
 // model Pruebas {

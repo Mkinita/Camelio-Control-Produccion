@@ -62,7 +62,7 @@ export default function AdminProducciones() {
     }
 
     const formatoNumero2 = (num) => {
-      return num.toString().slice(0,10);
+      return num.toString().slice(0,6);
   }
     
     useEffect(() => {
