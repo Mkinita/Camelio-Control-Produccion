@@ -76,6 +76,16 @@ model Destino {
   destino String
 }
 
+model Proveedor {
+  id Int @id @default(autoincrement())
+  proveedor String
+}
+
+model Origen {
+  id Int @id @default(autoincrement())
+  origen String
+}
+
 model Operador {
   id Int @id @default(autoincrement())
   operador String

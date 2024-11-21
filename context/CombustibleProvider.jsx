@@ -20,6 +20,8 @@ const CombustibleProvider = ({children}) => {
     const [fecha, setFecha] = useState('')
     const [volumen, setVolumen] = useState('')
     const [destino, setDestino] = useState('')
+    const [origen, setOrigen] = useState('')
+    const [proveedor, setProveedor] = useState('')
     const [pallet, setPallet] = useState('')
     const [cantidad, setCantidad] = useState('')
     const [nombre, setNombre] =  useState('')
@@ -510,6 +512,45 @@ const CombustibleProvider = ({children}) => {
     }
 
 
+    const AgregarProveedor = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/proveedor',{proveedor})
+            setProveedor('')
+            toast.success('Agregando ⏳')
+            setTimeout(() =>{
+                router.push('/agregar-valores')
+            },2000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
+    const AgregarOrigen = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/origen',{origen})
+            setOrigen('')
+            toast.success('Agregando ⏳')
+            setTimeout(() =>{
+                router.push('/agregar-origen')
+            },2000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
+
 
 
 
@@ -598,7 +639,13 @@ const CombustibleProvider = ({children}) => {
             pedido03,
             setPedido03,
             handleAgregarOperador,
-            handleEditarCantidadesoperadores
+            handleEditarCantidadesoperadores,
+            AgregarProveedor,
+            proveedor,
+            setProveedor,
+            origen,
+            setOrigen,
+            AgregarOrigen
 
         }}
         
