@@ -6,60 +6,54 @@ import axios from 'axios';
 
 
 const OrdenGeneral = ({productos}) => {
-    const {id,espesor,ancho,piezas,detalle,fecha3,
+    const {id,fecha3,guia,recepcion,largo,metros,calidad,proveedor,origen,destino} = productos
 
-        
-          guia,
-          recepcion,
-          largo,
-          metros,
-          calidad,
-          proveedor,
-          origen,
-          destino,
-
-    } = productos
-
-    const [newespesor, setNewEspesor] = useState('');
-    const [newancho, setNewAncho] = useState('');
+    const [newfecha3, setNewFecha3] = useState('');
+    const [newguia, setNewGuia] = useState('');
+    const [newrecepcion, setNewRecepcion] = useState('');
     const [newlargo, setNewLargo] = useState('');
-    const [newpiezas, setNewPiezas] = useState('');
-    const [newdetalle, setNewDetalle] = useState('');
+    const [newmetros, setNewMetros] = useState('');
+    const [newcalidad, setNewCaliad] = useState('');
+    const [newproveedor, setNewProveedor] = useState('');
+    const [neworigen, setNewOrigen] = useState('');
+    const [newdestino, setNewDestino] = useState('');
     const [isVisible, setIsVisible] = useState(false);
 
     const 
-    {   setEspesor,
-        setAncho,
-        setLargo,
-        setPiezas,
-        setDetalle
-    } = useCombustible();
+    { setFecha3, setGuia, setRecepcion, setLargo, setMetros, setCalidad, setProveedor, setOrigen, setDestino } = useCombustible();
 
 
     const router = useRouter();
 
     const eliminarRegistro = async () => {
         try {
-        const response = await fetch(`/api/eliminarproducto/${id}`, {
+            const confirmarCreacion = window.confirm(
+                `¿Estás seguro de que elimar?`
+            );
+
+            if (confirmarCreacion) {
+            const response = await fetch(`/api/eliminarrecepcion/${id}`, {
             method: 'DELETE',
         });
 
         if (response.ok) {
-            toast.success(`${detalle} eliminada`);
+            toast.success(`${fecha3} eliminada`);
             setTimeout(() => {
-            router.push('/agregar-producto');
+            router.push('/listado-recepcion');
             }, 1000);
         } else {
-            throw new Error('Error al eliminar la etiqueta');
+            throw new Error('Error al eliminar');
+        }
         }
         } catch (error) {
         console.log(error);
         }
+        
     };
   
   
     function reloadPage() {
-        toast.success(`${detalle} Actualizando`);
+        toast.success(`${fecha3} Actualizando`);
             setTimeout(() => {
             window.location.reload();
         }, 1000);
@@ -70,36 +64,45 @@ const OrdenGeneral = ({productos}) => {
         event.preventDefault();
     
         try {
-          await axios.post(`/api/editarproducto/${id}`, 
+          await axios.post(`/api/editarrecepcion/${id}`, 
             { 
-                espesor: newespesor,
-                ancho: newancho,
+                fecha3: newfecha3,
+                guia: newguia,
+                recepcion: newrecepcion,
                 largo: newlargo,
-                piezas: newpiezas,
-                detalle: newdetalle
+                metros: newmetros,
+                caliad: newcalidad,
+                proveedor: newproveedor,
+                origen: neworigen,
+                destino: newdestino
             });
-            setEspesor(newespesor);
-            setAncho(newancho);
+
+            setFecha3(newfecha3);
+            setGuia(newguia);
+            setRecepcion(newrecepcion);
             setLargo(newlargo);
-            setPiezas(newpiezas);
-            setDetalle(newdetalle);
+            setMetros(newmetros);
+            setCalidad(newcalidad);
+            setProveedor(newproveedor);
+            setOrigen(neworigen);
+            setDestino(newdestino);
         } catch (error) {
           console.log(error);
         }
     };
     
     useEffect(() => {
-        setNewEspesor(espesor);
-        setNewAncho(ancho);
+        setNewFecha3(fecha3);
+        setNewGuia(guia);
+        setNewRecepcion(recepcion);
         setNewLargo(largo);
-        setNewPiezas(piezas);
-        setNewDetalle(detalle);
+        setNewMetros(metros);
+        setNewCaliad(calidad);
+        setNewProveedor(proveedor);
+        setNewOrigen(origen);
+        setNewDestino(destino);
       }, [  
-          espesor,
-          ancho,
-          largo,
-          piezas,
-          detalle
+        fecha3,guia,recepcion,largo,metros,calidad,proveedor,origen,destino
     ]);
 
 
@@ -121,71 +124,38 @@ const OrdenGeneral = ({productos}) => {
                 <div class="mx-auto w-full max-w-9xl rounded-sm border border-gray-200 bg-white shadow-lg">
                     <div class="overflow-x-auto p-1">
                         <table class="w-full table-auto">
-                        <thead class="bg-gray-50 text-xs font-semibold uppercase text-gray-400">
-            <tr>
-              <th class="p-1">
-                <div class="text-left font-semibold">Fecha</div>
-              </th>
-              <th class="p-1">
-                <div class="text-left font-semibold">Guia</div>
-              </th>
-              <th class="p-1">
-                  <div class="text-left font-semibold">Recepcion</div>
-              </th>
-              <th class="p-1">
-                <div class="text-left font-semibold">Largo</div>
-              </th>
-              <th class="p-1">
-                <div class="text-left font-semibold">M³</div>
-              </th>
-              <th class="p-1">
-                <div class="text-left font-semibold">Calidad</div>
-              </th>
-              <th class="p-1">
-                <div class="text-left font-semibold">Proveedor</div>
-              </th>
-              <th class="p-1">
-                <div class="text-left font-semibold">Origen</div>
-              </th>
-              <th class="p-1">
-                <div class="text-left font-semibold">Destino</div>
-              </th>
-              <th colSpan="2" class="p-1">
-                <div class="text-center font-semibold">Accion</div>
-              </th>
-            </tr>
-          </thead>
+                        
                             <tbody class="divide-y divide-gray-100 text-sm">
                                 {isVisible ? (''):
                                     <tr> 
-                                        <td class="p-2">
+                                        <td class="p-1">
                                             <div class="font-medium text-gray-800">{fecha3}</div>
                                         </td>
-                                        <td class="p-2">
+                                        <td class="p-1">
                                             <div class="font-medium text-gray-800">{guia}</div>
                                         </td>
-                                        <td class="p-2">
+                                        <td class="p-1">
                                             <div class="font-medium text-gray-800">{recepcion}</div>
                                         </td>
-                                        <td class="p-2">
+                                        <td class="p-1">
                                             <div class="font-medium text-gray-800">{largo}</div>
                                         </td>
-                                        <td class="p-2">
+                                        <td class="p-1">
                                             <div class="font-medium text-gray-800">{metros}</div>
                                         </td>
-                                        <td class="p-2">
+                                        <td class="p-1">
                                             <div class="font-medium text-gray-800">{calidad}</div>
                                         </td>
-                                        <td class="p-2">
+                                        <td class="p-1">
                                             <div class="font-medium text-gray-800">{proveedor}</div>
                                         </td>
-                                        <td class="p-2">
+                                        <td class="p-1">
                                             <div class="font-medium text-gray-800">{origen}</div>
                                         </td>
-                                        <td class="p-2">
+                                        <td class="p-1">
                                             <div class="font-medium text-gray-800">{destino}</div>
                                         </td>
-                                        <td className="p-2">
+                                        <td className="p-1">
                                             <div className="flex justify-center"> 
                                                 {isVisible ? (
                                                     ''
@@ -235,10 +205,10 @@ const OrdenGeneral = ({productos}) => {
                                                 <td class="">
                                                     <div class="font-medium text-gray-800">
                                                         <input
-                                                            className="text-center border rounded-lg md:w-24 w-10"
-                                                            type="text"
-                                                            value={newespesor}
-                                                            onChange={(event) => setNewEspesor(event.target.value)}
+                                                            className="text-center border rounded-lg md:w-24 w-24"
+                                                            type="date"
+                                                            value={newfecha3}
+                                                            onChange={(event) => setNewFecha3(event.target.value)}
                                                         />
                                                     </div>
                                                 </td>
@@ -247,13 +217,23 @@ const OrdenGeneral = ({productos}) => {
                                                         <input
                                                             className="text-center border rounded-lg md:w-24 w-10"
                                                             type="text"
-                                                            value={newancho}
-                                                            onChange={(event) => setNewAncho(event.target.value)}
+                                                            value={newguia}
+                                                            onChange={(event) => setNewGuia(event.target.value)}
                                                         />
                                                     </div>
                                                 </td>
                                                 <td class="">
                                                 <div class="font-medium text-gray-800">
+                                                        <input
+                                                            className="text-center border rounded-lg md:w-24 w-10"
+                                                            type="text"
+                                                            value={newrecepcion}
+                                                            onChange={(event) => setNewRecepcion(event.target.value)}
+                                                        />
+                                                    </div>
+                                                </td>
+                                                <td class="">
+                                                    <div class="font-medium text-gray-800">
                                                         <input
                                                             className="text-center border rounded-lg md:w-24 w-10"
                                                             type="text"
@@ -265,23 +245,59 @@ const OrdenGeneral = ({productos}) => {
                                                 <td class="">
                                                     <div class="font-medium text-gray-800">
                                                         <input
-                                                            className="text-center border rounded-lg md:w-24 w-10"
+                                                            className="text-center border rounded-lg md:w-24 w-20"
                                                             type="text"
-                                                            value={newpiezas}
-                                                            onChange={(event) => setNewPiezas(event.target.value)}
+                                                            value={newmetros}
+                                                            onChange={(event) => setNewMetros(event.target.value)}
                                                         />
                                                     </div>
                                                 </td>
+
                                                 <td class="">
                                                     <div class="font-medium text-gray-800">
                                                         <input
-                                                            className="text-center border rounded-lg md:w-36 w-20"
+                                                            className="text-center border rounded-lg md:w-24 w-20"
                                                             type="text"
-                                                            value={newdetalle}
-                                                            onChange={(event) => setNewDetalle(event.target.value)}
+                                                            value={newcalidad}
+                                                            onChange={(event) => setNewCaliad(event.target.value)}
                                                         />
                                                     </div>
                                                 </td>
+
+                                                <td class="">
+                                                    <div class="font-medium text-gray-800">
+                                                        <input
+                                                            className="text-center border rounded-lg md:w-24 w-20"
+                                                            type="text"
+                                                            value={newproveedor}
+                                                            onChange={(event) => setNewProveedor(event.target.value)}
+                                                        />
+                                                    </div>
+                                                </td>
+
+                                                <td class="">
+                                                    <div class="font-medium text-gray-800">
+                                                        <input
+                                                            className="text-center border rounded-lg md:w-24 w-20"
+                                                            type="text"
+                                                            value={neworigen}
+                                                            onChange={(event) => setNewOrigen(event.target.value)}
+                                                        />
+                                                    </div>
+                                                </td>
+
+                                                <td class="">
+                                                    <div class="font-medium text-gray-800">
+                                                        <input
+                                                            className="text-center border rounded-lg md:w-24 w-20"
+                                                            type="text"
+                                                            value={newdestino}
+                                                            onChange={(event) => setNewDestino(event.target.value)}
+                                                        />
+                                                    </div>
+                                                </td>
+
+
                                                 <td className='text-center m-auto'>
                                                     {isVisible && (
                                                         <button onClick={reloadPage} type="submit" className="text-center border p-1 rounded-lg bg-lime-300 hover:scale-110">

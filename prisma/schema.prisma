@@ -136,4 +136,9 @@ model Recepciom {
   destino String
 }
 
+model Largo {
+  id Int @id @default(autoincrement())
+  largo String
+}
+
 

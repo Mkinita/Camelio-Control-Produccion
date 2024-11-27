@@ -12,6 +12,7 @@ export default function Resumen() {
     const [options01, setOptions01] = useState([]);
     const [options02, setOptions02] = useState([]);
     const [options03, setOptions03] = useState([]);
+    const [options04, setOptions04] = useState([]);
 
 
     useEffect(() => {
@@ -39,6 +40,13 @@ export default function Resumen() {
         fetch('/api/destino')
           .then(response => response.json())
           .then(data => setOptions03(data))
+          .catch(error => console.log(error));
+    },  []);
+
+    useEffect(() => {
+        fetch('/api/largo')
+          .then(response => response.json())
+          .then(data => setOptions04(data))
           .catch(error => console.log(error));
     },  []);
     
@@ -88,15 +96,26 @@ export default function Resumen() {
 
                     </div>
 
-                    <div className="py-5">
-                        <label htmlFor="foto" className="file-label font-bold">Largo</label>
-                        <input class="bg-gray-50 w-full p-2 rounded-md" type="number" placeholder="Agrega Un Largo" value={largo} onChange={e => setLargo(e.target.value)} />
+                   
 
+                    <div className='py-5'>
+                        <label htmlFor="foto" className="file-label font-bold">Largo</label>
+                        <select
+                            id="largo"
+                            className="bg-gray-50 w-full p-2 rounded-md"
+                            value={largo}
+                            onChange={e => setLargo(e.target.value)}
+                        >
+                            <option value="">-</option>
+                            {options04.map(option04 => (
+                            <option key={option04.value} value={option04.value}>{option04.largo}</option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className="py-5">
                         <label htmlFor="foto" className="file-label font-bold">M³</label>
-                        <input class="bg-gray-50 w-full p-2 rounded-md" type="number" placeholder="Agrega M³" value={metros} onChange={e => setMetros(e.target.value)} />
+                        <input class="bg-gray-50 w-full p-2 rounded-md" type="text" placeholder="Agrega M³" value={metros} onChange={e => setMetros(e.target.value)} />
 
                     </div>
                   

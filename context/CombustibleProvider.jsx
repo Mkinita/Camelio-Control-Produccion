@@ -555,6 +555,25 @@ const CombustibleProvider = ({children}) => {
         console.log('agregando orden')
     }
 
+    const AgregarLargo = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/largo',{largo})
+            setOrigen('')
+            toast.success('Agregando ⏳')
+            setTimeout(() =>{
+                router.push('/agregar-largo')
+            },2000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
 
     const AgregarRecepcion = async (e) => {
         e.preventDefault()
@@ -688,7 +707,9 @@ const CombustibleProvider = ({children}) => {
             setGuia,
             recepcion,
             setRecepcion,
-            setMetros
+            setMetros,
+            metros,
+            AgregarLargo
 
         }}
         
