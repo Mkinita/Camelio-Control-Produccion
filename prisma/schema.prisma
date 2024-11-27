@@ -123,4 +123,17 @@ model NuevoDespacho {
 }
 
 
+model Recepciom {
+  id Int @id @default(autoincrement())
+  fecha3 String
+  guia String
+  recepcion String
+  largo String
+  metros String
+  calidad String
+  proveedor String
+  origen String
+  destino String
+}
+
 

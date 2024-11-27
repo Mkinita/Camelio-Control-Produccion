@@ -38,6 +38,11 @@ const CombustibleProvider = ({children}) => {
     const [pedido02, setPedido02] = useState([])
     const [pedido03, setPedido03] = useState([])
     const [modal, setModal] = useState(false)
+    const [fecha3, setFecha3] = useState('')
+    const [guia, setGuia] = useState('')
+    const [recepcion, setRecepcion] = useState('')
+    const [metros, setMetros] = useState('')
+    
     
 
     const handleChangeModal = () => {
@@ -551,6 +556,36 @@ const CombustibleProvider = ({children}) => {
     }
 
 
+    const AgregarRecepcion = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/recepcion',{fecha3,guia,recepcion,largo,metros,calidad,proveedor,origen,destino})
+            setFecha3('')
+            setGuia('')
+            setRecepcion('')
+            setLargo('')
+            setMetros('')
+            setCalidad('')
+            setProveedor('')
+            setOrigen('')
+            setDestino('')
+            toast.success('Agregando ⏳')
+            setTimeout(() =>{
+                router.push('/recepcion-trozos')
+            },2000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando')
+    }
+
+    
+
+
 
 
 
@@ -645,7 +680,15 @@ const CombustibleProvider = ({children}) => {
             setProveedor,
             origen,
             setOrigen,
-            AgregarOrigen
+            AgregarOrigen,
+            AgregarRecepcion,
+            fecha3,
+            setFecha3,
+            guia,
+            setGuia,
+            recepcion,
+            setRecepcion,
+            setMetros
 
         }}
         
