@@ -75,9 +75,6 @@ export default function Resumen() {
             >
               
                 <div className="grid gap-2 grid-cols-2 md:grid-cols-3 2xl:grid-cols-2 text-center mx-auto w-full max-w-4xl">
-
-                    
-
                     <div className="py-5">
                         <label htmlFor="foto" className="file-label font-bold">Fecha</label>
                         <input class="bg-gray-50 w-full p-2 rounded-md" type="date" placeholder="Agrega Una Fecha." value={fecha3} onChange={e => setFecha3(e.target.value)} />

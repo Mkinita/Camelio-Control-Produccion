@@ -141,4 +141,11 @@ model Largo {
   largo String
 }
 
+model Consumo {
+  id Int @id @default(autoincrement())
+  fecha4 String
+  largo String
+  metros String
+}
+
 

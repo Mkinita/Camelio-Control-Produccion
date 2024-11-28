@@ -30,15 +30,7 @@ const controltrozos = () => {
         <main className="m-auto">
             <div className="p-2">
                 <div className='grid gap-2 grid-cols-1 md:grid-cols-1 w-full md:w-3/4 py-4 px-2 pb-2 m-auto'>
-                    <div className=' grid grid-cols-1 md:grid-cols-3'>                  
-                        <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
-                            <Link href="/agregar-operador-palet">
-                                <p className="text-center uppercase font-bold text-xl">Stock</p>
-                                <p className="text-center text-lg">Inicial</p>
-                                <span className="">➕</span>
-                            </Link>
-                            <Link href="/agregar-operador-palet" className='py-5 text-4xl'>📝</Link>
-                        </div>
+                    <div className=' grid grid-cols-1 md:grid-cols-4 gap-2'>                  
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
                             <Link href="/recepcion-trozos">
                                 <p className="text-center uppercase font-bold text-xl">Recepcion</p>
@@ -46,6 +38,22 @@ const controltrozos = () => {
                                 <span className="">➕</span>
                             </Link>
                             <Link href="/recepcion-trozos" className='py-5 text-4xl'>📝</Link>
+                        </div>
+                        <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
+                            <Link href="/consumo-trozos">
+                                <p className="text-center uppercase font-bold text-xl">Consumo</p>
+                                <p className="text-center text-lg">Trozos</p>
+                                <span className="">➕</span>
+                            </Link>
+                            <Link href="/consumo-trozos" className='py-5 text-4xl'>📝</Link>
+                        </div>
+                        <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
+                            <Link href="/agregar-operador-palet">
+                                <p className="text-center uppercase font-bold text-xl">Stock</p>
+                                <p className="text-center text-lg">Trozos</p>
+                                <span className="">➕</span>
+                            </Link>
+                            <Link href="/agregar-operador-palet" className='py-5 text-4xl'>📝</Link>
                         </div>
                         <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
                             <Link href="/agregar-valores">

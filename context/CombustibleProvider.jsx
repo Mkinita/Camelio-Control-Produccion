@@ -39,6 +39,7 @@ const CombustibleProvider = ({children}) => {
     const [pedido03, setPedido03] = useState([])
     const [modal, setModal] = useState(false)
     const [fecha3, setFecha3] = useState('')
+    const [fecha4, setFecha4] = useState('')
     const [guia, setGuia] = useState('')
     const [recepcion, setRecepcion] = useState('')
     const [metros, setMetros] = useState('')
@@ -602,6 +603,28 @@ const CombustibleProvider = ({children}) => {
         console.log('agregando')
     }
 
+
+    const AgregarConsumo = async (e) => {
+        e.preventDefault()
+
+        try {
+           await axios.post('/api/consumo',{fecha4, largo, metros})
+            setFecha4('')
+            setLargo('')
+            setMetros('')
+            toast.success('Agregando ⏳')
+            setTimeout(() =>{
+                router.push('/consumo-trozos')
+            },2000)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        console.log('agregando orden')
+    }
+
     
 
 
@@ -709,7 +732,10 @@ const CombustibleProvider = ({children}) => {
             setRecepcion,
             setMetros,
             metros,
-            AgregarLargo
+            AgregarLargo,
+            fecha4,
+            setFecha4,
+            AgregarConsumo
 
         }}
         
