@@ -25,14 +25,14 @@ const OrdenGeneral = ({consumos}) => {
             );
 
             if (confirmarCreacion) {
-            const response = await fetch(`/api/eliminarrecepcion/${id}`, {
+            const response = await fetch(`/api/eliminarconsumo/${id}`, {
             method: 'DELETE',
         });
 
         if (response.ok) {
             toast.success(`${fecha4} eliminada`);
             setTimeout(() => {
-            router.push('/listado-recepcion');
+            router.push('/listado-consumo');
             }, 1000);
         } else {
             throw new Error('Error al eliminar');
@@ -57,9 +57,9 @@ const OrdenGeneral = ({consumos}) => {
         event.preventDefault();
     
         try {
-          await axios.post(`/api/editarrecepcion/${id}`, 
+          await axios.post(`/api/editarconsumo/${id}`, 
             { 
-                fecha3: newfecha4,
+                fecha4: newfecha4,
                 largo: newlargo,
                 metros: newmetros,
             });
@@ -103,16 +103,16 @@ const OrdenGeneral = ({consumos}) => {
                             <tbody class="divide-y divide-gray-100 text-sm">
                                 {isVisible ? (''):
                                     <tr> 
-                                        <td class="p-1">
-                                            <div class="font-medium text-gray-800">{fecha4}</div>
+                                        <td class="w-1/4">
+                                            <div class="font-medium text-gray-800 text-center">{fecha4}</div>
                                         </td>
-                                        <td class="p-1">
-                                            <div class="font-medium text-gray-800">{largo}</div>
+                                        <td class="w-1/4">
+                                            <div class="font-medium text-gray-800 text-center">{largo}</div>
                                         </td>
-                                        <td class="p-1">
-                                            <div class="font-medium text-gray-800">{metros}</div>
+                                        <td class="w-1/4">
+                                            <div class="font-medium text-gray-800 text-center">{metros}</div>
                                         </td>
-                                        <td className="p-1">
+                                        <td className="w-1/4">
                                             <div className="flex justify-center"> 
                                                 {isVisible ? (
                                                     ''
@@ -159,10 +159,10 @@ const OrdenGeneral = ({consumos}) => {
                                     <tr>
                                         <td class="">
                                             <form onSubmit={handleSubmit} className='m-auto text-center'>
-                                                <td class="">
+                                                <td class="w-1/4">
                                                     <div class="font-medium text-gray-800">
                                                         <input
-                                                            className="text-center border rounded-lg md:w-24 w-24"
+                                                            className="text-center border rounded-lg w-full"
                                                             type="date"
                                                             value={newfecha4}
                                                             onChange={(event) => setNewFecha4(event.target.value)}
@@ -171,20 +171,20 @@ const OrdenGeneral = ({consumos}) => {
                                                 </td>
                                                 
                                                 
-                                                <td class="">
+                                                <td class="w-1/4">
                                                     <div class="font-medium text-gray-800">
                                                         <input
-                                                            className="text-center border rounded-lg md:w-24 w-10"
+                                                            className="text-center border rounded-lg w-full"
                                                             type="text"
                                                             value={newlargo}
                                                             onChange={(event) => setNewLargo(event.target.value)}
                                                         />
                                                     </div>
                                                 </td>
-                                                <td class="">
+                                                <td class="w-1/4">
                                                     <div class="font-medium text-gray-800">
                                                         <input
-                                                            className="text-center border rounded-lg md:w-24 w-20"
+                                                            className="text-center border rounded-lg w-full"
                                                             type="text"
                                                             value={newmetros}
                                                             onChange={(event) => setNewMetros(event.target.value)}
@@ -193,11 +193,9 @@ const OrdenGeneral = ({consumos}) => {
                                                 </td>
 
                                                 
-
-
-                                                <td className='text-center m-auto'>
+                                                <td className='text-center m-auto w-1/4'>
                                                     {isVisible && (
-                                                        <button onClick={reloadPage} type="submit" className="text-center border p-1 rounded-lg bg-lime-300 hover:scale-110">
+                                                        <button onClick={reloadPage} type="submit" className="text-center border p-1 rounded-lg bg-lime-300 hover:scale-110 w-1/2">
                                                             Guardar
                                                         </button>
                                                     )}

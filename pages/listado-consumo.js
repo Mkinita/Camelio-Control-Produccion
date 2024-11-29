@@ -16,20 +16,20 @@ const listadoConsumo = () => {
             <div class="font-semibold text-gray-800">Listado Consumo</div>
           </header>
         </div>
-        <div className='overflow-x-auto p-1'>
+        <div className='overflow-x-auto mx-auto w-full max-w-2xl py-2'>
         <table class="w-full table-auto">
         <thead class="bg-gray-50 text-xs font-semibold uppercase text-gray-400">
             <tr>
-              <th class="p-1">
+              <th class="w-1/4">
                 <div class="text-center font-semibold ">Fecha</div>
               </th>
-              <th class="p-1">
+              <th class="w-1/4">
                 <div class="text-center font-semibold">Largo</div>
               </th>
-              <th class="p-1">
+              <th class="w-1/4">
                 <div class="text-center font-semibold">M³</div>
               </th>
-              <th colSpan="2" class="p-1">
+              <th colSpan="2" class="w-1/4">
                 <div class="text-center font-semibold">Accion</div>
               </th>
             </tr>
