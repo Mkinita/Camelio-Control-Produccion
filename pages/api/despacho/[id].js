@@ -1,27 +1,3 @@
-// import { PrismaClient } from '@prisma/client'
-
-// export default async function handler (req,res){
-
-//     const prisma = new PrismaClient()
-//     if(req.method === 'POST'){
-//         const { id }  = req.query
-        
-
-//         const produccionactualizada = await prisma.pruebas.update({
-//             where:{
-//                 id: parseInt(id)
-//             },
-//             data:{
-//                 stock:true
-//             }
-//         })
-//         res.status(200).json(produccionactualizada)
-
-//     }
-
-// }
-
-
 import { PrismaClient } from '@prisma/client';
 
 export default async function handler(req, res) {
