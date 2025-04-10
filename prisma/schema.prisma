@@ -149,3 +149,12 @@ model Consumo {
 }
 
 
+model Trozo {
+  id       Int      @id @default(autoincrement())
+  fecha    DateTime @default(now())
+  diametro String
+  cantidad Int
+  largo    String
+}
+
+
