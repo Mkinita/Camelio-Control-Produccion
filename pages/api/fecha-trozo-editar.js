@@ -21,8 +21,10 @@ export default async function handler(req, res) {
           },
         },
         orderBy: {
-          cantidad: 'desc',
+          id: 'desc', // ✅ Orden por ID descendente = los más nuevos primero
         },
+        take: 18, // ✅ Solo los últimos 18
+      
     })
 
     res.status(200).json(trozos)

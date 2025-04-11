@@ -14,6 +14,8 @@ export default async function handler(req, res) {
             data: {
               cantidad: parseInt(t.cantidad),
             },
+            
+            
           })
         })
       )
