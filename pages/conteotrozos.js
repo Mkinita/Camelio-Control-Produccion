@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect ,useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-const diametros = ['14', '16', '18', '20', '22', '24', '26', '28', '30' ,'32', '34', '36', '38', '40', '42', '44', '46','48']
-const largosDisponibles = ['3.96', '3.20']
+const diametros = ['14', '16', '18', '20', '22', '24', '26', '28', '30', '32', '34', '36', '38', '40', '42', '44', '46', '48']
+const largosDisponibles = ['-','2.5','3.20','3.96', '4.00']
 
 export default function TrozosPage() {
   const [cantidades, setCantidades] = useState(
@@ -11,6 +12,7 @@ export default function TrozosPage() {
   )
 
   const [largo, setLargo] = useState(largosDisponibles[0])
+  const router = useRouter()
 
   const incrementar = (diametro) => {
     setCantidades((prev) => ({ ...prev, [diametro]: prev[diametro] + 1 }))
@@ -38,16 +40,30 @@ export default function TrozosPage() {
     })
 
     if (res.ok) {
-      alert('Guardado con éxito.')
+      // alert('Guardado con éxito.')
       setCantidades(diametros.reduce((acc, d) => ({ ...acc, [d]: 0 }), {}))
+
+      // Redirigir después de 0.5 segundos
+      setTimeout(() => {
+        router.push('/conteotrozoseditar') // reemplaza con tu ruta real
+      }, 500)
     } else {
       alert('Error al guardar.')
     }
   }
 
+  const [hoy, setHoy] = useState('')
+
+  useEffect(() => {
+    // Al cargar el componente, se pone la fecha actual en formato YYYY-MM-DD
+    const fechaActual = new Date().toISOString().split('T')[0]
+    setHoy(fechaActual)
+  }, [])
+
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Ingresar Trozos</h1>
+    <div className="p-4 bg-white text-center">
+      <h1 className="text-xl font-bold py-4 pb-0">Iniciar Turno</h1>
+      <p className='blockfont-semibold py-2 pb-8'>{hoy}</p>
 
       {/* Selector de largo */}
       <div className="mb-6">
@@ -55,7 +71,7 @@ export default function TrozosPage() {
         <select
           value={largo}
           onChange={(e) => setLargo(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded text-center"
         >
           {largosDisponibles.map((l) => (
             <option key={l} value={l}>
@@ -66,7 +82,7 @@ export default function TrozosPage() {
       </div>
 
       {/* Diámetros */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className=" hidden">
         {diametros.map((diametro) => (
           <div
             key={diametro}
@@ -96,7 +112,7 @@ export default function TrozosPage() {
         onClick={guardar}
         className="mt-6 w-full bg-black text-white py-3 rounded-lg font-semibold"
       >
-        Guardar
+        Iniciar Turno
       </button>
     </div>
   )
