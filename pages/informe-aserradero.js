@@ -28,6 +28,13 @@ export default function AdminProducciones() {
   const [totalCantidad, setTotalCantidad] = useState(0);
   const [totalVolumenA, setTotalVolumenA] = useState(0);
   const [totalCantidadA, setTotalCantidadA] = useState(0);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
 
   
   //función para traer los datos de la API

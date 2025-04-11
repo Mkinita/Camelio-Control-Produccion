@@ -22,6 +22,13 @@ export default function AdminProducciones() {
   const [ search, setSearch ] = useState("")
   const [totalVolumen, setTotalVolumen] = useState(0);
   const [totalCantidad, setTotalCantidad] = useState(0);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+      setIsClient(true);
+    }, []);
+  
+    if (!isClient) return null;
 
 
   
