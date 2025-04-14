@@ -8,7 +8,7 @@ export default function EditarTrozosTarjetas() {
   const [fechaBusqueda, setFechaBusqueda] = useState('')
   const [trozos, setTrozos] = useState([])
   const [paginaActual, setPaginaActual] = useState(0)
-  const trozosPorPagina = 4
+  const trozosPorPagina = 9
 
   useEffect(() => {
     const hoy = new Date().toISOString().split('T')[0]
@@ -90,28 +90,32 @@ export default function EditarTrozosTarjetas() {
       <p className="text-lg text-gray-600 py-0 pb-4">{fechaBusqueda}</p>
 
       {/* Tarjetas paginadas */}
-      <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-3 md:grid-cols-3 gap-2 mb-4">
         {trozosPagina.map((t) => (
           <div
             key={t.diametro}
-            className="bg-green-500 text-white rounded-xl p-4 flex flex-col items-center shadow-md"
+            className="bg-green-500 text-white rounded-xl p-2 flex flex-col items-center shadow-md"
           >
-            <span className="text-2xl font-bold">Ø {t.diametro} cm</span>
-            <span className="text-sm">Largo: {t.largo} m</span>
-            <div className="mt-2 flex items-center gap-2">
+            <span className="text-xl font-bold">Ø {t.diametro}</span>
+            <span className="text-sm">Largo: {t.largo}</span>
+            <span className="text-xl">{t.cantidad}</span>
+            <div className="grid grid-cols-2 gap-2">
+              <div>
               <button
                 onClick={() => decrementar(t.diametro)}
-                className="bg-red-600 px-3 py-1 rounded text-xl"
+                className="bg-red-600 p-2 py-1 rounded text-xl"
               >
                 −
               </button>
-              <span className="text-xl">{t.cantidad}</span>
+              </div>
+              <div>
               <button
                 onClick={() => incrementar(t.diametro)}
-                className="bg-blue-600 px-3 py-1 rounded text-xl"
+                className="bg-blue-600 p-2 py-1 rounded text-xl"
               >
                 +
               </button>
+              </div>
             </div>
           </div>
         ))}
