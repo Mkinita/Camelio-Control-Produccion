@@ -33,12 +33,12 @@ const controltrozos = () => {
                     
 
                     <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
-                        <Link href="/conteotrozos">
+                        <Link href="/conteodetrozosinicio">
                             <p className="text-center uppercase font-bold text-xl">Conteo</p>
                             <p className="text-center text-lg">Trozos</p>
                             <span className="">➕</span>
                         </Link>
-                        <Link href="/conteotrozos" className='py-5 text-4xl'>📊</Link>
+                        <Link href="/conteodetrozosinicio" className='py-5 text-4xl'>📊</Link>
                     </div>
 
                     
