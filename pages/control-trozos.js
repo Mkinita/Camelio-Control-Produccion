@@ -45,11 +45,21 @@ const controltrozos = () => {
                     <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
                         <Link href="/consultadiametro">
                             <p className="text-center uppercase font-bold text-xl">Informe</p>
-                            <p className="text-center text-lg">Conteo Trozos</p>
+                            <p className="text-center text-lg">Conteo Trozos Fecha</p>
                             <span className="">➕</span>
                         </Link>
                         <Link href="/consultadiametro" className='py-5 text-4xl'>📊</Link>
                     </div>
+
+                    <div className="border border-solid rounded-lg text-center shadow grid gap-1 grid-cols-2 p-2 hover:border-red-700">
+                        <Link href="/consultadiametrotable">
+                            <p className="text-center uppercase font-bold text-xl">Informe</p>
+                            <p className="text-center text-lg">Acumulado</p>
+                            <span className="">➕</span>
+                        </Link>
+                        <Link href="/consultadiametrotable" className='py-5 text-4xl'>📊</Link>
+                    </div>
+
                 </div>
             </div>
         </main>  
